@@ -1,3 +1,10 @@
+# DappHero Frontend
+Currently deployed at https://arweave.net/Cqkl4gsQ6nybAAehE9w0xP_pZPDZelAA02XWZa0rrec
+
+## Goals
+- [x] Deploy to Arweave
+- [ ] Recreate DappHero dashboard
+- [ ] Implement hash routing
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
