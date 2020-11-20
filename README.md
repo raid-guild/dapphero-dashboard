@@ -3,8 +3,11 @@ Currently deployed at https://arweave.net/Cqkl4gsQ6nybAAehE9w0xP_pZPDZelAA02XWZa
 
 ## Goals
 - [x] Deploy to Arweave
+- [x] Deploy dapphero-core to [Arweave](https://arweave.net/QXLKZsu2DLUonKxDC5j1DR9dZhtp2C2i-NHWHTezbzQ)
 - [ ] Recreate DappHero dashboard
 - [ ] Implement hash routing
+- [ ] Configure new dapphero-core env variables
+- [ ] On dapphero-core, replace bubble.io backend with smartweave addresses
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
