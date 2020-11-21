@@ -1,5 +1,5 @@
 # DappHero Frontend
-Currently deployed at https://arweave.net/Cqkl4gsQ6nybAAehE9w0xP_pZPDZelAA02XWZa0rrec
+Currently deployed at https://arweave.net/NIb1txcaon_5Y6M9ECSNlbIphhPM5QKuLg9tlSUBF2Q
 
 ## Goals
 - [x] Deploy to Arweave
@@ -8,6 +8,9 @@ Currently deployed at https://arweave.net/Cqkl4gsQ6nybAAehE9w0xP_pZPDZelAA02XWZa
 - [ ] Implement hash routing
 - [ ] Configure new dapphero-core env variables
 - [ ] On dapphero-core, replace bubble.io backend with smartweave addresses
+
+## Deployed Assets
+- Logo: https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
