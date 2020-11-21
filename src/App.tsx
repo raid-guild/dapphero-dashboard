@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import styled from 'styled-components'
+import {} from 'styled-components/cssprop'
+
+// Components
+import Navigation from './components/Navigation'
+import { H1 } from './components/Typography'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<Layout>
+			<Navigation />
+			<main>
+				<H1>Dashboard</H1>
+			</main>
+		</Layout>
+	);
 }
 
 export default App;
+
+const Layout = styled.div`
+	display: grid;
+	grid-template-columns: 30rem auto;
+	grid-template-rows: 12rem auto;
+`
