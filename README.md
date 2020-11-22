@@ -11,11 +11,7 @@ Currently deployed at https://arweave.net/NIb1txcaon_5Y6M9ECSNlbIphhPM5QKuLg9tlS
 
 ## Deployed Assets
 - Logo: https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
+# Getting Up and Running
 
 In the project directory, you can run:
 
@@ -26,6 +22,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+If you get the error `TypeError: Cannot assign to read only property 'jsx' of object '#<Object>'`, use [this](https://github.com/facebook/create-react-app/issues/9868#issuecomment-723576740) temporary workaround:
+
+- Go to node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js
+- Change line 238 to: `} else if (parsedCompilerOptions[option] !== valueToCheck && option !== "jsx") {`
 
 ### `yarn test`
 
