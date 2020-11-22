@@ -11,6 +11,8 @@ Currently deployed at https://arweave.net/NIb1txcaon_5Y6M9ECSNlbIphhPM5QKuLg9tlS
 
 ## Deployed Assets
 - Logo: https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y
+- Favicon: https://arweave.net/jXLNXjwmZpViJbodmNCczcWN0XkHyR8hxiEvhnAqQ-Y
+
 # Getting Up and Running
 
 In the project directory, you can run:
@@ -25,8 +27,8 @@ You will also see any lint errors in the console.
 
 If you get the error `TypeError: Cannot assign to read only property 'jsx' of object '#<Object>'`, use [this](https://github.com/facebook/create-react-app/issues/9868#issuecomment-723576740) temporary workaround:
 
-- Go to node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js
-- Change line 238 to: `} else if (parsedCompilerOptions[option] !== valueToCheck && option !== "jsx") {`
+1. Go to node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js
+2. Change line 238 to: `} else if (parsedCompilerOptions[option] !== valueToCheck && option !== "jsx") {`
 
 ### `yarn test`
 
