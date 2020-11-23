@@ -3,17 +3,17 @@
   "name": "Dapphero Dashboard",
   "icons": [
     {
-      "src": "favicon.svg",
+      "src": "https://arweave.net/jXLNXjwmZpViJbodmNCczcWN0XkHyR8hxiEvhnAqQ-Y",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/svg+xml"
     },
     {
-      "src": "favicon.svg",
+      "src": "https://arweave.net/jXLNXjwmZpViJbodmNCczcWN0XkHyR8hxiEvhnAqQ-Y",
       "type": "image/svg+xml",
       "sizes": "192x192"
     },
     {
-      "src": "favicon.svg",
+      "src": "https://arweave.net/jXLNXjwmZpViJbodmNCczcWN0XkHyR8hxiEvhnAqQ-Y",
       "type": "image/svg+xml",
       "sizes": "512x512"
     }

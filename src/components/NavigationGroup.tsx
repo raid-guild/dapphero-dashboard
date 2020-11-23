@@ -2,15 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 
 // Components
+import { colors } from '../components/Theme'
 import { H2 } from '../components/Typography'
 
 const NavigationGroup: React.FC<any> = ({
     iconAltText,
     iconURL,
+    setHash,
     title,
 }) => {
     return (
-        <NavigationGroupContainer>
+        <NavigationGroupContainer onClick={() => setHash(`${title.toLowerCase()}`)}>
             <SVGContainer>
                 <SVG
                     alt={iconAltText}
@@ -33,10 +35,9 @@ const NavigationGroupContainer = styled.div`
 
     &:hover {
         cursor: pointer;
-        fill: #48bb78;
 
         h2 {
-            color: #48bb78;
+            color: ${colors.green};
         }
     }
 `
