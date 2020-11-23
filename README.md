@@ -15,6 +15,10 @@ Currently deployed at https://arweave.net/ynhHFdAOyBYSR31T6Q1FMrNU-ttXwFwpaAH3Wp
 - Projects Icon: https://arweave.net/y--LjDmE8Ixh07sj0Hmy0rrZqX5EFrAk9BKQyMEt0a8
 - Contracts Icon: https://arweave.net/9ayl_-SzNbM-eAZEyre-CuQpKN7d37U4yf32IfjHF60
 
+# SmartWeave Contracts
+
+- Projects: `SQxVKmHyR9zNP7OgfJdE2nL8tVlaImU64WaI0kgjf0E`
+- Contracts: `NSPU013VqcRRvh_8mQ54BrvGCMMzs2Ponc3NRdqOC-4`
 # Getting Up and Running
 
 In the project directory, you can run:
