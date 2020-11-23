@@ -7,11 +7,10 @@ import { ButtonHeader } from './Buttons'
 
 const Header: React.FC<any> = ({
     hash,
-    setHash,
 }) => {
     return (
         <HeaderContainer>
-			<H1>{hash === '' ? 'Projects' : hash.charAt(0).toUpperCase() + hash.slice(1)}</H1>
+			<H1 center={true} uppercase={false}>{hash === '' ? 'Projects' : hash.charAt(0).toUpperCase() + hash.slice(1)}</H1>
             <a href="https://docs.dapphero.io/" target="_blank" rel="noreferrer">
                 <ButtonHeader>Documentation</ButtonHeader>
             </a>

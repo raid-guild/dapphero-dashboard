@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors, shadows } from '../components/Theme'
+import { colors, shadows } from './Theme'
 
 export const ButtonHeader = styled.button`
     border: none;
