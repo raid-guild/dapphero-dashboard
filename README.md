@@ -1,5 +1,5 @@
-# DappHero Frontend
-Currently deployed at https://arweave.net/NIb1txcaon_5Y6M9ECSNlbIphhPM5QKuLg9tlSUBF2Q
+# DappHero Dashboard
+Currently deployed at https://arweave.net/E7alxInoyd2pMpE6yoRMVH_YWRVUYw_Uly7ahLKNVS0
 
 ## Goals
 - [x] Deploy to Arweave
@@ -12,6 +12,8 @@ Currently deployed at https://arweave.net/NIb1txcaon_5Y6M9ECSNlbIphhPM5QKuLg9tlS
 ## Deployed Assets
 - Logo: https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y
 - Favicon: https://arweave.net/jXLNXjwmZpViJbodmNCczcWN0XkHyR8hxiEvhnAqQ-Y
+- Projects Icon: https://arweave.net/y--LjDmE8Ixh07sj0Hmy0rrZqX5EFrAk9BKQyMEt0a8
+- Contracts Icon: https://arweave.net/9ayl_-SzNbM-eAZEyre-CuQpKN7d37U4yf32IfjHF60
 
 # Getting Up and Running
 
