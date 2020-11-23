@@ -5,7 +5,7 @@ Currently deployed at https://arweave.net/ynhHFdAOyBYSR31T6Q1FMrNU-ttXwFwpaAH3Wp
 - [x] Deploy to Arweave
 - [x] Deploy dapphero-core to [Arweave](https://arweave.net/QXLKZsu2DLUonKxDC5j1DR9dZhtp2C2i-NHWHTezbzQ)
 - [ ] Recreate DappHero dashboard
-- [ ] Implement hash routing
+- [x] Implement hash routing
 - [ ] Configure new dapphero-core env variables
 - [ ] On dapphero-core, replace bubble.io backend with smartweave addresses
 
