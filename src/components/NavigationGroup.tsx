@@ -8,11 +8,11 @@ import { H2 } from '../components/Typography'
 const NavigationGroup: React.FC<any> = ({
     iconAltText,
     iconURL,
-    setHash,
+    setPage,
     title,
 }) => {
     return (
-        <NavigationGroupContainer onClick={() => setHash(`${title.toLowerCase()}`)}>
+        <NavigationGroupContainer onClick={() => setPage(`${title.toLowerCase()}`)}>
             <SVGContainer>
                 <SVG
                     alt={iconAltText}

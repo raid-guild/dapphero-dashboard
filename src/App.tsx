@@ -10,7 +10,7 @@ import Navigation from './components/Navigation'
 
 const App = () => {
 	const [address, setAddress] = React.useState('')
-	const [hash, setHash] = React.useState('')
+	const [page, setPage] = React.useState('')
 	const [wallet, setWallet] = React.useState(null)
 
 	const arweave = Arweave.init({
@@ -29,11 +29,7 @@ const App = () => {
 		if (wallet) {
 			getAddress();
 		}
-		
-		if(hash !== '') {
-			window.location.replace(`#/${hash}`)
-		}
-	}, [arweave, hash, wallet])
+	}, [arweave, wallet])
 
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader();
@@ -51,8 +47,8 @@ const App = () => {
 			<Login uploadWallet={uploadWallet} />
 		}
 		{wallet && <Layout>
-				<Navigation setHash={setHash} />
-				<Header hash={hash} setHash={setHash} />
+				<Navigation setPage={setPage} />
+				<Header page={page} setPage={setPage} />
 				<Main>
 					Address: {address}
 				</Main>

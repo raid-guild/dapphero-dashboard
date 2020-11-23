@@ -5,21 +5,21 @@ import styled from 'styled-components'
 import NavigationGroup from './NavigationGroup'
 
 const Navigation: React.FC<any> = ({
-    setHash,
+    setPage,
 }) => {
     return (
         <NavigationContainer>
-            <LogoContainer onClick={() => setHash('projects')}>
+            <LogoContainer onClick={() => setPage('projects')}>
                 <LogoImage alt="DappHero Logo" src="https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y" />
             </LogoContainer>
             <NavigationGroup
-                setHash={setHash}
+                setPage={setPage}
                 iconAltText="Projects"
                 iconURL={'https://arweave.net/y--LjDmE8Ixh07sj0Hmy0rrZqX5EFrAk9BKQyMEt0a8'}
                 title={"Projects"}
             />
             <NavigationGroup
-                setHash={setHash}
+                setPage={setPage}
                 iconAltText="Contracts"
                 iconURL={'https://arweave.net/9ayl_-SzNbM-eAZEyre-CuQpKN7d37U4yf32IfjHF60'}
                 title={"Contracts"}

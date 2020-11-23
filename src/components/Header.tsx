@@ -6,11 +6,11 @@ import { H1 } from './Typography'
 import { ButtonHeader } from './Buttons'
 
 const Header: React.FC<any> = ({
-    hash,
+    page,
 }) => {
     return (
         <HeaderContainer>
-			<H1 center={true} uppercase={false}>{hash === '' ? 'Projects' : hash.charAt(0).toUpperCase() + hash.slice(1)}</H1>
+			<H1 center={true} uppercase={false}>{page === '' ? 'Projects' : page.charAt(0).toUpperCase() + page.slice(1)}</H1>
             <a href="https://docs.dapphero.io/" target="_blank" rel="noreferrer">
                 <ButtonHeader>Documentation</ButtonHeader>
             </a>
