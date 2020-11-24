@@ -1,6 +1,4 @@
 /* eslint-disable no-undef */
-import { validateContract } from './utils'
-
 /**
  * Contract
  *  name: string
@@ -13,6 +11,33 @@ import { validateContract } from './utils'
  *  updatedAt: string
  *  isLocked: boolean
  */
+
+function isString(val) {
+    return typeof val === 'string'
+}
+
+function isBool(val) {
+    return typeof val === 'boolean'
+}
+
+function validateContract(contract) {
+
+    if (!isString(contract.name)) {
+        throw new ContractError(`Invalid name provided: ${contract.name}`)
+    }
+    if (!isString(contract.description)) {
+        throw new ContractError(`Invalid description provided: ${contract.description}`)
+    }
+    if (!isString(contract.network)) {
+        throw new ContractError(`Invalid network provided: ${contract.network}`)
+    }
+    if (!isString(contract.deployedAddress)) {
+        throw new ContractError(`Invalid deployedAddress provided: ${contract.deployedAddress}`)
+    }
+    if (!isString(contract.abi)) {
+        throw new ContractError(`Invalid abi provided: ${contract.abi}`)
+    }
+}
 
 export function handle(state, action) {
 

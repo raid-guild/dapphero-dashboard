@@ -1,6 +1,4 @@
 /* eslint-disable no-undef */
-import { validateProject, isBool } from './utils'
-
 /**
 * Project
 *  name: string
@@ -14,6 +12,29 @@ import { validateProject, isBool } from './utils'
 *  isPaused: boolean
 *  isLocked: boolean
 */
+
+function isString(val) {
+    return typeof val === 'string'
+}
+
+function isBool(val) {
+    return typeof val === 'boolean'
+}
+
+function validateProject(proj) {
+    if (!isString(proj.name)) {
+        throw new ContractError(`Invalid name provided: ${proj.name}`)
+    }
+    if (!isString(proj.description)) {
+        throw new ContractError(`Invalid description provided: ${proj.description}`)
+    }
+    if (!isString(proj.coverImg)) {
+        throw new ContractError(`Invalid coverImg provided: ${proj.coverImg}`)
+    }
+    if (!isString(proj.network)) {
+        throw new ContractError(`Invalid network provided: ${proj.network}`)
+    }
+}
 
 export function handle(state, action) {
     
