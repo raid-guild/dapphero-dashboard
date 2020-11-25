@@ -7,11 +7,14 @@ import { JWKInterface } from 'arweave/node/lib/wallet';
 import Header from './components/Header'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
+import useProjects from './hooks/useProjects';
 
 const App = () => {
 	const [address, setAddress] = React.useState('')
 	const [page, setPage] = React.useState('')
 	const [wallet, setWallet] = React.useState(null)
+	const [projects] = useProjects()
+	// const projects = {}
 
 	const arweave = Arweave.init({
 		host: 'arweave.net',// Hostname or IP address for a Arweave host
@@ -51,6 +54,9 @@ const App = () => {
 				<Header page={page} setPage={setPage} />
 				<Main>
 					Address: {address}
+					<pre>
+						{JSON.stringify(projects)}
+					</pre>
 				</Main>
 			</Layout>
 		}
