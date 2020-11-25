@@ -1,7 +1,7 @@
 import { ContractActionInterface, ContractInput } from "./interfaces";
 
-declare const ContractError: any;
-declare const SmartWeave: any;
+declare const ContractError: any
+declare const SmartWeave: any
 
 export function handle(state: any, action: ContractActionInterface) {
     const input: ContractInput = action.input
@@ -25,7 +25,7 @@ export function handle(state: any, action: ContractActionInterface) {
     }
 
     if (action.input.function === 'update') {
-        const id = input.id
+        const id = input.id || ''
         const contract = input.contract
 
         if (!state.contracts[id]) {
@@ -43,7 +43,7 @@ export function handle(state: any, action: ContractActionInterface) {
     }
 
     if (action.input.function === 'get') {
-        const id = input.id
+        const id = input.id || ''
 
         if (!state.contracts[id]) {
             throw new ContractError('Project does not exist')

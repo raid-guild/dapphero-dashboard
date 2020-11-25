@@ -17,8 +17,13 @@ Currently deployed at https://arweave.net/ynhHFdAOyBYSR31T6Q1FMrNU-ttXwFwpaAH3Wp
 
 # SmartWeave Contracts
 
-- Projects: `SQxVKmHyR9zNP7OgfJdE2nL8tVlaImU64WaI0kgjf0E`
-- Contracts: `NSPU013VqcRRvh_8mQ54BrvGCMMzs2Ponc3NRdqOC-4`
+- Projects: `4-YMdP_cr5BPzunSfFmtdXX_taJapeUDzwkaScVVRTA`
+- Contracts: `4La0jY027BT3RhRxCWzlfVu5q-BMm77ZgTkLI_MPy5w`
+
+## Tests
+ You can run tests with the following command:
+### `yarn test-contracts`
+
 # Getting Up and Running
 
 In the project directory, you can run:

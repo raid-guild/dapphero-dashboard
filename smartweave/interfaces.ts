@@ -41,13 +41,13 @@ export interface ContractInterface {
 export interface ProjectInput {
     function: FunctionType
     id?: string
-    project?: ProjectInterface
+    project: ProjectInterface
 }
 
 export interface ContractInput {
     function: FunctionType
     id?: string,
-    contract?: ContractInterface
+    contract: ContractInterface
 }
 
 export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet'

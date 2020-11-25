@@ -7,8 +7,8 @@ export function handle(state: any, action: ProjectActionInterface) {
     const input: ProjectInput = action.input
 
     if (input.function === 'create') { 
-        const project = action.input.project
-        
+        const project = input.project
+       
         state.projects[SmartWeave.transaction.id] = {
             name: project.name ,
             description: project.description,
@@ -26,7 +26,7 @@ export function handle(state: any, action: ProjectActionInterface) {
     }
 
     if (input.function === 'update') {
-        const id = input.id
+        const id = input.id || ''
         const project = input.project
         
         if (!state.projects[id]) {
@@ -44,7 +44,7 @@ export function handle(state: any, action: ProjectActionInterface) {
     }
 
     if (action.input.function === 'get') {
-        const id = input.id
+        const id = input.id || ''
 
         if (!state.projects[id]) {
             throw new ContractError('Project does not exist')

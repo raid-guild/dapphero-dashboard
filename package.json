@@ -17,7 +17,7 @@
     "react-scripts": "4.0.0",
     "smartweave": "^0.4.12",
     "styled-components": "^5.2.1",
-    "typescript": "4.0.5",
+    "typescript": "^4.1.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -28,6 +28,7 @@
     "clean": "rimraf ./dist",
     "build-contracts": "npm run clean && npm run build-contracts-ts && npm run cp",
     "build-contracts-ts": "node build-sw.js",
+    "test-contracts": "jest ./smartweave",
     "cp": "copyfiles -u 1 ./smartweave/**/*.json ./dist"
   },
   "eslintConfig": {
@@ -48,12 +49,19 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "devDependencies": {
     "@types/react": "^16.14.1",
     "@types/styled-components": "^5.1.4",
     "copyfiles": "^2.4.0",
     "esbuild": "^0.8.14",
     "glob": "^7.1.6",
-    "rimraf": "^3.0.2"
+    "promises-tho": "^1.1.0",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.4",
+    "typescript.api": "^0.7.7"
   }
 }
