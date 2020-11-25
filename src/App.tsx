@@ -7,11 +7,12 @@ import { JWKInterface } from 'arweave/node/lib/wallet';
 import Header from './components/Header'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
+import NewProject from './components/NewProject'
 import Projects from './components/Projects'
 
 const App = () => {
 	const [address, setAddress] = React.useState('')
-	const [page, setPage] = React.useState('projects')
+	const [router, setRouter] = React.useState('projects')
 	const [wallet, setWallet] = React.useState(null)
 	// const projects = {}
 
@@ -49,9 +50,10 @@ const App = () => {
 				<Login uploadWallet={uploadWallet} />
 			}
 			{wallet && <Layout>
-					<Navigation setPage={setPage} />
-					<Header page={page} setPage={setPage} />
-					{page === 'projects' && <Projects address={address} />}
+					<Navigation router={router} setRouter={setRouter} />
+					<Header router={router} setrouter={setRouter} />
+					{router === 'projects' && <Projects setRouter={setRouter} address={address} />}
+					{router === 'project' && <NewProject setRouter={setRouter} address={address} />}
 				</Layout>
 			}
 		</>

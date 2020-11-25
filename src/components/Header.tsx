@@ -2,17 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 
 // Components
+import { ButtonLink } from './Buttons'
+import { colors, shadows } from './Theme'
 import { H1 } from './Typography'
-import { ButtonHeader } from './Buttons'
 
 const Header: React.FC<any> = ({
-    page,
+    router,
 }) => {
     return (
         <HeaderContainer>
-			<H1 center={true} uppercase={false}>{page === '' ? 'Projects' : page.charAt(0).toUpperCase() + page.slice(1)}</H1>
+			<H1>{router === '' ? 'Projects' : router.charAt(0).toUpperCase() + router.slice(1)}</H1>
             <a href="https://docs.dapphero.io/" target="_blank" rel="noreferrer">
-                <ButtonHeader>Documentation</ButtonHeader>
+                <ButtonLink>Documentation</ButtonLink>
             </a>
         </HeaderContainer>
     )
@@ -21,9 +22,14 @@ const Header: React.FC<any> = ({
 export default Header
 
 const HeaderContainer = styled.div`
+    background: ${colors.white};
+    box-shadow: ${shadows.card};
+    position: sticky;
+    top: 0;
     display: flex;
     grid-column: 2 / -1;
     grid-row: 1 / 2;
     justify-content: space-between;
     padding: 4rem 5rem;
+    z-index: 98;
 `

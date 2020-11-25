@@ -1,18 +1,42 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 // Components
 import { colors } from '../components/Theme'
 import { H2 } from '../components/Typography'
 
+// Types
+interface NavigationGroupContainerProps {
+    active: boolean;
+}
+
 const NavigationGroup: React.FC<any> = ({
     iconAltText,
     iconURL,
-    setPage,
+    router,
+    setRouter,
     title,
 }) => {
+    const [active, setActive] = React.useState(false)
+
+    React.useEffect(() => {
+        if (router === title.toLowerCase()) {
+            setActive(true)
+        } else {
+            setActive(false)
+        }
+
+        return function cleanup() {
+            return
+        };
+    }, [router, title])
+
+    const onChangeRoute = () => {
+        setRouter(title.toLowerCase())
+    }
+
     return (
-        <NavigationGroupContainer onClick={() => setPage(`${title.toLowerCase()}`)}>
+        <NavigationGroupContainer active={active} onClick={onChangeRoute}>
             <SVGContainer>
                 <SVG
                     alt={iconAltText}
@@ -26,12 +50,18 @@ const NavigationGroup: React.FC<any> = ({
 
 export default NavigationGroup
 
-const NavigationGroupContainer = styled.div`
+const NavigationGroupContainer = styled.div<NavigationGroupContainerProps>`
     align-items: center;
     display: flex;
     height: 6rem;
     justify-content: flex-start;
     width: 100%;
+
+    ${props => props.active && css`
+        h2 {
+            color: ${colors.green};
+        }
+    `}
 
     &:hover {
         cursor: pointer;
