@@ -7,13 +7,12 @@ import { JWKInterface } from 'arweave/node/lib/wallet';
 import Header from './components/Header'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
-import useProjects from './hooks/useProjects';
+import Projects from './components/Projects'
 
 const App = () => {
 	const [address, setAddress] = React.useState('')
-	const [page, setPage] = React.useState('')
+	const [page, setPage] = React.useState('projects')
 	const [wallet, setWallet] = React.useState(null)
-	const [projects] = useProjects()
 	// const projects = {}
 
 	const arweave = Arweave.init({
@@ -46,20 +45,15 @@ const App = () => {
 
 	return (
 		<>
-		{!wallet &&
-			<Login uploadWallet={uploadWallet} />
-		}
-		{wallet && <Layout>
-				<Navigation setPage={setPage} />
-				<Header page={page} setPage={setPage} />
-				<Main>
-					Address: {address}
-					<pre>
-						{JSON.stringify(projects)}
-					</pre>
-				</Main>
-			</Layout>
-		}
+			{!wallet &&
+				<Login uploadWallet={uploadWallet} />
+			}
+			{wallet && <Layout>
+					<Navigation setPage={setPage} />
+					<Header page={page} setPage={setPage} />
+					{page === 'projects' && <Projects address={address} />}
+				</Layout>
+			}
 		</>
 	);
 }
@@ -70,10 +64,4 @@ const Layout = styled.div`
 	display: grid;
 	grid-template-columns: 30rem auto;
 	grid-template-rows: 12rem auto;
-`
-
-const Main = styled.main`
-	grid-column: 2 / -1;
-	grid-row: 2 / -1;
-	padding: 5rem;
 `

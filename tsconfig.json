@@ -10,7 +10,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -22,7 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "smartweave"
+    "src"
   ]
 }

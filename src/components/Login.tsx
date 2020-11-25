@@ -78,10 +78,6 @@ const LoginInput = styled.input`
     transition: all .3s ease;
     width: 30rem;
 
-    ${media.medium`
-        margin-top: 2.5rem;
-    `}
-
     ${media.large`
         margin-top: 3rem;
     `}
@@ -94,7 +90,7 @@ const LoginInput = styled.input`
 
 const LogoContainer = styled.div`
     height: 10rem;
-    margin: 6rem auto 2rem;
+    margin: 4rem auto 2rem;
     width: 10rem;
 
     ${media.small`
