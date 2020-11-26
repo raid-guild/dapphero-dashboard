@@ -11,8 +11,8 @@ import { Main } from './Containers'
 const Projects: React.FC<any> = ({
     setRouter,
 }) => {
-    const [projects] = useProjects()
-    
+    const { projects } = useProjects()
+
     return (
         <Main background={colors.white}>
             <H4>Functionality in DappHero is built around projects. Contract, Networks, and other features belong to an individual project, and this project becomes available on your website via script tag.</H4>

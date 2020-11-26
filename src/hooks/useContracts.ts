@@ -5,14 +5,12 @@ import { ContractInterface } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 
 const CONTRACT_ADDRESS = 'uIF7JW5S1IuoFC5_r8zpMDLB6SSn2E2wnOeyU0YhHk4'
-export interface ContractList {
-    [id: string]: ContractInterface
-}
+export type ContractList = Record<string, ContractInterface>
 
 export default function useContracts() {
     const arweave = useArweave()
 
-    const [contracts, setContracts] = useState({} as ContractList)
+    const [contracts, setContracts] = useState<ContractList>({})
 
     useEffect(() => {
         const fetchContracts = async () => {
@@ -54,5 +52,5 @@ export default function useContracts() {
         return data.result
     }
 
-    return [contracts, addContract, updateContract, getContract]
+    return { contracts, addContract, updateContract, getContract }
 }

@@ -5,14 +5,12 @@ import { ProjectInterface } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 
 const CONTRACT_ADDRESS = 'DVI-gBX6HtNUjoZHWLHnWmeujp01rQRnPOEDs4COwx0'
-export interface ProjectList {
-    [id: string]: ProjectInterface
-}
+export type ProjectList = Record<string,ProjectInterface>
 
 export default function useProjects() {
     const arweave = useArweave() 
 
-    const [projects, setProjects] = useState({} as ProjectList)
+    const [projects, setProjects] = useState<ProjectList>({})
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -54,5 +52,5 @@ export default function useProjects() {
         return data.result
     }
 
-    return [projects, addProject, updateProject, getProject]
+    return { projects, addProject, updateProject, getProject }
 }
