@@ -29,7 +29,7 @@ export default function useProjects() {
         fetchProjects()
     }, [arweave])
 
-    const addProject = async (wallet: JWKInterface, project: ProjectInterface) => {
+    const addProject = async (wallet: JWKInterface, project: ProjectInterface): Promise<string | false> => {
         const projectId = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'create',
             project
@@ -37,10 +37,11 @@ export default function useProjects() {
         const newProjects: ProjectList = projects
         newProjects[projectId as string] = project
         setProjects(newProjects)
+        return projectId
     }
 
-    const updateProject = async (wallet: JWKInterface, id: string, project: ProjectInterface) => { 
-        await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
+    const updateProject = async (wallet: JWKInterface, id: string, project: ProjectInterface): Promise<string | false> => { 
+        const tx = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'update',
             id,
             project
@@ -48,6 +49,7 @@ export default function useProjects() {
         const newProjects: ProjectList = projects
         newProjects[id] = project
         setProjects(newProjects)
+        return tx
     }
 
     const getProject = async (wallet: JWKInterface, id: string): Promise<ProjectInterface> => {

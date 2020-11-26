@@ -24,7 +24,7 @@ Contracts must be compiled from Typescript before deploying by running:
 The contracts and state json will be in the `dist` folder
 ## Current Deployed Addresses
 - Projects: `DVI-gBX6HtNUjoZHWLHnWmeujp01rQRnPOEDs4COwx0`
-- Contracts: `4La0jY027BT3RhRxCWzlfVu5q-BMm77ZgTkLI_MPy5w`
+- Contracts: `uIF7JW5S1IuoFC5_r8zpMDLB6SSn2E2wnOeyU0YhHk4`
 
 ## Tests
  You can run tests with the following command:
