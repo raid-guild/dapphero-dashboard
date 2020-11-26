@@ -1,23 +1,16 @@
-import Arweave from 'arweave'
 import { readContract, interactWrite, interactRead } from 'smartweave'
 import { JWKInterface } from 'arweave/node/lib/wallet'
 import { useEffect, useState } from 'react'
 import { ProjectInterface } from '../../smartweave/interfaces'
+import useArweave from './useArweave'
 
 const CONTRACT_ADDRESS = 'DVI-gBX6HtNUjoZHWLHnWmeujp01rQRnPOEDs4COwx0'
-
 export interface ProjectList {
     [id: string]: ProjectInterface
 }
 
 export default function useProjects() {
-    const arweave = Arweave.init({
-        host: 'arweave.net',// Hostname or IP address for a Arweave host
-        port: 443,          // Port
-        protocol: 'https',  // Network protocol http or https
-        timeout: 20000,     // Network request timeouts in milliseconds
-        logging: false,     // Enable network request logging
-    })
+    const arweave = useArweave() 
 
     const [projects, setProjects] = useState({} as ProjectList)
 
