@@ -17,7 +17,7 @@ export default function useContracts() {
     useEffect(() => {
         const fetchContracts = async () => {
             const result = await readContract(arweave, CONTRACT_ADDRESS) || {}
-            setContracts(result)
+            setContracts(result.contracts)
         }
         fetchContracts()
     }, [arweave])
