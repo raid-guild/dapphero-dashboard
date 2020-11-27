@@ -73,3 +73,26 @@ export const H4 = styled.h4`
         margin-bottom: 5rem;
     `}
 `
+
+export const H5 = styled.h5`
+    color: #a0aec0;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 22px;
+    transition: all .3s ease;
+    text-transform: uppercase;
+
+    ${media.small`
+        font-size: 2rem;
+    `}
+
+    ${media.medium`
+        font-size: 1.8rem;
+    `}
+
+    ${media.large`
+        font-size: 1.4rem;
+    `}
+`
