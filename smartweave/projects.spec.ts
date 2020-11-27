@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-conditional-expect */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Arweave from 'arweave/node';
 import * as fs from 'fs';
@@ -15,9 +16,8 @@ const { handle } = require('./projects.ts')
 let { handler, swGlobal } = createContractExecutionEnvironment(arweave, handle.toString(), '4-YMdP_cr5BPzunSfFmtdXX_taJapeUDzwkaScVVRTA')
 
 const addresses = {
-    admin: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
-    user: 'VAg65x9jNSfO9KQHdd3tfx1vQa8qyCyJ_uj7QcxNLDk',
-    nonuser: 'DiFv0MDBxKEFkJEy_KNgJXNG6mxxSTcxgV0h4gzAgsc'
+    user: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
+    otherUser: 'VAg65x9jNSfO9KQHdd3tfx1vQa8qyCyJ_uj7QcxNLDk'
 };
 
 describe('Create, Update, Fetch Projects', () => {
@@ -82,6 +82,49 @@ describe('Create, Update, Fetch Projects', () => {
         expect(state.projects[updateId].coverImg).toBe('https://example.com/cover_updated.png')
         expect(state.projects[updateId].network).toBe('rinkeby')
         expect(state.projects[updateId].contracts[0]).toBe('0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF')
+    })
+
+    it('Should not allow updates of projects not owned by the sender', () => {
+        handler(state, {
+            input: {
+                function: 'create',
+                project: {
+                    name: 'My Project',
+                    description: 'Blah blah blah',
+                    coverImg: 'https://example.com/cover.png',
+                    network: 'mainnet',
+                    contracts: []
+                }
+            }, caller: addresses.user
+        })
+
+        const updateId = Object.keys(state.projects)[0]
+
+        try {
+            handler(state, {
+                input: {
+                    function: 'update',
+                    id: updateId,
+                    project: {
+                        name: 'My Project (Updated)',
+                        description: 'Blah blah blah (Updated)',
+                        coverImg: 'https://example.com/cover_updated.png',
+                        network: 'rinkeby',
+                        contracts: [
+                            '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF'
+                        ]
+                    }
+                }, caller: addresses.otherUser
+            })
+        } catch (err) {
+            expect(err.name).toBe('ContractError')
+        }
+
+        expect(state.projects[updateId].name).toBe('My Project')
+        expect(state.projects[updateId].description).toBe('Blah blah blah')
+        expect(state.projects[updateId].coverImg).toBe('https://example.com/cover.png')
+        expect(state.projects[updateId].network).toBe('mainnet')
+        expect(state.projects[updateId].contracts[0]).toBe(undefined)
     })
 
     it('Should fetch an existing project', async () => {

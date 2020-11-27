@@ -33,6 +33,10 @@ export function handle(state: any, action: ProjectActionInterface) {
             throw new ContractError('Project does not exist')
         }
 
+        if (state.projects[id].creator !== action.caller) {
+            throw new ContractError('Project is owned by another caller') 
+        }
+
         state.projects[id].name = project.name
         state.projects[id].description = project.description
         state.projects[id].coverImg = project.coverImg
