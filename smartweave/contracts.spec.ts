@@ -153,4 +153,45 @@ describe('Create, Update, Fetch Contracts', () => {
         expect(data.result.deployedAddress).toBe('0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF')
         expect(data.result.network).toBe('mainnet')
     })
+
+    it('Should fetch contracts belonging to creator', async () => {
+        const contract = {
+            name: 'My Contract',
+            description: 'Blah blah blah',
+            deployedAddress: '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF',
+            network: 'mainnet',
+            abi: '[{}]'
+        }
+
+        for (let i = 0; i < 3; i++) {
+            handler(state, {
+                input: {
+                    function: 'create',
+                    contract
+                }, caller: addresses.user
+            })
+        }
+
+        for (let i = 0; i < 4; i++) {
+            handler(state, {
+                input: {
+                    function: 'create',
+                    contract
+                }, caller: addresses.otherUser
+            })
+        }
+
+        const data = await handler(state, {
+            input: {
+                function: 'getByCreator'
+            }, caller: addresses.user
+        })
+
+        let count = 0
+        for (let key in data.result) {
+            expect(data.result[key].creator).toBe(addresses.user)
+            count++
+        }
+        expect(count).toBe(3)
+    })
  })

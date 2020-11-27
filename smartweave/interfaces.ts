@@ -39,6 +39,7 @@ export interface ContractInterface {
     isLocked?: boolean
 }
 
+export type ContractList = Record<string, ContractInterface>
 export interface ProjectInput {
     function: FunctionType
     id?: string

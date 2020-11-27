@@ -1,4 +1,4 @@
-import { ContractActionInterface, ContractInput } from "./interfaces";
+import { ContractActionInterface, ContractInput, ContractList } from "./interfaces";
 
 declare const ContractError: any
 declare const SmartWeave: any
@@ -54,6 +54,18 @@ export function handle(state: any, action: ContractActionInterface) {
         }
 
         const result = state.contracts[id]
+
+        return { result }
+    }
+
+    if (action.input.function === 'getByCreator') {
+        let result: ContractList = {}
+
+        for (let key in state.contracts) {
+            if (state.contracts[key].creator === action.caller) {
+                result[key] = state.contracts[key]
+            }
+        }
 
         return { result }
     }
