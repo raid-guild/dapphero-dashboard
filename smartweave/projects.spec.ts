@@ -84,7 +84,7 @@ describe('Create, Update, Fetch Projects', () => {
         expect(state.projects[updateId].contracts[0]).toBe('0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF')
     })
 
-    it('Should not allow updates of projects not owned by the sender', () => {
+    it('Should not allow updates of projects not owned by the caller', () => {
         handler(state, {
             input: {
                 function: 'create',

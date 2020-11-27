@@ -32,6 +32,10 @@ export function handle(state: any, action: ContractActionInterface) {
             throw new ContractError('Contract deos not exist')
         }
 
+        if (state.contracts[id].creator !== action.caller) {
+            throw new ContractError('Contract is owned by another caller')
+        }
+
         state.contracts[id].name = contract.name
         state.contracts[id].description = contract.description
         state.contracts[id].network = contract.network
