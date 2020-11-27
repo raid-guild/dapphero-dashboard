@@ -9,7 +9,7 @@ import { Card, CardContainer, Main } from './Containers'
 import { H3 } from '../components/Typography'
 
 const Projects: React.FC<any> = () => {
-    const { projects } = useProjects()
+    // const { projects } = useProjects(wallet)
     
     return (
         <Main background={colors.grey}>
