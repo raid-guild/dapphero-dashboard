@@ -1,4 +1,4 @@
-import { ProjectActionInterface, ProjectInput } from './interfaces'
+import { ProjectActionInterface, ProjectInput, ProjectList } from './interfaces'
 
 declare const ContractError: any
 declare const SmartWeave: any
@@ -33,6 +33,10 @@ export function handle(state: any, action: ProjectActionInterface) {
             throw new ContractError('Project does not exist')
         }
 
+        if (state.projects[id].creator !== action.caller) {
+            throw new ContractError('Project is owned by another caller') 
+        }
+
         state.projects[id].name = project.name
         state.projects[id].description = project.description
         state.projects[id].coverImg = project.coverImg
@@ -51,6 +55,18 @@ export function handle(state: any, action: ProjectActionInterface) {
         }
 
         const result = state.projects[id]
+
+        return { result }
+    }
+
+    if (action.input.function === 'getByCreator') {
+        let result: ProjectList = {}
+
+        for (let key in state.projects) {
+            if (state.projects[key].creator === action.caller) {
+                result[key] = state.projects[key]
+            }
+        }
 
         return { result }
     }

@@ -11,7 +11,7 @@ import { Main } from './Containers'
 const Projects: React.FC<any> = ({
     setRouter,
 }) => {
-    const { projects } = useProjects()
+    // const { projects } = useProjects(wallet)
 
     return (
         <Main background={colors.white}>

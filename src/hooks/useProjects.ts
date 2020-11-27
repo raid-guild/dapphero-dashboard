@@ -4,23 +4,25 @@ import { useEffect, useState } from 'react'
 import { ProjectInterface } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 
-const CONTRACT_ADDRESS = 'DVI-gBX6HtNUjoZHWLHnWmeujp01rQRnPOEDs4COwx0'
+const CONTRACT_ADDRESS = 'N9n48HdcRPNB34A4Zcxg2RiYvfFUa7HkbKFbZ1GmjZ8'
 export type ProjectList = Record<string,ProjectInterface>
 
-export default function useProjects() {
+export default function useProjects(wallet: JWKInterface) {
     const arweave = useArweave() 
 
     const [projects, setProjects] = useState<ProjectList>({})
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const result = await readContract(arweave, CONTRACT_ADDRESS) || {}
-            setProjects(result.projects)
+            const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
+                function: 'getByCreator'
+            })
+            setProjects(data.result)
         }
         fetchProjects()
-    }, [arweave])
+    }, [arweave, wallet])
 
-    const addProject = async (wallet: JWKInterface, project: ProjectInterface): Promise<string | false> => {
+    const addProject = async (project: ProjectInterface): Promise<string | false> => {
         const projectId = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'create',
             project
@@ -31,7 +33,7 @@ export default function useProjects() {
         return projectId
     }
 
-    const updateProject = async (wallet: JWKInterface, id: string, project: ProjectInterface): Promise<string | false> => { 
+    const updateProject = async (id: string, project: ProjectInterface): Promise<string | false> => { 
         const tx = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'update',
             id,
@@ -43,7 +45,7 @@ export default function useProjects() {
         return tx
     }
 
-    const getProject = async (wallet: JWKInterface, id: string): Promise<ProjectInterface> => {
+    const getProject = async (id: string): Promise<ProjectInterface> => {
         const data: any = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'get',
             id

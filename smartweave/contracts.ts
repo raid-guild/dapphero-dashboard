@@ -1,4 +1,4 @@
-import { ContractActionInterface, ContractInput } from "./interfaces";
+import { ContractActionInterface, ContractInput, ContractList } from "./interfaces";
 
 declare const ContractError: any
 declare const SmartWeave: any
@@ -32,6 +32,10 @@ export function handle(state: any, action: ContractActionInterface) {
             throw new ContractError('Contract deos not exist')
         }
 
+        if (state.contracts[id].creator !== action.caller) {
+            throw new ContractError('Contract is owned by another caller')
+        }
+
         state.contracts[id].name = contract.name
         state.contracts[id].description = contract.description
         state.contracts[id].network = contract.network
@@ -50,6 +54,18 @@ export function handle(state: any, action: ContractActionInterface) {
         }
 
         const result = state.contracts[id]
+
+        return { result }
+    }
+
+    if (action.input.function === 'getByCreator') {
+        let result: ContractList = {}
+
+        for (let key in state.contracts) {
+            if (state.contracts[key].creator === action.caller) {
+                result[key] = state.contracts[key]
+            }
+        }
 
         return { result }
     }
