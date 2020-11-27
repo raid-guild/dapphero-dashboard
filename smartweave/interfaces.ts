@@ -26,6 +26,7 @@ export interface ProjectInterface {
     isLocked?: boolean
 }
 
+export type ProjectList = Record<string, ProjectInterface>
 export interface ContractInterface {
     name: string
     description: string
@@ -51,4 +52,4 @@ export interface ContractInput {
 }
 
 export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet'
-export type FunctionType = 'create' | 'update' | 'get'
+export type FunctionType = 'create' | 'update' | 'get' | 'getByCreator'

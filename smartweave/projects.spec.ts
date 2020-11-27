@@ -157,4 +157,45 @@ describe('Create, Update, Fetch Projects', () => {
         expect(data.result.coverImg).toBe('https://example.com/cover.png')
         expect(data.result.network).toBe('mainnet')
     })
+
+    it('Should fetch projects belonging to caller', async () => {
+        const project = {
+            name: 'My Project',
+            description: 'Blah blah blah',
+            coverImg: 'https://example.com/cover.png',
+            network: 'mainnet',
+            contracts: []
+        }
+
+        for (let i = 0; i < 3; i++) {
+            handler(state, {
+                input: {
+                    function: 'create',
+                    project
+                }, caller: addresses.user
+            })
+        }
+
+        for (let j = 0; j < 4; j++) {
+            handler(state, {
+                input: {
+                    function: 'create',
+                    project
+                }, caller: addresses.otherUser
+            })
+        }
+
+        const data = await handler(state, {
+            input: {
+                function: 'getByCreator'
+            }, caller: addresses.user
+        })
+
+        let count = 0
+        for (let key in data.result) {
+            expect(data.result[key].creator).toBe(addresses.user)
+            count++
+        }
+        expect(count).toBe(3)
+    })
  })
