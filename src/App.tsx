@@ -11,11 +11,26 @@ import Navigation from './components/Navigation'
 import NewProject from './components/NewProject'
 import Projects from './components/Projects'
 
+
+const TEMP_PROJECT = {
+    name: 'myProjectName',
+    description: 'My new project description',
+    coverImg: 'Test 1 image',
+    network: '',
+    contracts: [''],
+    creator: '',
+    createdAt: '',
+    updatedAt: '',
+    isPaused: false,
+    isLocked: false,
+}
+
 const App = () => {
 	const [address, setAddress] = React.useState('')
 	const [loadingProjects, setLoadingProject] = React.useState(true)
 	const [router, setRouter] = React.useState('projects')
 	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
+	const [displayProject, setDisplayProject] = React.useState(TEMP_PROJECT)
 	const [wallet, setWallet] = React.useState(null)
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
 	
@@ -60,6 +75,15 @@ const App = () => {
 		}
 	}
 
+	const onSelectProject = (project: any) => {
+		setRouter('project')
+		if (project === 'default') {
+			setDisplayProject(TEMP_PROJECT)
+		} else  {
+			setDisplayProject(project)
+		}
+	}
+
 	return (
 		<>
 			{!wallet &&
@@ -69,9 +93,17 @@ const App = () => {
 					<Navigation router={router} setRouter={setRouter} />
 					<Header router={router} setrouter={setRouter} />
 					{router === 'projects' && <Projects
-						projectsArray={projectsArray} setRouter={setRouter} address={address} loadingProjects={loadingProjects}
+						projectsArray={projectsArray}
+						setRouter={setRouter} address={address}
+						loadingProjects={loadingProjects}
+						onSelectProject={onSelectProject}
 					/>}
-					{router === 'project' && <NewProject setRouter={setRouter} wallet={wallet} address={address} />}
+					{router === 'project' && <NewProject
+						displayProject={displayProject}
+						setRouter={setRouter}
+						wallet={wallet}
+						address={address}
+					/>}
 				</Layout>
 			}
 		</>

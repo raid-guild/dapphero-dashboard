@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import useProjects from '../hooks/useProjects'
 
 // Components
-import { colors } from '../components/Theme'
 import { ButtonAction } from '../components/Buttons'
 import { Card, CardContainer, Main } from './Containers'
-import { H3 } from '../components/Typography'
+import { Label, Input } from './Form'
 import { NetworkType } from '../../smartweave/interfaces'
+import { colors } from '../components/Theme'
+import { H3 } from '../components/Typography'
 
 const testProject = {
     name: 'Test 1',
@@ -23,13 +24,32 @@ const testProject = {
 }
 
 const Projects: React.FC<any> = ({
-    wallet
+    displayProject,
+    wallet,
 }) => {
-    const { addProject } = useProjects(wallet)
+    const { addProject, updateProject } = useProjects(wallet)
+    const [newProject, setNewProject] = React.useState(displayProject)
 
-    const onAddNewProject = () => {
-        addProject(testProject)
-        .then(id => console.log(id))
+    // const onAddNewProject = () => {
+    //     addProject(testProject)
+    //     .then(id => console.log(id))
+    // }
+
+    const onUpdateProject = () => {
+        if (displayProject === newProject) {
+            console.log('Nothing happened!')
+        } else {
+            updateProject(displayProject.id, newProject)
+            .then(id => console.log(id))
+        }
+    }
+
+    const handleOnChange = (e: any) => {
+        e.persist()
+        setNewProject((prev: any) => ({
+            ...prev,
+            [e.target.id]: e.target.value
+        }))
     }
     
     return (
@@ -40,7 +60,16 @@ const Projects: React.FC<any> = ({
                 </CardContainer>
                 <Line />
                 <CardContainer>
-                    <H3>Cover Image</H3>
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                        id='name'
+                        onChange={handleOnChange}
+                        required
+                        value={newProject.name}
+                    />
+                </CardContainer>
+                <CardContainer>
+                    <H3>Cover Image (coming soon)</H3>
                 </CardContainer>
                 <Line />
             </Card>
@@ -66,7 +95,7 @@ const Projects: React.FC<any> = ({
                 <Line />
             </Card>
             
-            <ButtonAction onClick={onAddNewProject}>Save</ButtonAction>
+            <ButtonAction onClick={onUpdateProject}>Save</ButtonAction>
         </Main>
     )
 }

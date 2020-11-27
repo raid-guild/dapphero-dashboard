@@ -10,6 +10,7 @@ import { Main } from './Containers'
 
 const Projects: React.FC<any> = ({
     loadingProjects,
+    onSelectProject,
     projectsArray,
     setRouter,
 }) => {
@@ -17,7 +18,7 @@ const Projects: React.FC<any> = ({
     return (
         <Main background={colors.white}>
             <H4>Functionality in DappHero is built around projects. Contract, Networks, and other features belong to an individual project, and this project becomes available on your website via script tag.</H4>
-            <ButtonAction onClick={() => setRouter('project')}>New +</ButtonAction>
+            <ButtonAction onClick={onSelectProject.bind(this, 'default')}>New +</ButtonAction>
             {!loadingProjects && <Table>
                 <thead>
                     <TableHeadRow>
@@ -38,7 +39,7 @@ const Projects: React.FC<any> = ({
                 <tbody>
                     {projectsArray.map((project: { name: React.ReactNode; id: string | any[]; network: React.ReactNode; isLocked: any }, index: string | number | null | undefined) => {
                         return(
-                            <TableBodyRow key={index} onClick={() => setRouter('project')}>
+                            <TableBodyRow key={index} onClick={onSelectProject.bind(this, project)}>
                                 <TableBodyCell>
                                     <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                                         <Dot />

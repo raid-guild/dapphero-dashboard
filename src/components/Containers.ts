@@ -25,5 +25,7 @@ export const Card = styled.div`
 `
 
 export const CardContainer = styled.div`
+    display: flex;
+    flex-direction: column;
     padding: 0 3rem;
 `
