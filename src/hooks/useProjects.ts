@@ -1,6 +1,6 @@
-import { readContract, interactWrite, interactRead } from 'smartweave'
+import { interactWrite, interactRead } from 'smartweave'
 import { JWKInterface } from 'arweave/node/lib/wallet'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ProjectInterface } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 
@@ -12,15 +12,15 @@ export default function useProjects(wallet: JWKInterface) {
 
     const [projects, setProjects] = useState<ProjectList>({})
 
-    useEffect(() => {
-        const fetchProjects = async () => {
-            const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
-                function: 'getByCreator'
-            })
-            setProjects(data.result)
-        }
-        fetchProjects()
-    }, [arweave, wallet])
+    // useEffect(() => {
+    //     const fetchProjects = async () => {
+    //         const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
+    //             function: 'getByCreator'
+    //         })
+    //         setProjects(data)
+    //     }
+    //     fetchProjects()
+    // }, [arweave, wallet])
 
     const addProject = async (project: ProjectInterface): Promise<string | false> => {
         const projectId = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
@@ -54,5 +54,13 @@ export default function useProjects(wallet: JWKInterface) {
         return data.result
     }
 
-    return { projects, addProject, updateProject, getProject }
+    const getAllProjects = async (): Promise<ProjectList> => {
+        const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
+            function: 'getByCreator'
+        })
+        
+        return data
+    }
+
+    return { projects, addProject, updateProject, getProject, getAllProjects }
 }

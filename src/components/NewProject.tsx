@@ -7,9 +7,30 @@ import { colors } from '../components/Theme'
 import { ButtonAction } from '../components/Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { H3 } from '../components/Typography'
+import { NetworkType } from '../../smartweave/interfaces'
 
-const Projects: React.FC<any> = () => {
-    // const { projects } = useProjects(wallet)
+const testProject = {
+    name: 'Test 1',
+    description: 'This is test 1',
+    coverImg: 'Test 1 image',
+    network: 'rinkeby' as NetworkType,
+    contracts: ['Test contract'],
+    creator: '',
+    createdAt: '',
+    updatedAt: '',
+    isPaused: false,
+    isLocked: false,
+}
+
+const Projects: React.FC<any> = ({
+    wallet
+}) => {
+    const { addProject } = useProjects(wallet)
+
+    const onAddNewProject = () => {
+        addProject(testProject)
+        .then(id => console.log(id))
+    }
     
     return (
         <Main background={colors.grey}>
@@ -45,7 +66,7 @@ const Projects: React.FC<any> = () => {
                 <Line />
             </Card>
             
-            <ButtonAction>Save</ButtonAction>
+            <ButtonAction onClick={onAddNewProject}>Save</ButtonAction>
         </Main>
     )
 }

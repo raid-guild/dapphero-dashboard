@@ -1,10 +1,9 @@
 export const colors = {
-    h1Black: '#252525',
-    h2Black: '#222836',
-    pBlack: '#3c424f',
     black: '#000',
+    black2: '#3c424f',
     green: '#48bb78',
     grey: '#f5f7fa',
+    red: '#ff4f6e',
     white: '#FFF',
 }
 

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { media } from './Breakpoints'
 
 export const H1 = styled.h1`
@@ -93,6 +93,30 @@ export const H5 = styled.h5`
     `}
 
     ${media.large`
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+    `}
+`
+
+export const P1 = styled.p`
+    color: #3c4d4f;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    transition: all .3s ease;
+
+    ${props => props.color && css`
+        color: ${props.color};
+    `}
+
+    ${media.small`
+        font-size: 2rem;
+    `}
+
+    ${media.medium`
+        font-size: 1.6rem;
+    `}
+
+    ${media.large`
+        font-size: 1.6rem;
     `}
 `

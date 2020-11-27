@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Arweave from 'arweave';
 import { JWKInterface } from 'arweave/node/lib/wallet';
+import useProjects from './hooks/useProjects'
 
 // Components
 import Header from './components/Header'
@@ -12,10 +13,12 @@ import Projects from './components/Projects'
 
 const App = () => {
 	const [address, setAddress] = React.useState('')
+	const [loadingProjects, setLoadingProject] = React.useState(true)
 	const [router, setRouter] = React.useState('projects')
+	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
 	const [wallet, setWallet] = React.useState(null)
-	// const projects = {}
-
+	const { getAllProjects } = useProjects(wallet! as JWKInterface)
+	
 	const arweave = Arweave.init({
 		host: 'arweave.net',// Hostname or IP address for a Arweave host
 		port: 443,          // Port
@@ -31,8 +34,21 @@ const App = () => {
 
 		if (wallet) {
 			getAddress();
-		}
-	}, [arweave, wallet])
+			getAllProjects().then(result => {
+				let newIdArray: any[] = []
+				let newProjectsArray: any[] = []
+				newIdArray = Object.keys(result)
+	
+				Object.keys(result).map(function(key, index) {
+					newProjectsArray.push(result[key])
+					newProjectsArray[index].id = newIdArray[index]
+					return newProjectsArray
+				})
+				setProjectsArray(newProjectsArray)
+				setLoadingProject(false)
+			})
+		}		
+	}, [arweave, wallet, projectsArray, getAllProjects])
 
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader();
@@ -52,8 +68,10 @@ const App = () => {
 			{wallet && <Layout>
 					<Navigation router={router} setRouter={setRouter} />
 					<Header router={router} setrouter={setRouter} />
-					{router === 'projects' && <Projects setRouter={setRouter} address={address} />}
-					{router === 'project' && <NewProject setRouter={setRouter} address={address} />}
+					{router === 'projects' && <Projects
+						projectsArray={projectsArray} setRouter={setRouter} address={address} loadingProjects={loadingProjects}
+					/>}
+					{router === 'project' && <NewProject setRouter={setRouter} wallet={wallet} address={address} />}
 				</Layout>
 			}
 		</>
