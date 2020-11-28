@@ -54,13 +54,9 @@ export function handle(state: any, action: ProjectActionInterface) {
             throw new ContractError('Project does not exist')
         }
 
-        if (state.projects[id].creator !== action.caller) {
-            throw new ContractError('Project is owned by another caller')
-        }
+        const result = state.projects[id]
 
-        delete state.projects[id]
-
-        return { state }
+        return { result }
     }
 
     if (action.input.function === 'delete') {
@@ -70,9 +66,13 @@ export function handle(state: any, action: ProjectActionInterface) {
             throw new ContractError('Project does not exist')
         }
 
-        const result = state.projects[id]
+        if (state.projects[id].creator !== action.caller) {
+            throw new ContractError('Project is owned by another caller')
+        }
 
-        return { result }
+        delete state.projects[id]
+
+        return { state }
     }
 
     if (action.input.function === 'getByCreator') {
