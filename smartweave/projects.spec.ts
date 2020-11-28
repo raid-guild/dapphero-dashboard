@@ -158,6 +158,34 @@ describe('Create, Update, Fetch Projects', () => {
         expect(data.result.network).toBe('mainnet')
     })
 
+    it('Should delete an existing project', async () => {
+        const project = {
+            name: 'My Project',
+            description: 'Blah blah blah',
+            coverImg: 'https://example.com/cover.png',
+            network: 'mainnet',
+            contracts: []
+        }
+
+        handler(state, {
+            input: {
+                function: 'create',
+                project
+            }, caller: addresses.user
+        })
+
+        const fetchId = Object.keys(state.projects)[0]
+
+        await handler(state, {
+            input: {
+                function: 'delete',
+                id: fetchId
+            }, caller: addresses.user
+        })
+
+        expect(state.projects[fetchId]).toBe(undefined)
+    })
+
     it('Should fetch projects belonging to caller', async () => {
         const project = {
             name: 'My Project',

@@ -154,6 +154,34 @@ describe('Create, Update, Fetch Contracts', () => {
         expect(data.result.network).toBe('mainnet')
     })
 
+    it('Should delete an existing contract', async () => {
+        const contract = {
+            name: 'My Contract',
+            description: 'Blah blah blah',
+            deployedAddress: '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF',
+            network: 'mainnet',
+            abi: '[{}]'
+        }
+
+        handler(state, {
+            input: {
+                function: 'create',
+                contract
+            }, caller: addresses.user
+        })
+
+        const fetchId = Object.keys(state.contracts)[0]
+
+        await handler(state, {
+            input: {
+                function: 'delete',
+                id: fetchId
+            }, caller: addresses.user
+        })
+
+        expect(state.contracts[fetchId]).toBe(undefined)
+    })
+
     it('Should fetch contracts belonging to creator', async () => {
         const contract = {
             name: 'My Contract',
