@@ -5,35 +5,28 @@ import useProjects from '../hooks/useProjects'
 // Components
 import { ButtonAction } from '../components/Buttons'
 import { Card, CardContainer, Main } from './Containers'
-import { Label, Input } from './Form'
-import { NetworkType } from '../../smartweave/interfaces'
+import { Label, Input, Select, TextArea } from './Form'
 import { colors } from '../components/Theme'
-import { H3 } from '../components/Typography'
-
-const testProject = {
-    name: 'Test 1',
-    description: 'This is test 1',
-    coverImg: 'Test 1 image',
-    network: 'rinkeby' as NetworkType,
-    contracts: ['Test contract'],
-    creator: '',
-    createdAt: '',
-    updatedAt: '',
-    isPaused: false,
-    isLocked: false,
-}
+import { H3, P1 } from '../components/Typography'
 
 const Projects: React.FC<any> = ({
     displayProject,
     wallet,
 }) => {
     const { addProject, updateProject } = useProjects(wallet)
+    const [ isNew, setIsNew ] = React.useState(false)
     const [newProject, setNewProject] = React.useState(displayProject)
 
-    // const onAddNewProject = () => {
-    //     addProject(testProject)
-    //     .then(id => console.log(id))
-    // }
+    const onAddNewProject = () => {
+        addProject(newProject)
+        .then(id => console.log(id))
+    }
+
+    React.useEffect(() => {
+        if (newProject.id === undefined) {
+            setIsNew(true)
+        }
+    }, [newProject])
 
     const onUpdateProject = () => {
         if (displayProject === newProject) {
@@ -50,6 +43,7 @@ const Projects: React.FC<any> = ({
             ...prev,
             [e.target.id]: e.target.value
         }))
+        console.log(newProject)
     }
     
     return (
@@ -60,12 +54,19 @@ const Projects: React.FC<any> = ({
                 </CardContainer>
                 <Line />
                 <CardContainer>
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">Name:</Label>
                     <Input
                         id='name'
                         onChange={handleOnChange}
                         required
                         value={newProject.name}
+                    />
+                    <Label htmlFor="description">Description:</Label>
+                    <TextArea
+                        id='description'
+                        onChange={handleOnChange}
+                        required
+                        value={newProject.description}
                     />
                 </CardContainer>
                 <CardContainer>
@@ -79,6 +80,21 @@ const Projects: React.FC<any> = ({
                     <H3>Networds and Contracts</H3>
                 </CardContainer>
                 <Line />
+                <CardContainer>
+                    <P1 color={colors.grey2}>Select a network for your project, followed by one or more smart contracts deployed on that network.</P1>
+                    <br/>
+                    <Label htmlFor="network">Select a project network:</Label>
+                    <Select defaultValue={newProject.network} onChange={handleOnChange} name="network" id="network">
+                        <option value="">choose an option</option>
+                        <option value="rinkeby">rinkeby</option>
+                        <option value="mainnet">mainnet</option>
+                        <option value="kovan">kovan</option>
+                        <option value="goerli">goerli</option>
+                        <option value="ropsten">ropsten</option>
+                        <option value="xDai">xDai</option>
+                        <option value="maticMumbaiTestnet">maticMumbaiTestnet</option>
+                    </Select>
+                </CardContainer>
             </Card>
 
             <Card>
@@ -86,6 +102,14 @@ const Projects: React.FC<any> = ({
                     <H3>Project Script Tag</H3>
                 </CardContainer>
                 <Line />
+                <CardContainer>
+                    <P1 color={colors.grey2}>Copy and paste this into your HTML. <a
+                        href={'https://docs.dapphero.io/'}
+                        style={{textDecoration: 'none', color: colors.green}}
+                        target="_blank"
+                        rel="noreferrer"
+                    >Check Docs.</a></P1>
+                </CardContainer>
             </Card>
 
             <Card>
@@ -95,7 +119,7 @@ const Projects: React.FC<any> = ({
                 <Line />
             </Card>
             
-            <ButtonAction onClick={onUpdateProject}>Save</ButtonAction>
+            <ButtonAction onClick={!isNew ? onUpdateProject : onAddNewProject}>Save</ButtonAction>
         </Main>
     )
 }
