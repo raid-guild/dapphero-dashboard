@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { ProjectInterface } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 
-const CONTRACT_ADDRESS = 'N9n48HdcRPNB34A4Zcxg2RiYvfFUa7HkbKFbZ1GmjZ8'
+const CONTRACT_ADDRESS = '3H8xD7BgeLDh_tJriyFujJrfQCuaChSXm4HB-smU1VY'
 export type ProjectList = Record<string,ProjectInterface>
 
 export default function useProjects(wallet: JWKInterface) {
@@ -54,6 +54,15 @@ export default function useProjects(wallet: JWKInterface) {
         return data.result
     }
 
+    const deleteProject = async (id: string): Promise<ProjectInterface> => {
+        const tx: any = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
+            function: 'delete',
+            id
+        })
+
+        return tx
+    }
+
     const getAllProjects = async (): Promise<ProjectList> => {
         const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'getByCreator'
@@ -62,5 +71,5 @@ export default function useProjects(wallet: JWKInterface) {
         return data
     }
 
-    return { projects, addProject, updateProject, getProject, getAllProjects }
+    return { projects, addProject, updateProject, getProject, deleteProject, getAllProjects }
 }

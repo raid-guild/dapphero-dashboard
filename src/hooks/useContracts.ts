@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { ContractInterface, ContractList } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 
-const CONTRACT_ADDRESS = 'bSc5KRKVZoG7e90QQKimcVfTahKx5C4t74DE4qIUISo'
+const CONTRACT_ADDRESS = 'FgnK-IPuHLyQhGS_zQUCj22E0Tom-kFEun8zxaoRme4'
 
 export default function useContracts(wallet: JWKInterface) {
     const arweave = useArweave()
@@ -53,5 +53,14 @@ export default function useContracts(wallet: JWKInterface) {
         return data.result
     }
 
-    return { contracts, addContract, updateContract, getContract }
+    const deleteContract = async (id: string): Promise<ContractInterface> => {
+        const tx: any = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
+            function: 'delete',
+            id
+        })
+
+        return tx
+    }
+
+    return { contracts, addContract, updateContract, getContract, deleteContract }
 }
