@@ -53,4 +53,4 @@ export interface ContractInput {
 }
 
 export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet'
-export type FunctionType = 'create' | 'update' | 'get' | 'getByCreator'
+export type FunctionType = 'create' | 'update' | 'get' | 'delete' | 'getByCreator'

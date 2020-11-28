@@ -50,12 +50,28 @@ export function handle(state: any, action: ContractActionInterface) {
         const id = input.id || ''
 
         if (!state.contracts[id]) {
-            throw new ContractError('Project does not exist')
+            throw new ContractError('Contract does not exist')
         }
 
         const result = state.contracts[id]
 
         return { result }
+    }
+
+    if (action.input.function === 'delete') {
+        const id = input.id || ''
+
+        if (!state.contracts[id]) {
+            throw new ContractError('Contract does not exist')
+        }
+
+        if (state.contracts[id].creator !== action.caller) {
+            throw new ContractError('Contract is owned by another caller')
+        }
+
+        delete state.contracts[id]
+
+        return { state }
     }
 
     if (action.input.function === 'getByCreator') {
