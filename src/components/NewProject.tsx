@@ -98,7 +98,7 @@ const NewProjects: React.FC<any> = ({
 
             <Card>
                 <CardContainer>
-                    <H3>Networds and Contracts</H3>
+                    <H3>Networks and Contracts</H3>
                 </CardContainer>
                 <Line />
                 <CardContainer>
