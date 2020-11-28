@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { colors, shadows } from './Theme'
 
 export const ButtonLink = styled.button`
@@ -39,4 +39,31 @@ export const ButtonAction = styled.button`
     &:active {
         box-shadow: ${shadows.card};
     }
+
+    ${props => props.color && css`
+        background: ${props.color};
+    `}
+`
+
+export const ButtonAction2 = styled.button`
+    border: 1px solid ${colors.grey2};
+    background: ${colors.white};
+    border-radius: 4px;
+    color: ${colors.black2};
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1.8rem;
+    height: 4.5rem;
+    transition: all .3s ease;
+    width: 10rem;
+    outline: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    ${props => props.color && css`
+        background: ${colors.green};
+        color: ${colors.white};
+        border: 1px solid transparent;
+    `}
 `

@@ -62,6 +62,35 @@ export const Input = styled.input`
     `}
 `
 
+export const InputCopy = styled.input`
+    background: ${colors.grey};
+    border: none;
+    border-radius: 5px;
+    color: ${colors.grey2};
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    height: 4rem;
+    letter-spacing: 1px;
+    line-height: 22px;
+    margin-bottom: 4rem;
+    outline: none;
+    padding: 0 2rem;
+    transition: all .3s ease;
+    width: 100%;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background: rgba(115, 229, 182, .5);
+        color: ${colors.black2};
+    }
+
+    ${media.large`
+        font-size: 1.1rem;
+    `}
+`
+
 export const Select = styled.select`
     background: ${colors.grey};
     border: none;
