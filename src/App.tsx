@@ -1,16 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import Arweave from 'arweave';
-import { JWKInterface } from 'arweave/node/lib/wallet';
+import Arweave from 'arweave'
+import { JWKInterface } from 'arweave/node/lib/wallet'
+import useContracts from './hooks/useContracts'
 import useProjects from './hooks/useProjects'
 import { media } from './components/Breakpoints'
 
 // Components
+import Contracts from './components/Contracts'
 import Header from './components/Header'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
 import NewProject from './components/NewProject'
 import Projects from './components/Projects'
+import { NetworkType } from '../smartweave/interfaces'
 
 
 const TEMP_PROJECT = {
@@ -26,6 +29,18 @@ const TEMP_PROJECT = {
     isLocked: false,
 }
 
+const TEMP_CONTRACT = {
+	name: 'Counter Contract',
+	description: 'Test counter contract description',
+	network: 'rinkeby' as NetworkType,
+	deployedAddress: '0xBAfEFAf4E108e3EFEFE40A510ABAf64B90848d94',
+	abi: '',
+	creator: '',
+	createdAt: new Date().toUTCString(),
+	updatedAt: new Date().toUTCString(),
+	isLocked: false
+}
+
 const App = () => {
 	const [address, setAddress] = React.useState('')
 	const [loadingProjects, setLoadingProject] = React.useState(true)
@@ -34,6 +49,7 @@ const App = () => {
 	const [displayProject, setDisplayProject] = React.useState(TEMP_PROJECT)
 	const [wallet, setWallet] = React.useState(null)
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
+	const { getAllContracts, addContract } = useContracts(wallet! as JWKInterface)
 	
 	const arweave = Arweave.init({
 		host: 'arweave.net',// Hostname or IP address for a Arweave host
@@ -50,6 +66,7 @@ const App = () => {
 
 		if (wallet) {
 			getAddress();
+
 			getAllProjects().then(result => {
 				let newIdArray: any[] = []
 				let newProjectsArray: any[] = []
@@ -64,7 +81,7 @@ const App = () => {
 				setLoadingProject(false)
 			})
 		}		
-	}, [arweave, wallet, projectsArray, getAllProjects])
+	}, [arweave, getAllProjects, projectsArray, wallet])
 
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader();
@@ -83,6 +100,13 @@ const App = () => {
 		} else  {
 			setDisplayProject(project)
 		}
+	}
+
+	const onGetContracts = () => {
+		getAllContracts().then(result => {
+			console.log(result)
+		})
+		// addContract(TEMP_CONTRACT).then(result => console.log(result))
 	}
 
 	return (
@@ -104,6 +128,13 @@ const App = () => {
 						setRouter={setRouter}
 						wallet={wallet}
 						address={address}
+					/>}
+					{router === 'contracts' && <Contracts
+						projectsArray={projectsArray}
+						setRouter={setRouter} address={address}
+						loadingProjects={loadingProjects}
+						onSelectProject={onSelectProject}
+						onGetContracts={onGetContracts}
 					/>}
 				</Layout>
 			}

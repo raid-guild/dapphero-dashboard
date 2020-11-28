@@ -11,15 +11,15 @@ export default function useContracts(wallet: JWKInterface) {
 
     const [contracts, setContracts] = useState<ContractList>({})
 
-    useEffect(() => {
-        const fetchContracts = async () => {
-            const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
-                function: 'getByCreator'
-            })
-            setContracts(data.result)
-        }
-        fetchContracts()
-    }, [arweave, wallet])
+    // useEffect(() => {
+    //     const fetchContracts = async () => {
+    //         const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
+    //             function: 'getByCreator'
+    //         })
+    //         setContracts(data)
+    //     }
+    //     fetchContracts()
+    // }, [arweave, wallet])
 
     const addContract = async (contract: ContractInterface): Promise<string | false> => {
         const contractId = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
@@ -62,5 +62,13 @@ export default function useContracts(wallet: JWKInterface) {
         return tx
     }
 
-    return { contracts, addContract, updateContract, getContract, deleteContract }
+    const getAllContracts = async (): Promise<ContractList> => {
+        const data = await interactRead(arweave, wallet, CONTRACT_ADDRESS, {
+            function: 'getByCreator'
+        })
+        
+        return data
+    }
+
+    return { contracts, addContract, updateContract, getContract, deleteContract, getAllContracts }
 }
