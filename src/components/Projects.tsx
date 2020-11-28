@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { media } from '../components/Breakpoints'
 
 // Components
 import { colors } from '../components/Theme'
@@ -70,7 +71,11 @@ const Table = styled.table`
     border-collapse: collapse;
     margin-top: 5rem;
     overflow: hidden;
-    width: 80rem;
+    width: 60rem;
+
+    ${media.large`
+        width: 80rem;
+    `}
 `
 
 const TableHeadRow = styled.tr`

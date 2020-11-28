@@ -5,24 +5,12 @@ import { colors } from './Theme'
 export const Label = styled.label`
     color: ${colors.black2};
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 500;
     letter-spacing: 1px;
     line-height: 22px;
     margin-bottom: 1rem;
     transition: all .3s ease;
-
-    ${media.small`
-        font-size: 2rem;
-    `}
-
-    ${media.medium`
-        font-size: 1.8rem;
-    `}
-
-    ${media.large`
-        font-size: 1.4rem;
-    `}
 `
 
 export const Input = styled.input`
@@ -31,7 +19,7 @@ export const Input = styled.input`
     border-radius: 5px;
     color: ${colors.grey2};
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 600;
     height: 4rem;
     letter-spacing: 1px;
@@ -40,7 +28,15 @@ export const Input = styled.input`
     outline: none;
     padding: 0 2rem;
     transition: all .3s ease;
-    width: 50%;
+    width: 100%;
+
+    ${media.medium`
+        width: 80%;
+    `}
+
+    ${media.large`
+        width: 50%;
+    `}
 
     &:hover,
     &:active,
@@ -48,18 +44,6 @@ export const Input = styled.input`
         background: rgba(115, 229, 182, .5);
         color: ${colors.black2};
     }
-
-    ${media.small`
-        font-size: 2rem;
-    `}
-
-    ${media.medium`
-        font-size: 1.8rem;
-    `}
-
-    ${media.large`
-        font-size: 1.4rem;
-    `}
 `
 
 export const InputCopy = styled.input`
@@ -68,7 +52,7 @@ export const InputCopy = styled.input`
     border-radius: 5px;
     color: ${colors.grey2};
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
     font-weight: 600;
     height: 4rem;
     letter-spacing: 1px;
@@ -85,10 +69,6 @@ export const InputCopy = styled.input`
         background: rgba(115, 229, 182, .5);
         color: ${colors.black2};
     }
-
-    ${media.large`
-        font-size: 1.1rem;
-    `}
 `
 
 export const Select = styled.select`
@@ -97,7 +77,7 @@ export const Select = styled.select`
     border-radius: 5px;
     color: ${colors.grey2};
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 600;
     height: 4rem;
     letter-spacing: 1px;
@@ -106,7 +86,15 @@ export const Select = styled.select`
     outline: none;
     padding: 0 2rem;
     transition: all .3s ease;
-    width: 50%;
+    width: 100%;
+
+    ${media.medium`
+        width: 80%;
+    `}
+
+    ${media.large`
+        width: 50%;
+    `}
 
     &:hover,
     &:active,
@@ -114,18 +102,6 @@ export const Select = styled.select`
         background: rgba(115, 229, 182, .5);
         color: ${colors.black2};
     }
-
-    ${media.small`
-        font-size: 2rem;
-    `}
-
-    ${media.medium`
-        font-size: 1.8rem;
-    `}
-
-    ${media.large`
-        font-size: 1.4rem;
-    `}
 `
 
 export const TextArea = styled.textarea`
@@ -134,7 +110,7 @@ export const TextArea = styled.textarea`
     border-radius: 5px;
     color: ${colors.grey2};
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 600;
     height: 10rem;
     letter-spacing: 1px;
@@ -143,7 +119,15 @@ export const TextArea = styled.textarea`
     outline: none;
     padding: 1rem 2rem;
     transition: all .3s ease;
-    width: 50%;
+    width: 100%;
+
+    ${media.medium`
+        width: 80%;
+    `}
+
+    ${media.large`
+        width: 50%;
+    `}
 
     &:hover,
     &:active,
@@ -151,16 +135,4 @@ export const TextArea = styled.textarea`
         background: rgba(115, 229, 182, .5);
         color: ${colors.black2};
     }
-
-    ${media.small`
-        font-size: 2rem;
-    `}
-
-    ${media.medium`
-        font-size: 1.8rem;
-    `}
-
-    ${media.large`
-        font-size: 1.4rem;
-    `}
 `

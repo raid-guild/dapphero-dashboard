@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Arweave from 'arweave';
 import { JWKInterface } from 'arweave/node/lib/wallet';
 import useProjects from './hooks/useProjects'
+import { media } from './components/Breakpoints'
 
 // Components
 import Header from './components/Header'
@@ -114,6 +115,10 @@ export default App;
 
 const Layout = styled.div`
 	display: grid;
-	grid-template-columns: 30rem auto;
+	grid-template-columns: 25rem auto;
 	grid-template-rows: 12rem auto;
+
+	${media.medium`
+		grid-template-columns: 30rem auto;
+    `}
 `

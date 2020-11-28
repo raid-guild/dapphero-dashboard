@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { media } from '../components/Breakpoints'
 
 // Components
 import NavigationGroup from './NavigationGroup'
@@ -45,8 +46,12 @@ const NavigationContainer = styled.div`
     grid-column: 1 / 2;
     gird-row: 1 / -1;
     position: fixed;
-    width: 30rem;
+    width: 25rem;
     z-index: 99;
+
+    ${media.medium`
+        width: 30rem;
+    `}
 `
 
 const LogoContainer = styled.div`
