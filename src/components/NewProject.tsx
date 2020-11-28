@@ -8,9 +8,10 @@ import { ButtonAction, ButtonAction2 } from '../components/Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, InputCopy, Select, TextArea } from './Form'
 import { colors } from '../components/Theme'
-import { H3, P1 } from '../components/Typography'
+import { H3, P1, P2 } from '../components/Typography'
 
 const NewProjects: React.FC<any> = ({
+    contractsArray,
     displayProject,
     wallet,
 }) => {
@@ -32,6 +33,8 @@ const NewProjects: React.FC<any> = ({
         if (newProject.id === undefined) {
             setIsNew(true)
         }
+        console.log(newProject)
+
     }, [newProject])
 
     const onAddNewProject = () => {
@@ -63,7 +66,6 @@ const NewProjects: React.FC<any> = ({
             ...prev,
             [e.target.id]: e.target.value
         }))
-        console.log(newProject)
     }
 
     const onCopy = () => {
@@ -74,6 +76,19 @@ const NewProjects: React.FC<any> = ({
             copyText.setSelectionRange(0, 99999); /*For mobile devices*/
             document.execCommand("copy");
             setIsCopied(true)
+        }
+    }
+
+    const onAddContract = () => {
+        let e = document.getElementById('contract') as HTMLInputElement
+        let newContractsArray = newProject.contracts
+        newContractsArray.push(e.value)
+        console.log(newContractsArray)
+        if (e !== null) {
+            setNewProject((prev: any) => ({
+                ...prev,
+                contracts: newContractsArray
+            }))
         }
     }
 
@@ -127,7 +142,7 @@ const NewProjects: React.FC<any> = ({
                     <CardContainer>
                         <P1 color={colors.grey2}>Select a network for your project, followed by one or more smart contracts deployed on that network.</P1>
                         <br/>
-                        <Label htmlFor="network">Select a project network:</Label>
+                        <Label htmlFor="network">Select a project Network:</Label>
                         <Select defaultValue={newProject.network} onChange={handleOnChange} name="network" id="network">
                             <option value="">choose an option</option>
                             <option value="rinkeby">rinkeby</option>
@@ -138,6 +153,23 @@ const NewProjects: React.FC<any> = ({
                             <option value="xDai">xDai</option>
                             <option value="maticMumbaiTestnet">maticMumbaiTestnet</option>
                         </Select>
+                        <P2 style={{marginTop: '-2rem'}} color={colors.grey2}>A project can have only one network.</P2>
+                        <br />
+                        <br />
+                        <Label htmlFor="contract">Add Smart Contract:</Label>
+                        <Select onChange={handleOnChange} name="contract" id="contract">
+                            <option>choose an option</option>
+                            {contractsArray.filter((contract: { network: any }) => contract.network === newProject.network).map((contract: any, index: any) => {
+                                return <option key={index} value={contract.id}>{contract.name}</option>
+                            })}
+                        </Select>
+                        <ButtonAction onClick={onAddContract}>Add +</ButtonAction>
+                        <br />
+                        <P2 color={colors.grey2}>Remember contracts must be deployed on the selected network above.</P2>
+                        <br />
+                        {newProject.contracts.map((contract: React.ReactNode, index: string | number | null | undefined) => {
+                            return <p key={index}>{contract}</p>
+                        })}
                     </CardContainer>
                 </Card>
 

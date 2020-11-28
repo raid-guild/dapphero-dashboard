@@ -82,9 +82,18 @@ export const P1 = styled.p`
     transition: all .3s ease;
     line-height: 22px;
 
-    ${media.large`
-        font-size: 1.6rem;
+    ${props => props.color && css`
+        color: ${props.color};
     `}
+`
+
+export const P2 = styled.p`
+    color: #3c4d4f;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    transition: all .3s ease;
+    line-height: 22px;
 
     ${props => props.color && css`
         color: ${props.color};

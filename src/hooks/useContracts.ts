@@ -1,6 +1,6 @@
 import { interactWrite, interactRead } from 'smartweave'
 import { JWKInterface } from 'arweave/node/lib/wallet'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ContractInterface, ContractList } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 

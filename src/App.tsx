@@ -21,7 +21,7 @@ const TEMP_PROJECT = {
     description: 'My new project description',
     coverImg: 'Test 1 image',
     network: '',
-    contracts: [''],
+    contracts: [],
     creator: '',
     createdAt: '',
     updatedAt: '',
@@ -45,6 +45,7 @@ const App = () => {
 	const [address, setAddress] = React.useState('')
 	const [loadingProjects, setLoadingProject] = React.useState(true)
 	const [router, setRouter] = React.useState('projects')
+	const [contractsArray, setContractsArray] = React.useState<any[]>([])
 	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
 	const [displayProject, setDisplayProject] = React.useState(TEMP_PROJECT)
 	const [wallet, setWallet] = React.useState(null)
@@ -80,8 +81,21 @@ const App = () => {
 				setProjectsArray(newProjectsArray)
 				setLoadingProject(false)
 			})
+
+			getAllContracts().then(result => {
+				let newIdArray: any[] = []
+				let newContractsArray: any[] = []
+				newIdArray = Object.keys(result)
+	
+				Object.keys(result).map(function(key, index) {
+					newContractsArray.push(result[key])
+					newContractsArray[index].id = newIdArray[index]
+					return newContractsArray
+				})
+				setContractsArray(newContractsArray)
+			})
 		}		
-	}, [arweave, getAllProjects, projectsArray, wallet])
+	}, [arweave, getAllContracts, getAllProjects, projectsArray, wallet])
 
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader();
@@ -124,6 +138,7 @@ const App = () => {
 						onSelectProject={onSelectProject}
 					/>}
 					{router === 'project' && <NewProject
+						contractsArray={contractsArray}
 						displayProject={displayProject}
 						setRouter={setRouter}
 						wallet={wallet}

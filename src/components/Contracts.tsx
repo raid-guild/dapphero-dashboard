@@ -13,7 +13,6 @@ const Contracts: React.FC<any> = ({
     loadingProjects,
     onSelectProject,
     projectsArray,
-    setRouter,
     onGetContracts,
 }) => {
 
