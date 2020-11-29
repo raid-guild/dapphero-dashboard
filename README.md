@@ -1,13 +1,17 @@
 # DappHero Dashboard
-Currently deployed at https://arweave.net/HRE7LhR6PzWnRHBZlcGSu3nCGzrQogZfjbaw1tSTXaQ
+Currently deployed at: https://arweave.net/HRE7LhR6PzWnRHBZlcGSu3nCGzrQogZfjbaw1tSTXaQ
+
+## DappHero Core
+Latest core deployment at: https://arweave.net/LLFlLl7dugP4SEGTKvwWWllsBZLAaQLIXiLV729Z_kU
 
 ## Goals
 - [x] Deploy to Arweave
 - [x] Deploy dapphero-core to [Arweave](https://arweave.net/QXLKZsu2DLUonKxDC5j1DR9dZhtp2C2i-NHWHTezbzQ)
-- [ ] Recreate DappHero dashboard
+- [x] Recreate DappHero dashboard
 - [x] Implement hash routing
+- [x] On dapphero-core, replace bubble.io backend with smartweave addresses
 - [ ] Configure new dapphero-core env variables
-- [ ] On dapphero-core, replace bubble.io backend with smartweave addresses
+- [ ] Add subscriptions to transaction statuses
 
 ## Deployed Assets
 - Logo: https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y
