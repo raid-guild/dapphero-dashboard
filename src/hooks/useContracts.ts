@@ -3,11 +3,13 @@ import { JWKInterface } from 'arweave/node/lib/wallet'
 import { useState } from 'react'
 import { ContractInterface, ContractList } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
+import usePST from './usePST'
 
 const CONTRACT_ADDRESS = 'FgnK-IPuHLyQhGS_zQUCj22E0Tom-kFEun8zxaoRme4'
 
 export default function useContracts(wallet: JWKInterface) {
     const arweave = useArweave()
+    const { sendTip } = usePST(wallet)
 
     const [contracts, setContracts] = useState<ContractList>({})
 
@@ -22,6 +24,7 @@ export default function useContracts(wallet: JWKInterface) {
     // }, [arweave, wallet])
 
     const addContract = async (contract: ContractInterface): Promise<string | false> => {
+        await sendTip()
         const contractId = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'create',
             contract
@@ -33,6 +36,7 @@ export default function useContracts(wallet: JWKInterface) {
     }
 
     const updateContract = async (id: string, contract: ContractInterface): Promise<string | false> => {
+        await sendTip()
         const tx = await interactWrite(arweave, wallet, CONTRACT_ADDRESS, {
             function: 'update',
             id,
