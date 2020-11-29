@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { media } from '../components/Breakpoints'
 
 // Components
 import { colors } from '../components/Theme'
 import { ButtonAction } from '../components/Buttons'
 import Spinner from './Spinner'
+import { Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow, Dot} from './Table'
 import { H4, H5, P1 } from '../components/Typography'
 import { Main } from './Containers'
 
@@ -65,54 +65,6 @@ const Projects: React.FC<any> = ({
 }
 
 export default Projects
-
-const Table = styled.table`
-    border-radius: 5px;
-    border-collapse: collapse;
-    margin-top: 5rem;
-    overflow: hidden;
-    width: 60rem;
-
-    ${media.large`
-        width: 80rem;
-    `}
-`
-
-const TableHeadRow = styled.tr`
-    background: ${colors.grey};
-    border: 1px solid ${colors.grey};
-    height: 3.5rem;
-`
-
-const TableBodyRow = styled.tr`
-    border: 1px solid ${colors.grey};
-    border-left: 3px solid ${colors.grey};
-    height: 5rem;
-
-    &:hover {
-        cursor: pointer;
-        border-left: 3px solid ${colors.green};
-    }
-`
-
-const TableHeadCell = styled.th`
-    vertical-align: middle;
-`
-
-const TableBodyCell = styled.th`
-    vertical-align: middle;
-    border: 2px solid ${colors.grey};
-`
-
-const Dot = styled.div`
-    align-self: center;
-    background: ${colors.green};
-    border-radius: 50%;
-    height: .8rem;
-    margin-left: 2rem;
-    margin-right: 1rem;
-    width: .8rem;
-`
 
 const IsLocked = styled.div`
     border: 1px solid ${colors.red};

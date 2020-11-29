@@ -50,7 +50,7 @@ export default function useContracts(wallet: JWKInterface) {
             id
         })
 
-        return data.result
+        return data
     }
 
     const deleteContract = async (id: string): Promise<ContractInterface> => {

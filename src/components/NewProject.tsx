@@ -1,23 +1,29 @@
 // import Arweave from 'arweave';
 import React from 'react'
 import styled from 'styled-components'
+import useContracts from '../hooks/useContracts'
 import useProjects from '../hooks/useProjects'
 
 // Components
 import { ButtonAction, ButtonAction2 } from '../components/Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, InputCopy, Select, TextArea } from './Form'
+import { Table, TableBodyCell, TableBodyRow, Dot} from './Table'
 import { colors } from '../components/Theme'
 import { H3, P1, P2 } from '../components/Typography'
+import Spinner from './Spinner'
 
 const NewProjects: React.FC<any> = ({
     contractsArray,
     displayProject,
     wallet,
 }) => {
+    const { deleteContract,getContract } = useContracts(wallet)
     const { addProject, deleteProject, updateProject } = useProjects(wallet)
     const [ isCopied, setIsCopied ] = React.useState(false)
     const [ isNew, setIsNew ] = React.useState(false)
+    const [contractList, setContractList] = React.useState<any[]>([])
+    const [contractsPending, setContractsPending] = React.useState(false)
     const [newProject, setNewProject] = React.useState(displayProject)
     // const [pending, setPending] = React.useState(false);
     
@@ -33,9 +39,12 @@ const NewProjects: React.FC<any> = ({
         if (newProject.id === undefined) {
             setIsNew(true)
         }
-        console.log(newProject)
 
     }, [newProject])
+
+    React.useEffect(() => {
+        displayContracts()
+    }, [])
 
     const onAddNewProject = () => {
         addProject(newProject)
@@ -81,15 +90,46 @@ const NewProjects: React.FC<any> = ({
 
     const onAddContract = () => {
         let e = document.getElementById('contract') as HTMLInputElement
+
+        if (e.value === '') {
+            return
+        }
+
         let newContractsArray = newProject.contracts
         newContractsArray.push(e.value)
-        console.log(newContractsArray)
         if (e !== null) {
             setNewProject((prev: any) => ({
                 ...prev,
                 contracts: newContractsArray
             }))
+
+            displayContracts()
         }
+    }
+
+    const displayContracts = async () => {
+        setContractsPending(true)
+        let contractsListArray: any[] = []
+
+        for (let i=0; i < newProject.contracts.length; i++) {
+            await getContract(newProject.contracts[i])
+            .then(contract => {
+                let addContractId: any = contract
+                addContractId.id = newProject.contracts[i]
+                contractsListArray.push(addContractId)
+            })
+        }
+
+        setContractList(contractsListArray)
+        setContractsPending(false)
+
+        return
+    }
+
+    const onDeleteContract = async (id: string) => {
+        console.log('deleting')
+        await deleteContract(id)
+        .then(result => console.log(result))
     }
 
     // const subscribeToTransaction = async (transaction: string) => {
@@ -158,7 +198,7 @@ const NewProjects: React.FC<any> = ({
                         <br />
                         <Label htmlFor="contract">Add Smart Contract:</Label>
                         <Select onChange={handleOnChange} name="contract" id="contract">
-                            <option>choose an option</option>
+                            <option value={''}>choose an option</option>
                             {contractsArray.filter((contract: { network: any }) => contract.network === newProject.network).map((contract: any, index: any) => {
                                 return <option key={index} value={contract.id}>{contract.name}</option>
                             })}
@@ -167,9 +207,29 @@ const NewProjects: React.FC<any> = ({
                         <br />
                         <P2 color={colors.grey2}>Remember contracts must be deployed on the selected network above.</P2>
                         <br />
-                        {newProject.contracts.map((contract: React.ReactNode, index: string | number | null | undefined) => {
-                            return <p key={index}>{contract}</p>
+                        {contractList.map((contract: any, index: string | number | null | undefined) => {
+                            return (
+                                <Table>
+                                    <tbody>
+                                        <TableBodyRow key={index}>
+                                            <TableBodyCell>
+                                                <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+                                                    <Dot />
+                                                    <P1 color={colors.black2}>{contract.name}</P1>
+                                                </div>
+                                            </TableBodyCell>
+                                            <TableBodyCell>
+                                                <P1 color={colors.green}>{contract.deployedAddress.slice(0, 10)}...</P1>
+                                            </TableBodyCell>
+                                            <TableBodyCell onClick={onDeleteContract.bind(this, contract.id)}>
+                                                <P1 color={colors.red}>Delete</P1>
+                                            </TableBodyCell>
+                                        </TableBodyRow>
+                                    </tbody>
+                                </Table>
+                            )
                         })}
+                        {contractsPending && <Spinner />}
                     </CardContainer>
                 </Card>
 
