@@ -1,14 +1,14 @@
 import React from 'react'
-import styled from 'styled-components'
 
 // Hooks
 import useContracts from '../hooks/useContracts'
 import useProjects from '../hooks/useProjects'
 
 // Components
-import { ButtonAction, ButtonAction2 } from './Buttons'
+import { ButtonAction1, ButtonAction2, ButtonsContainer1, ButtonsContainer2 } from './Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, InputCopy, Select, TextArea } from './Form'
+import Line from './Line'
 import Spinner from './Spinner'
 import { Table, TableBodyCell, TableBodyRow, Dot} from './Table'
 import { colors } from './Theme'
@@ -40,23 +40,25 @@ const AddProject: React.FC<any> = ({
         displayContracts()
     }, [])
 
-    const onAddNewProject = () => {
+    const onAddNewProject = async () => {
         console.log('Saving...')
-        addProject(newProject)
-        .then(id => console.log(id))
+        const id = await addProject(newProject)
+        console.log(id)
     }
 
-    const onDeleteProject = () => {
-        deleteProject(newProject.id)
-        .then(id => console.log(id))
+    const onDeleteProject = async () => {
+        console.log('Deleting...')
+        const id = await deleteProject(newProject.id)
+        console.log(id)
     }
 
-    const onUpdateProject = () => {
+    const onUpdateProject = async () => {
+        console.log('Updating...')
         if (displayProject === newProject) {
             console.log('Nothing happened!')
         } else {
-            updateProject(displayProject.id, newProject)
-            .then(id => console.log(id))
+            const id = await updateProject(displayProject.id, newProject)
+            console.log(id)
         }
     }
 
@@ -191,13 +193,13 @@ const AddProject: React.FC<any> = ({
                                 return <option key={index} value={contract.id}>{contract.name}</option>
                             })}
                         </Select>
-                        <ButtonAction onClick={onAddContract}>Add +</ButtonAction>
+                        <ButtonAction1 onClick={onAddContract}>Add +</ButtonAction1>
                         <br />
                         <P2 color={colors.grey2}>Remember contracts must be deployed on the selected network above.</P2>
                         <br />
                             <Table>
                                 <tbody>
-                                {contractList.map((contract: any, index: string | number) => {
+                                {contractsArray.map((contract: any, index: string | number) => {
                                     return (
                                         <TableBodyRow key={index}>
                                             <TableBodyCell>
@@ -250,7 +252,7 @@ const AddProject: React.FC<any> = ({
                             required
                             value={`<script src="https://package.dapphero.io/main.js" id="dh-apiKey" data-api="${newProject.id}"></script>`}
                         />
-                        <ButtonAction onClick={onCopy}>{!isCopied ? 'Copy' : 'Copied!'}</ButtonAction>
+                        <ButtonAction1 onClick={onCopy}>{!isCopied ? 'Copy' : 'Copied!'}</ButtonAction1>
                     </CardContainer>)}
                 </Card>
 
@@ -276,8 +278,8 @@ const AddProject: React.FC<any> = ({
                 </Card>
                 
                 <ButtonsContainer2>
-                    <ButtonAction onClick={!isNew ? onUpdateProject : onAddNewProject}>Save</ButtonAction>
-                    {!isNew && (!newProject.isPaused && <ButtonAction color={colors.red} onClick={onDeleteProject}>Delete</ButtonAction>)}
+                    <ButtonAction1 onClick={!isNew ? onUpdateProject : onAddNewProject}>Save</ButtonAction1>
+                    {!isNew && (!newProject.isPaused && <ButtonAction1 color={colors.red} onClick={onDeleteProject}>Delete</ButtonAction1>)}
                 </ButtonsContainer2>
             </Main>
         </>
@@ -286,21 +288,3 @@ const AddProject: React.FC<any> = ({
 
 export default AddProject
 
-const Line = styled.hr`
-    border-bottom: 1px solid ${colors.grey};
-    opacity: .15;
-    width: 100%;
-    padding-bottom: 5rem;
-`
-
-const ButtonsContainer1 = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 22rem;
-`
-
-const ButtonsContainer2 = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 28rem;
-`

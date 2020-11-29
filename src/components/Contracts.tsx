@@ -5,7 +5,7 @@ import { media } from '../components/Breakpoints'
 // Components
 import { colors } from '../components/Theme'
 import { Main } from './Containers'
-import { ButtonAction } from '../components/Buttons'
+import { ButtonAction1 } from '../components/Buttons'
 import Spinner from './Spinner'
 import { H4, H5, P1 } from '../components/Typography'
 
@@ -18,7 +18,7 @@ const Contracts: React.FC<any> = ({
     return (
         <Main background={colors.white}>
             <H4>The Contracts tab offers you a quick overview of the contracts you have associated with your DappHero Account. Once you create a contract here, you will be able to use it in an of your DappHero projects.</H4>
-            <ButtonAction onClick={onSelectContract.bind(this, 'default')}>New +</ButtonAction>
+            <ButtonAction1 onClick={onSelectContract.bind(this, 'default')}>New +</ButtonAction1>
             {!loadingData && <Table>
                 <thead>
                     <TableHeadRow>

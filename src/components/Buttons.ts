@@ -23,7 +23,7 @@ export const ButtonLink = styled.button`
     }
 `
 
-export const ButtonAction = styled.button`
+export const ButtonAction1 = styled.button`
     background: ${colors.green};
     border: none;
     border-radius: 4px;
@@ -71,6 +71,12 @@ export const ButtonAction2 = styled.button<ButtonAction2Props>`
         color: ${colors.white};
         border: 1px solid transparent;
     `}
+`
+
+export const ButtonsContainer1 = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 22rem;
 `
 
 export const ButtonsContainer2 = styled.div`

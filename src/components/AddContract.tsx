@@ -4,7 +4,7 @@ import React from 'react'
 import useContracts from '../hooks/useContracts'
 
 // Components
-import { ButtonAction, ButtonAction2, ButtonsContainer2 } from './Buttons'
+import { ButtonAction1, ButtonAction2, ButtonsContainer2 } from './Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, Select, TextArea } from './Form'
 import Line from './Line'
@@ -142,8 +142,8 @@ const AddContract: React.FC<any> = ({
                 </Card>
 
                 <ButtonsContainer2>
-                    <ButtonAction onClick={!isNew ? onUpdateContract : onAddNewContract}>Save</ButtonAction>
-                    {!isNew && (!newContract.isPaused && <ButtonAction color={colors.red} onClick={onDeleteContract}>Delete</ButtonAction>)}
+                    <ButtonAction1 onClick={!isNew ? onUpdateContract : onAddNewContract}>Save</ButtonAction1>
+                    {!isNew && (!newContract.isPaused && <ButtonAction1 color={colors.red} onClick={onDeleteContract}>Delete</ButtonAction1>)}
                 </ButtonsContainer2>
             </Main>
         </>

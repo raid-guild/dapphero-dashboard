@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 // Components
 import { colors } from '../components/Theme'
-import { ButtonAction } from '../components/Buttons'
+import { ButtonAction1 } from '../components/Buttons'
 import Spinner from './Spinner'
 import { Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow, Dot} from './Table'
 import { H4, H5, P1 } from '../components/Typography'
@@ -19,7 +19,7 @@ const Projects: React.FC<any> = ({
     return (
         <Main background={colors.white}>
             <H4>Functionality in DappHero is built around projects. Contract, Networks, and other features belong to an individual project, and this project becomes available on your website via script tag.</H4>
-            <ButtonAction onClick={onSelectProject.bind(this, 'default')}>New +</ButtonAction>
+            <ButtonAction1 onClick={onSelectProject.bind(this, 'default')}>New +</ButtonAction1>
             {!loadingData && <Table>
                 <thead>
                     <TableHeadRow>
