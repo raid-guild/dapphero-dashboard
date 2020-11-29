@@ -1,9 +1,10 @@
 import React from 'react'
 import { JWKInterface } from 'arweave/node/lib/wallet'
-import styled from 'styled-components'
 
+// Consts
 import { DEFAULT_CONTRACT, DEFAULT_PROJECT} from './consts'
-import { media } from './components/Breakpoints'
+
+// Hooks
 import useArweave from './hooks/useArweave'
 import useContracts from './hooks/useContracts'
 import useProjects from './hooks/useProjects'
@@ -13,6 +14,7 @@ import AddContract from './components/AddContract'
 import AddProject from './components/AddProject'
 import Contracts from './components/Contracts'
 import Header from './components/Header'
+import Layout from './components/Layout'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
 import Projects from './components/Projects'
@@ -30,8 +32,9 @@ const App = () => {
 	const [contractsArray, setContractsArray] = React.useState<any[]>([])
 	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
 
-	const [loadingData, setLoadingData] = React.useState(true)
+	const [loadingData, setLoadingData] = React.useState<boolean>(true)
 
+	// Hooks
 	const arweave = useArweave()
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
 	const { getAllContracts } = useContracts(wallet! as JWKInterface)
@@ -60,9 +63,7 @@ const App = () => {
 		if (wallet) {
 			setInitialState();
 		}
-		return () => {
-			console.log("unsubscribe")
-		}
+		return
 	}, [setInitialState, wallet])
 
 	// Upload wallet
@@ -114,9 +115,7 @@ const App = () => {
 					{router === 'project' && <AddProject
 						contractsArray={contractsArray}
 						displayProject={displayProject}
-						setRouter={setRouter}
 						wallet={wallet}
-						address={address}
 					/>}
 					{router === 'contracts' && <Contracts
 						projectsArray={projectsArray}
@@ -126,11 +125,8 @@ const App = () => {
 						contractsArray={contractsArray}
 					/>}
 					{router === 'contract' && <AddContract
-						contractsArray={contractsArray}
 						displayContract={displayContract}
-						setRouter={setRouter}
 						wallet={wallet}
-						address={address}
 					/>}
 				</Layout>)
 			}
@@ -139,13 +135,3 @@ const App = () => {
 }
 
 export default App;
-
-const Layout = styled.div`
-	display: grid;
-	grid-template-columns: 25rem auto;
-	grid-template-rows: 12rem auto;
-
-	${media.medium`
-		grid-template-columns: 30rem auto;
-    `}
-`

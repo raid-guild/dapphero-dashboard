@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components'
 import { colors, shadows } from './Theme'
 
+// Types
+interface ButtonAction2Props {
+    active?: boolean;
+}
+
 export const ButtonLink = styled.button`
     border: none;
     border-radius: 4px;
@@ -45,7 +50,7 @@ export const ButtonAction = styled.button`
     `}
 `
 
-export const ButtonAction2 = styled.button`
+export const ButtonAction2 = styled.button<ButtonAction2Props>`
     border: 1px solid ${colors.grey2};
     background: ${colors.white};
     border-radius: 4px;
@@ -61,9 +66,15 @@ export const ButtonAction2 = styled.button`
         cursor: pointer;
     }
 
-    ${props => props.color && css`
+    ${props => props.active && css`
         background: ${colors.green};
         color: ${colors.white};
         border: 1px solid transparent;
     `}
+`
+
+export const ButtonsContainer2 = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 28rem;
 `

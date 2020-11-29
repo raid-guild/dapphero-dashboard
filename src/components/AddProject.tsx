@@ -1,6 +1,7 @@
-// import Arweave from 'arweave';
 import React from 'react'
 import styled from 'styled-components'
+
+// Hooks
 import useContracts from '../hooks/useContracts'
 import useProjects from '../hooks/useProjects'
 
@@ -8,23 +9,25 @@ import useProjects from '../hooks/useProjects'
 import { ButtonAction, ButtonAction2 } from './Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, InputCopy, Select, TextArea } from './Form'
+import Spinner from './Spinner'
 import { Table, TableBodyCell, TableBodyRow, Dot} from './Table'
 import { colors } from './Theme'
 import { H3, P1, P2 } from './Typography'
-import Spinner from './Spinner'
 
 const AddProject: React.FC<any> = ({
     contractsArray,
     displayProject,
     wallet,
 }) => {
+    const [ isCopied, setIsCopied ] = React.useState<boolean>(false)
+    const [ isNew, setIsNew ] = React.useState<boolean>(false)
+    const [ contractList, setContractList ] = React.useState<any[]>([])
+    const [ contractsPending, setContractsPending ] = React.useState<boolean>(false)
+    const [ newProject, setNewProject ] = React.useState(displayProject)
+
+    // Hooks
     const { getContract } = useContracts(wallet)
     const { addProject, deleteProject, updateProject } = useProjects(wallet)
-    const [ isCopied, setIsCopied ] = React.useState(false)
-    const [ isNew, setIsNew ] = React.useState(false)
-    const [contractList, setContractList] = React.useState<any[]>([])
-    const [contractsPending, setContractsPending] = React.useState(false)
-    const [newProject, setNewProject] = React.useState(displayProject)
 
     React.useEffect(() => {
         if (newProject.id === undefined) {

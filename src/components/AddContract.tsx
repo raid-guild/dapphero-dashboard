@@ -1,12 +1,13 @@
-// import Arweave from 'arweave';
 import React from 'react'
-import styled from 'styled-components'
+
+// Hooks
 import useContracts from '../hooks/useContracts'
 
 // Components
-import { ButtonAction, ButtonAction2 } from './Buttons'
+import { ButtonAction, ButtonAction2, ButtonsContainer2 } from './Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, Select, TextArea } from './Form'
+import Line from './Line'
 import { colors } from './Theme'
 import { H3, P1 } from './Typography'
 
@@ -14,44 +15,50 @@ const AddContract: React.FC<any> = ({
     displayContract,
     wallet,
 }) => {
-    const { addContract, deleteContract, updateContract } = useContracts(wallet)
-    const [ isNew, setIsNew ] = React.useState(false)
+    const [ isNew, setIsNew ] = React.useState<boolean>(false)
     const [ newContract, setNewContract ] = React.useState(displayContract)
+
+    // Hooks
+    const { addContract, deleteContract, updateContract } = useContracts(wallet)
 
     React.useEffect(() => {
         if (newContract.id === undefined) {
             setIsNew(true)
         }
-
+        return
     }, [newContract])
 
-    const onAddNewContract = () => {
+    // Add new contract
+    const onAddNewContract = async () => {
         console.log('Adding...')
-        addContract(newContract)
-        .then(id => console.log(id))
+        const id = await addContract(newContract)
+        console.log('Transaction ID:', id)
     }
 
-    const onDeleteContract = () => {
+    // Delete contract
+    const onDeleteContract = async () => {
         console.log('Deleting...')
-        deleteContract(newContract.id)
-        .then(id => console.log(id))
+        const id = await deleteContract(newContract.id)
+        console.log('Transaction ID:', id)
     }
 
-    const onUpdateContract = () => {
+    // Update contract
+    const onUpdateContract = async () => {
         if (displayContract === newContract) {
-            console.log('Nothing happened!')
+            console.log('No changes were made. Contract did not update.')
         } else {
             console.log('Updating...')
-            updateContract(displayContract.id, newContract)
-            .then(id => console.log(id))
+            const id = await updateContract(displayContract.id, newContract)
+            console.log('Transaction ID:', id)
         }
     }
 
+    // Handle changes to contract details
     const handleOnChange = (e: any) => {
         if (newContract.isLocked) {
             return
         }
-        
+
         e.persist()
         setNewContract((prev: any) => ({
             ...prev,
@@ -130,7 +137,7 @@ const AddContract: React.FC<any> = ({
                         <P1 color={colors.grey2}>To prevent accidental contract deletion you can lock it here.</P1>
                         <br/>
 
-                        <ButtonAction2 color={newContract.isLocked} onClick={() => setNewContract((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newContract.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
+                        <ButtonAction2 active={newContract.isLocked} onClick={() => setNewContract((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newContract.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
                     </CardContainer>
                 </Card>
 
@@ -144,16 +151,3 @@ const AddContract: React.FC<any> = ({
 }
 
 export default AddContract
-
-const Line = styled.hr`
-    border-bottom: 1px solid ${colors.grey};
-    opacity: .15;
-    width: 100%;
-    padding-bottom: 5rem;
-`
-
-const ButtonsContainer2 = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 28rem;
-`
