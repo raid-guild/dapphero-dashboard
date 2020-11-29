@@ -5,15 +5,15 @@ import useContracts from '../hooks/useContracts'
 import useProjects from '../hooks/useProjects'
 
 // Components
-import { ButtonAction, ButtonAction2 } from '../components/Buttons'
+import { ButtonAction, ButtonAction2 } from './Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, InputCopy, Select, TextArea } from './Form'
 import { Table, TableBodyCell, TableBodyRow, Dot} from './Table'
-import { colors } from '../components/Theme'
-import { H3, P1, P2 } from '../components/Typography'
+import { colors } from './Theme'
+import { H3, P1, P2 } from './Typography'
 import Spinner from './Spinner'
 
-const NewProjects: React.FC<any> = ({
+const AddProject: React.FC<any> = ({
     contractsArray,
     displayProject,
     wallet,
@@ -25,15 +25,6 @@ const NewProjects: React.FC<any> = ({
     const [contractList, setContractList] = React.useState<any[]>([])
     const [contractsPending, setContractsPending] = React.useState(false)
     const [newProject, setNewProject] = React.useState(displayProject)
-    // const [pending, setPending] = React.useState(false);
-    
-    // const arweave = Arweave.init({
-	// 	host: 'arweave.net',
-	// 	port: 443,
-	// 	protocol: 'https',
-	// 	timeout: 20000,
-	// 	logging: false,
-	// });
 
     React.useEffect(() => {
         if (newProject.id === undefined) {
@@ -131,18 +122,6 @@ const NewProjects: React.FC<any> = ({
         await deleteContract(id)
         .then(result => console.log(result))
     }
-
-    // const subscribeToTransaction = async (transaction: string) => {
-    //     setPending(true)
-	// 	arweave.transactions.getStatus(transaction).then(status => {
-	// 		if (status.confirmed == null) {
-	// 			setTimeout(() => subscribeToTransaction(transaction), 10000);
-	// 		} else {
-    //             setPending(false)
-	// 			console.log('Transaction confirmed: ', transaction);
-	// 		}
-	// 	})
-	// }
     
     return (
         <>
@@ -295,7 +274,7 @@ const NewProjects: React.FC<any> = ({
     )
 }
 
-export default NewProjects
+export default AddProject
 
 const Line = styled.hr`
     border-bottom: 1px solid ${colors.grey};

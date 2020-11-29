@@ -7,11 +7,12 @@ import useProjects from './hooks/useProjects'
 import { media } from './components/Breakpoints'
 
 // Components
+import AddContract from './components/AddContract'
+import AddProject from './components/AddProject'
 import Contracts from './components/Contracts'
 import Header from './components/Header'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
-import NewProject from './components/NewProject'
 import Projects from './components/Projects'
 import { NetworkType } from '../smartweave/interfaces'
 
@@ -30,10 +31,10 @@ const TEMP_PROJECT = {
 }
 
 const TEMP_CONTRACT = {
-	name: 'Counter Contract',
-	description: 'Test counter contract description',
-	network: 'rinkeby' as NetworkType,
-	deployedAddress: '0xBAfEFAf4E108e3EFEFE40A510ABAf64B90848d94',
+	name: 'newContract',
+	description: 'My new contract description',
+	network: '',
+	deployedAddress: '0x0000000000000000000000000000000000000000',
 	abi: '',
 	creator: '',
 	createdAt: new Date().toUTCString(),
@@ -48,6 +49,7 @@ const App = () => {
 	const [contractsArray, setContractsArray] = React.useState<any[]>([])
 	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
 	const [displayProject, setDisplayProject] = React.useState(TEMP_PROJECT)
+	const [displayContract, setDisplayContract] = React.useState(TEMP_CONTRACT)
 	const [wallet, setWallet] = React.useState(null)
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
 	const { getAllContracts, addContract } = useContracts(wallet! as JWKInterface)
@@ -60,19 +62,17 @@ const App = () => {
 		logging: false,     // Enable network request logging
 	});
 
-	React.useEffect(() => {
+	const experimentFunction = React.useCallback(() => {
 		const getAddress = async () => {
 			setAddress(await arweave.wallets.jwkToAddress(wallet! as JWKInterface));
 		}
-
+		getAddress();
 		if (wallet) {
-			getAddress();
-
 			getAllProjects().then(result => {
 				let newIdArray: any[] = []
 				let newProjectsArray: any[] = []
 				newIdArray = Object.keys(result)
-	
+
 				Object.keys(result).map(function(key, index) {
 					newProjectsArray.push(result[key])
 					newProjectsArray[index].id = newIdArray[index]
@@ -86,7 +86,7 @@ const App = () => {
 				let newIdArray: any[] = []
 				let newContractsArray: any[] = []
 				newIdArray = Object.keys(result)
-	
+
 				Object.keys(result).map(function(key, index) {
 					newContractsArray.push(result[key])
 					newContractsArray[index].id = newIdArray[index]
@@ -94,8 +94,12 @@ const App = () => {
 				})
 				setContractsArray(newContractsArray)
 			})
-		}		
-	}, [arweave, getAllContracts, getAllProjects, projectsArray, wallet])
+		}	
+	}, [arweave, getAllContracts, getAllProjects, wallet])
+
+	React.useEffect(() => {
+		experimentFunction()		
+	}, [experimentFunction])
 
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader();
@@ -116,11 +120,13 @@ const App = () => {
 		}
 	}
 
-	const onGetContracts = () => {
-		getAllContracts().then(result => {
-			console.log(result)
-		})
-		// addContract(TEMP_CONTRACT).then(result => console.log(result))
+	const onSelectContract = (contract: any) => {
+		setRouter('contract')
+		if (contract === 'default') {
+			setDisplayContract(TEMP_CONTRACT)
+		} else  {
+			setDisplayContract(contract)
+		}
 	}
 
 	return (
@@ -137,7 +143,7 @@ const App = () => {
 						loadingProjects={loadingProjects}
 						onSelectProject={onSelectProject}
 					/>}
-					{router === 'project' && <NewProject
+					{router === 'project' && <AddProject
 						contractsArray={contractsArray}
 						displayProject={displayProject}
 						setRouter={setRouter}
@@ -148,8 +154,15 @@ const App = () => {
 						projectsArray={projectsArray}
 						setRouter={setRouter} address={address}
 						loadingProjects={loadingProjects}
-						onSelectProject={onSelectProject}
-						onGetContracts={onGetContracts}
+						onSelectContract={onSelectContract}
+						contractsArray={contractsArray}
+					/>}
+					{router === 'contract' && <AddContract
+						contractsArray={contractsArray}
+						displayContract={displayContract}
+						setRouter={setRouter}
+						wallet={wallet}
+						address={address}
 					/>}
 				</Layout>
 			}

@@ -11,23 +11,22 @@ import { Main } from './Containers'
 
 const Contracts: React.FC<any> = ({
     loadingProjects,
-    onSelectProject,
-    projectsArray,
-    onGetContracts,
+    onSelectContract,
+    contractsArray,
 }) => {
 
     return (
         <Main background={colors.white}>
-            <H4>Functionality in DappHero is built around projects. Contract, Networks, and other features belong to an individual project, and this project becomes available on your website via script tag.</H4>
-            <ButtonAction onClick={onSelectProject.bind(this, 'default')}>New +</ButtonAction>
+            <H4>The Contracts tab offers you a quick overview of the contracts you have associated with your DappHero Account. Once you create a contract here, you will be able to use it in an of your DappHero projects.</H4>
+            <ButtonAction onClick={onSelectContract.bind(this, 'default')}>New +</ButtonAction>
             {!loadingProjects && <Table>
                 <thead>
                     <TableHeadRow>
                         <TableHeadCell>
-                            <H5>Project Name</H5>
+                            <H5>Contract Name</H5>
                         </TableHeadCell>
                         <TableHeadCell>
-                            <H5>Project ID</H5>
+                            <H5>Address</H5>
                         </TableHeadCell>
                         <TableHeadCell>
                             <H5>Network</H5>
@@ -38,29 +37,28 @@ const Contracts: React.FC<any> = ({
                     </TableHeadRow>
                 </thead>
                 <tbody>
-                    {projectsArray.map((project: { name: React.ReactNode; id: string | any[]; network: React.ReactNode; isLocked: any }, index: string | number | null | undefined) => {
+                    {contractsArray.map((contract: { name: React.ReactNode; deployedAddress: string; network: React.ReactNode; isLocked: any }, index: string | number | null | undefined) => {
                         return(
-                            <TableBodyRow key={index} onClick={onSelectProject.bind(this, project)}>
+                            <TableBodyRow key={index} onClick={onSelectContract.bind(this, contract)}>
                                 <TableBodyCell>
                                     <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                                         <Dot />
-                                        <P1 color={colors.black2}>{project.name}</P1>
+                                        <P1 color={colors.black2}>{contract.name}</P1>
                                     </div>
                                 </TableBodyCell>
                                 <TableBodyCell>
-                                    <P1 color={colors.green}>{project.id.slice(0, 10)}...</P1>
+                                    <P1 color={colors.green}>{contract.deployedAddress.slice(0, 10)}...</P1>
                                 </TableBodyCell>
                                 <TableBodyCell>
-                                    <P1 color={colors.red}>{project.network ? project.network : 'missing'}</P1>
+                                    <P1 color={colors.red}>{contract.network ? contract.network : 'missing'}</P1>
                                 </TableBodyCell>
-                                <TableBodyCell>{project.isLocked ? 'Locked' : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
+                                <TableBodyCell>{contract.isLocked ? 'Locked' : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
                             </TableBodyRow>
                         )
                     })}
                 </tbody>
             </Table>}
             {loadingProjects && <Spinner />}
-            <button onClick={onGetContracts}>Get contracts</button>
         </Main>
     )
 }
