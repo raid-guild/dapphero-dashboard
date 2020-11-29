@@ -10,7 +10,7 @@ import { H4, H5, P1 } from '../components/Typography'
 import { Main } from './Containers'
 
 const Projects: React.FC<any> = ({
-    loadingProjects,
+    loadingData,
     onSelectProject,
     projectsArray,
     setRouter,
@@ -20,7 +20,7 @@ const Projects: React.FC<any> = ({
         <Main background={colors.white}>
             <H4>Functionality in DappHero is built around projects. Contract, Networks, and other features belong to an individual project, and this project becomes available on your website via script tag.</H4>
             <ButtonAction onClick={onSelectProject.bind(this, 'default')}>New +</ButtonAction>
-            {!loadingProjects && <Table>
+            {!loadingData && <Table>
                 <thead>
                     <TableHeadRow>
                         <TableHeadCell>
@@ -59,7 +59,7 @@ const Projects: React.FC<any> = ({
                     })}
                 </tbody>
             </Table>}
-            {loadingProjects && <Spinner />}
+            {loadingData && <Spinner />}
         </Main>
     )
 }

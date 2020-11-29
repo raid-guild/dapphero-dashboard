@@ -1,10 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
-import Arweave from 'arweave'
 import { JWKInterface } from 'arweave/node/lib/wallet'
+import styled from 'styled-components'
+
+import { DEFAULT_CONTRACT, DEFAULT_PROJECT} from './consts'
+import { media } from './components/Breakpoints'
+import useArweave from './hooks/useArweave'
 import useContracts from './hooks/useContracts'
 import useProjects from './hooks/useProjects'
-import { media } from './components/Breakpoints'
 
 // Components
 import AddContract from './components/AddContract'
@@ -15,87 +17,55 @@ import Login from './components/Login'
 import Navigation from './components/Navigation'
 import Projects from './components/Projects'
 
-
-const TEMP_PROJECT = {
-    name: 'myProjectName',
-    description: 'My new project description',
-    coverImg: 'Test 1 image',
-    network: '',
-    contracts: [],
-    creator: '',
-    createdAt: '',
-    updatedAt: '',
-    isPaused: false,
-    isLocked: false,
-}
-
-const TEMP_CONTRACT = {
-	name: 'newContract',
-	description: 'My new contract description',
-	network: '',
-	deployedAddress: '0x0000000000000000000000000000000000000000',
-	abi: '[]',
-	creator: '',
-	createdAt: new Date().toUTCString(),
-	updatedAt: new Date().toUTCString(),
-	isLocked: false
-}
+// Helpers
+import { addIdsToArrary } from './helpers'
 
 const App = () => {
-	const [address, setAddress] = React.useState('')
-	const [loadingProjects, setLoadingProject] = React.useState(true)
-	const [router, setRouter] = React.useState('projects')
+	const [address, setAddress] = React.useState<string>('')
+	const [router, setRouter] = React.useState<string>('projects')
+	const [wallet, setWallet] = React.useState<JWKInterface | null>(null)
+
+	const [displayContract, setDisplayContract] = React.useState(DEFAULT_CONTRACT)
+	const [displayProject, setDisplayProject] = React.useState(DEFAULT_PROJECT)
 	const [contractsArray, setContractsArray] = React.useState<any[]>([])
 	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
-	const [displayProject, setDisplayProject] = React.useState(TEMP_PROJECT)
-	const [displayContract, setDisplayContract] = React.useState(TEMP_CONTRACT)
-	const [wallet, setWallet] = React.useState(null)
+
+	const [loadingData, setLoadingData] = React.useState(true)
+
+	const arweave = useArweave()
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
 	const { getAllContracts } = useContracts(wallet! as JWKInterface)
-	
-	const arweave = Arweave.init({
-		host: 'arweave.net',// Hostname or IP address for a Arweave host
-		port: 443,          // Port
-		protocol: 'https',  // Network protocol http or https
-		timeout: 20000,     // Network request timeouts in milliseconds
-		logging: false,     // Enable network request logging
-	});
 
-	React.useEffect(() => {
-		const getAddress = async () => {
+	const setInitialState = React.useCallback(
+		async () => {
 			setAddress(await arweave.wallets.jwkToAddress(wallet! as JWKInterface));
-		}
+
+			// Grabs all user projects from smartweave contract
+			const projectsResult = await getAllProjects()
+			const newProjectsArray = addIdsToArrary(projectsResult)
+			setProjectsArray(newProjectsArray)
+
+			// Grabs all user contracts from smartweave contract
+			const contractsResult = await getAllContracts()
+			const newContractsArray = addIdsToArrary(contractsResult)
+			setContractsArray(newContractsArray)
+
+			setLoadingData(false)
+		},
+		[arweave, getAllContracts, getAllProjects, wallet],
+	)
+
+	// Load initial State
+	React.useEffect(() => {
 		if (wallet) {
-			getAddress();
-			getAllProjects().then(result => {
-				let newIdArray: any[] = []
-				let newProjectsArray: any[] = []
-				newIdArray = Object.keys(result)
-
-				Object.keys(result).map(function(key, index) {
-					newProjectsArray.push(result[key])
-					newProjectsArray[index].id = newIdArray[index]
-					return newProjectsArray
-				})
-				setProjectsArray(newProjectsArray)
-				setLoadingProject(false)
-			})
-
-			getAllContracts().then(result => {
-				let newIdArray: any[] = []
-				let newContractsArray: any[] = []
-				newIdArray = Object.keys(result)
-
-				Object.keys(result).map(function(key, index) {
-					newContractsArray.push(result[key])
-					newContractsArray[index].id = newIdArray[index]
-					return newContractsArray
-				})
-				setContractsArray(newContractsArray)
-			})
+			setInitialState();
 		}
-	}, [arweave, getAllContracts, getAllProjects, wallet])
+		return () => {
+			console.log("unsubscribe")
+		}
+	}, [setInitialState, wallet])
 
+	// Upload wallet
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader();
 		fileReader.onload = async (e) => {
@@ -106,19 +76,21 @@ const App = () => {
 		}
 	}
 
+	// Open Project component
 	const onSelectProject = (project: any) => {
 		setRouter('project')
 		if (project === 'default') {
-			setDisplayProject(TEMP_PROJECT)
+			setDisplayProject(DEFAULT_PROJECT)
 		} else  {
 			setDisplayProject(project)
 		}
 	}
 
+	// Open Contract component
 	const onSelectContract = (contract: any) => {
 		setRouter('contract')
 		if (contract === 'default') {
-			setDisplayContract(TEMP_CONTRACT)
+			setDisplayContract(DEFAULT_CONTRACT)
 		} else  {
 			setDisplayContract(contract)
 		}
@@ -129,13 +101,14 @@ const App = () => {
 			{!wallet &&
 				<Login uploadWallet={uploadWallet} />
 			}
-			{wallet && <Layout>
+			{wallet &&
+				(<Layout>
 					<Navigation router={router} setRouter={setRouter} />
 					<Header router={router} setrouter={setRouter} />
 					{router === 'projects' && <Projects
 						projectsArray={projectsArray}
 						setRouter={setRouter} address={address}
-						loadingProjects={loadingProjects}
+						loadingData={loadingData}
 						onSelectProject={onSelectProject}
 					/>}
 					{router === 'project' && <AddProject
@@ -148,7 +121,7 @@ const App = () => {
 					{router === 'contracts' && <Contracts
 						projectsArray={projectsArray}
 						setRouter={setRouter} address={address}
-						loadingProjects={loadingProjects}
+						loadingData={loadingData}
 						onSelectContract={onSelectContract}
 						contractsArray={contractsArray}
 					/>}
@@ -159,7 +132,7 @@ const App = () => {
 						wallet={wallet}
 						address={address}
 					/>}
-				</Layout>
+				</Layout>)
 			}
 		</>
 	);
