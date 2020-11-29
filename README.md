@@ -1,5 +1,5 @@
 # DappHero Dashboard
-Currently deployed at https://arweave.net/zNeKuBJUlO7kuBksJgoKTVjIKHJ5bYfGv6BcgOihzq8
+Currently deployed at https://arweave.net/HRE7LhR6PzWnRHBZlcGSu3nCGzrQogZfjbaw1tSTXaQ
 
 ## Goals
 - [x] Deploy to Arweave
