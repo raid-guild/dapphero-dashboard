@@ -14,7 +14,6 @@ import Header from './components/Header'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
 import Projects from './components/Projects'
-import { NetworkType } from '../smartweave/interfaces'
 
 
 const TEMP_PROJECT = {
@@ -35,7 +34,7 @@ const TEMP_CONTRACT = {
 	description: 'My new contract description',
 	network: '',
 	deployedAddress: '0x0000000000000000000000000000000000000000',
-	abi: '',
+	abi: '[]',
 	creator: '',
 	createdAt: new Date().toUTCString(),
 	updatedAt: new Date().toUTCString(),
@@ -52,7 +51,7 @@ const App = () => {
 	const [displayContract, setDisplayContract] = React.useState(TEMP_CONTRACT)
 	const [wallet, setWallet] = React.useState(null)
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
-	const { getAllContracts, addContract } = useContracts(wallet! as JWKInterface)
+	const { getAllContracts } = useContracts(wallet! as JWKInterface)
 	
 	const arweave = Arweave.init({
 		host: 'arweave.net',// Hostname or IP address for a Arweave host
@@ -61,42 +60,6 @@ const App = () => {
 		timeout: 20000,     // Network request timeouts in milliseconds
 		logging: false,     // Enable network request logging
 	});
-
-	const experimentFunction = React.useCallback(() => {
-		const getAddress = async () => {
-			setAddress(await arweave.wallets.jwkToAddress(wallet! as JWKInterface));
-		}
-		if (wallet) {
-			getAddress();
-			getAllProjects().then(result => {
-				let newIdArray: any[] = []
-				let newProjectsArray: any[] = []
-				newIdArray = Object.keys(result)
-
-				Object.keys(result).map(function(key, index) {
-					newProjectsArray.push(result[key])
-					newProjectsArray[index].id = newIdArray[index]
-					return newProjectsArray
-				})
-				setProjectsArray(newProjectsArray)
-				setLoadingProject(false)
-			})
-
-			getAllContracts().then(result => {
-				let newIdArray: any[] = []
-				let newContractsArray: any[] = []
-				newIdArray = Object.keys(result)
-
-				Object.keys(result).map(function(key, index) {
-					newContractsArray.push(result[key])
-					newContractsArray[index].id = newIdArray[index]
-					return newContractsArray
-				})
-				setContractsArray(newContractsArray)
-			})
-			return
-		}	
-	}, [arweave, getAllContracts, getAllProjects, wallet])
 
 	React.useEffect(() => {
 		const getAddress = async () => {

@@ -14,7 +14,7 @@ const Spinner: React.FC<any> = () => {
 export default Spinner
 
 const LDSRing = styled.div`
-    z-index: 1000;
+    z-index: 9;
     width: 4rem;
     height: 4rem;
     margin: 2rem auto;

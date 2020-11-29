@@ -18,7 +18,7 @@ const AddProject: React.FC<any> = ({
     displayProject,
     wallet,
 }) => {
-    const { deleteContract,getContract } = useContracts(wallet)
+    const { getContract } = useContracts(wallet)
     const { addProject, deleteProject, updateProject } = useProjects(wallet)
     const [ isCopied, setIsCopied ] = React.useState(false)
     const [ isNew, setIsNew ] = React.useState(false)
@@ -38,6 +38,7 @@ const AddProject: React.FC<any> = ({
     }, [])
 
     const onAddNewProject = () => {
+        console.log('Saving...')
         addProject(newProject)
         .then(id => console.log(id))
     }
@@ -93,7 +94,6 @@ const AddProject: React.FC<any> = ({
                 ...prev,
                 contracts: newContractsArray
             }))
-
             displayContracts()
         }
     }
@@ -117,10 +117,16 @@ const AddProject: React.FC<any> = ({
         return
     }
 
-    const onDeleteContract = async (id: string) => {
+    const onRemoveContract = async (index: string | number) => {
+        let newArray = newProject.contracts
+        newArray.splice(index, 1)
         console.log('deleting')
-        await deleteContract(id)
-        .then(result => console.log(result))
+        setNewProject((prev: any) => ({
+            ...prev,
+            contracts: newArray
+        }))
+
+        displayContracts()
     }
     
     return (
@@ -178,7 +184,7 @@ const AddProject: React.FC<any> = ({
                         <Label htmlFor="contract">Add Smart Contract:</Label>
                         <Select onChange={handleOnChange} name="contract" id="contract">
                             <option value={''}>choose an option</option>
-                            {contractsArray.filter((contract: { network: any }) => contract.network === newProject.network).map((contract: any, index: any) => {
+                            {newProject.network !== '' && contractsArray.filter((contract: { network: any }) => contract.network === newProject.network).map((contract: any, index: any) => {
                                 return <option key={index} value={contract.id}>{contract.name}</option>
                             })}
                         </Select>
@@ -186,10 +192,10 @@ const AddProject: React.FC<any> = ({
                         <br />
                         <P2 color={colors.grey2}>Remember contracts must be deployed on the selected network above.</P2>
                         <br />
-                        {contractList.map((contract: any, index: string | number | null | undefined) => {
-                            return (
-                                <Table>
-                                    <tbody>
+                            <Table>
+                                <tbody>
+                                {contractList.map((contract: any, index: string | number) => {
+                                    return (
                                         <TableBodyRow key={index}>
                                             <TableBodyCell>
                                                 <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
@@ -200,14 +206,15 @@ const AddProject: React.FC<any> = ({
                                             <TableBodyCell>
                                                 <P1 color={colors.green}>{contract.deployedAddress.slice(0, 10)}...</P1>
                                             </TableBodyCell>
-                                            <TableBodyCell onClick={onDeleteContract.bind(this, contract.id)}>
+                                            <TableBodyCell onClick={onRemoveContract.bind(this, index)}>
                                                 <P1 color={colors.red}>Delete</P1>
                                             </TableBodyCell>
                                         </TableBodyRow>
-                                    </tbody>
-                                </Table>
-                            )
-                        })}
+                                    )
+                                })}
+
+                            </tbody>
+                        </Table>
                         {contractsPending && <Spinner />}
                     </CardContainer>
                 </Card>
