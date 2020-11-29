@@ -66,8 +66,8 @@ const App = () => {
 		const getAddress = async () => {
 			setAddress(await arweave.wallets.jwkToAddress(wallet! as JWKInterface));
 		}
-		getAddress();
 		if (wallet) {
+			getAddress();
 			getAllProjects().then(result => {
 				let newIdArray: any[] = []
 				let newProjectsArray: any[] = []
@@ -94,12 +94,44 @@ const App = () => {
 				})
 				setContractsArray(newContractsArray)
 			})
+			return
 		}	
 	}, [arweave, getAllContracts, getAllProjects, wallet])
 
 	React.useEffect(() => {
-		experimentFunction()		
-	}, [experimentFunction])
+		const getAddress = async () => {
+			setAddress(await arweave.wallets.jwkToAddress(wallet! as JWKInterface));
+		}
+		if (wallet) {
+			getAddress();
+			getAllProjects().then(result => {
+				let newIdArray: any[] = []
+				let newProjectsArray: any[] = []
+				newIdArray = Object.keys(result)
+
+				Object.keys(result).map(function(key, index) {
+					newProjectsArray.push(result[key])
+					newProjectsArray[index].id = newIdArray[index]
+					return newProjectsArray
+				})
+				setProjectsArray(newProjectsArray)
+				setLoadingProject(false)
+			})
+
+			getAllContracts().then(result => {
+				let newIdArray: any[] = []
+				let newContractsArray: any[] = []
+				newIdArray = Object.keys(result)
+
+				Object.keys(result).map(function(key, index) {
+					newContractsArray.push(result[key])
+					newContractsArray[index].id = newIdArray[index]
+					return newContractsArray
+				})
+				setContractsArray(newContractsArray)
+			})
+		}
+	}, [arweave, getAllContracts, getAllProjects, wallet])
 
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader();
