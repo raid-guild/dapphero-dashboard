@@ -36,9 +36,12 @@ const App = () => {
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
 	const { getAllContracts } = useContracts(wallet! as JWKInterface)
 
-	const setInitialState = React.useCallback(
-		async () => {
+	
 
+	// Load initial State
+	React.useEffect(() => {
+		const setInitialState = async () => {
+	
 			// Grabs all user projects from smartweave contract
 			const projectsResult = await getAllProjects()
 			const newProjectsArray = addIdsToArrary(projectsResult)
@@ -50,18 +53,14 @@ const App = () => {
 			setContractsArray(newContractsArray)
 
 			setLoadingData(false)
-			console.log(projectsArray)
-		},
-		[getAllContracts, getAllProjects],
-	)
+		}
 
-	// Load initial State
-	React.useEffect(() => {
 		if (wallet) {
 			setInitialState()
 		}
 		return
-	}, [setInitialState, wallet])
+	// eslint-disable-next-line
+	}, [wallet])
 
 	// Upload wallet
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
