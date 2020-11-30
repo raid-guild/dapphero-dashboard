@@ -16,6 +16,7 @@ import { H3, P1, P2 } from './Typography'
 const AddProject: React.FC<any> = ({
     contractsArray,
     displayProject,
+    onSnackbar,
     wallet,
 }) => {
     const [ newContract, setNewContract ] = React.useState<string>('')
@@ -102,6 +103,7 @@ const AddProject: React.FC<any> = ({
         setPendingSave(true)
         const id = await addProject(newProject)
         console.log('Transaction ID: ', id)
+        onSnackbar(id)
         setPendingSave(false)
     }
 
@@ -111,6 +113,7 @@ const AddProject: React.FC<any> = ({
         setPendingDelete(true)
         const id = await deleteProject(newProject.id)
         console.log('Transaction ID: ', id)
+        onSnackbar(id)
         setPendingDelete(false)
     }
 
@@ -123,6 +126,7 @@ const AddProject: React.FC<any> = ({
             setPendingSave(true)
             const id = await updateProject(displayProject.id, newProject)
             console.log('Transaction ID: ', id)
+            onSnackbar(id)
             setPendingSave(false)
         }
     }

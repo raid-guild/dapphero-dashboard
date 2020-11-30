@@ -17,6 +17,7 @@ import Layout from './components/Layout'
 import Login from './components/Login'
 import Navigation from './components/Navigation'
 import Projects from './components/Projects'
+import Snackbar from './components/Snackbar'
 
 // Helpers
 import { addIdsToArrary } from './helpers'
@@ -29,6 +30,8 @@ const App = () => {
 	const [displayProject, setDisplayProject] = React.useState(DEFAULT_PROJECT)
 	const [contractsArray, setContractsArray] = React.useState<any[]>([])
 	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
+	const [transactionId, setTransactionId] = React.useState<string>('')
+	const [snackbar, setSnackbar] = React.useState<boolean>(false)
 
 	const [loadingData, setLoadingData] = React.useState<boolean>(true)
 
@@ -93,6 +96,11 @@ const App = () => {
 		}
 	}
 
+	const onSnackbar = (id: string) => {
+		setSnackbar(true)
+		setTransactionId(id)
+	}
+
 	return (
 		<>
 			{!wallet &&
@@ -102,6 +110,7 @@ const App = () => {
 				(<Layout>
 					<Navigation router={router} setRouter={setRouter} />
 					<Header router={router} />
+					{ snackbar && <Snackbar setSnackbar={setSnackbar} transactionId={transactionId} />}
 					{router === 'projects' && <Projects
 						loadingData={loadingData}
 						onSelectProject={onSelectProject}
@@ -110,6 +119,7 @@ const App = () => {
 					{router === 'project' && <AddProject
 						contractsArray={contractsArray}
 						displayProject={displayProject}
+						onSnackbar={onSnackbar}
 						wallet={wallet}
 					/>}
 					{router === 'contracts' && <Contracts
@@ -119,6 +129,7 @@ const App = () => {
 					/>}
 					{router === 'contract' && <AddContract
 						displayContract={displayContract}
+						onSnackbar={onSnackbar}
 						wallet={wallet}
 					/>}
 				</Layout>)

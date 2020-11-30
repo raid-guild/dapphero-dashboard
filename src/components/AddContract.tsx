@@ -14,6 +14,7 @@ import { H3, P1 } from './Typography'
 
 const AddContract: React.FC<any> = ({
     displayContract,
+    onSnackbar,
     wallet,
 }) => {
     const [ isNew, setIsNew ] = React.useState<boolean>(false)
@@ -37,6 +38,7 @@ const AddContract: React.FC<any> = ({
         setPendingSave(true)
         const id = await addContract(newContract)
         console.log('Transaction ID:', id)
+        onSnackbar(id)
         setPendingSave(false)
     }
 
@@ -46,6 +48,7 @@ const AddContract: React.FC<any> = ({
         setPendingDelete(true)
         const id = await deleteContract(newContract.id)
         console.log('Transaction ID:', id)
+        onSnackbar(id)
         setPendingDelete(false)
     }
 
@@ -58,6 +61,7 @@ const AddContract: React.FC<any> = ({
             setPendingSave(true)
             const id = await updateContract(displayContract.id, newContract)
             console.log('Transaction ID:', id)
+            onSnackbar(id)
             setPendingSave(false)
         }
     }
