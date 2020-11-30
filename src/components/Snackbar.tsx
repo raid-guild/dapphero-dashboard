@@ -13,7 +13,7 @@ const Snackbar: React.FC<any> = ({
         <SnackbarPosition>
                 <SnackbarContainer>
                     <TextContainer>
-                        <P2 color={colors.white}>Transaction is being mined on arweave!</P2>
+                        <P2 color={colors.white}>Transaction is being mined on Arweave!</P2>
                         <P2>
                         <a style={{ color: colors.white}} rel="noreferrer" target='_blank' href={`https://viewblock.io/arweave/tx/${transactionId}`}>View transaction status on Viewblock.</a>
                         </P2>
