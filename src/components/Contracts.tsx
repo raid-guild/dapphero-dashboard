@@ -1,12 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
-import { media } from '../components/Breakpoints'
 
 // Components
-import { colors } from '../components/Theme'
-import { Main } from './Containers'
 import { ButtonAction1 } from '../components/Buttons'
+import { Main } from './Containers'
+import { IsLocked, Dot, Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow } from './Table'
 import Spinner from './Spinner'
+import { colors } from '../components/Theme'
 import { H4, H5, P1 } from '../components/Typography'
 
 const Contracts: React.FC<any> = ({
@@ -14,7 +13,6 @@ const Contracts: React.FC<any> = ({
     loadingData,
     onSelectContract,
 }) => {
-
     return (
         <Main background={colors.white}>
             <H4>The Contracts tab offers you a quick overview of the contracts you have associated with your DappHero Account. Once you create a contract here, you will be able to use it in an of your DappHero projects.</H4>
@@ -50,7 +48,7 @@ const Contracts: React.FC<any> = ({
                                     <P1 color={colors.green}>{contract.deployedAddress.slice(0, 10)}...</P1>
                                 </TableBodyCell>
                                 <TableBodyCell>
-                                    <P1 color={colors.red}>{contract.network ? contract.network : 'missing'}</P1>
+                                    <P1 color={contract.network ? colors.green : colors.red}>{contract.network ? contract.network : 'missing'}</P1>
                                 </TableBodyCell>
                                 <TableBodyCell>{contract.isLocked ? 'Locked' : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
                             </TableBodyRow>
@@ -64,62 +62,3 @@ const Contracts: React.FC<any> = ({
 }
 
 export default Contracts
-
-const Table = styled.table`
-    border-radius: 5px;
-    border-collapse: collapse;
-    margin-top: 5rem;
-    overflow: hidden;
-    width: 60rem;
-
-    ${media.large`
-        width: 80rem;
-    `}
-`
-
-const TableHeadRow = styled.tr`
-    background: ${colors.grey};
-    border: 1px solid ${colors.grey};
-    height: 3.5rem;
-`
-
-const TableBodyRow = styled.tr`
-    border: 1px solid ${colors.grey};
-    border-left: 3px solid ${colors.grey};
-    height: 5rem;
-
-    &:hover {
-        cursor: pointer;
-        border-left: 3px solid ${colors.green};
-    }
-`
-
-const TableHeadCell = styled.th`
-    vertical-align: middle;
-`
-
-const TableBodyCell = styled.th`
-    vertical-align: middle;
-    border: 2px solid ${colors.grey};
-`
-
-const Dot = styled.div`
-    align-self: center;
-    background: ${colors.green};
-    border-radius: 50%;
-    height: .8rem;
-    margin-left: 2rem;
-    margin-right: 1rem;
-    width: .8rem;
-`
-
-const IsLocked = styled.div`
-    border: 1px solid ${colors.red};
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    margin: 0 auto;
-    padding: .3rem;
-    transition: all .3s ease;
-    width: 9rem;
-`

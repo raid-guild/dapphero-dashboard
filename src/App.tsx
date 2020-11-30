@@ -5,7 +5,6 @@ import { JWKInterface } from 'arweave/node/lib/wallet'
 import { DEFAULT_CONTRACT, DEFAULT_PROJECT} from './consts'
 
 // Hooks
-import useArweave from './hooks/useArweave'
 import useContracts from './hooks/useContracts'
 import useProjects from './hooks/useProjects'
 
@@ -23,7 +22,6 @@ import Projects from './components/Projects'
 import { addIdsToArrary } from './helpers'
 
 const App = () => {
-	const [address, setAddress] = React.useState<string>('')
 	const [router, setRouter] = React.useState<string>('projects')
 	const [wallet, setWallet] = React.useState<JWKInterface | null>(null)
 
@@ -35,13 +33,11 @@ const App = () => {
 	const [loadingData, setLoadingData] = React.useState<boolean>(true)
 
 	// Hooks
-	const arweave = useArweave()
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
 	const { getAllContracts } = useContracts(wallet! as JWKInterface)
 
 	const setInitialState = React.useCallback(
 		async () => {
-			setAddress(await arweave.wallets.jwkToAddress(wallet! as JWKInterface));
 
 			// Grabs all user projects from smartweave contract
 			const projectsResult = await getAllProjects()
@@ -54,8 +50,9 @@ const App = () => {
 			setContractsArray(newContractsArray)
 
 			setLoadingData(false)
+			console.log(projectsArray)
 		},
-		[arweave, getAllContracts, getAllProjects, wallet],
+		[getAllContracts, getAllProjects],
 	)
 
 	// Load initial State
@@ -105,12 +102,11 @@ const App = () => {
 			{wallet &&
 				(<Layout>
 					<Navigation router={router} setRouter={setRouter} />
-					<Header router={router} setrouter={setRouter} />
+					<Header router={router} />
 					{router === 'projects' && <Projects
-						projectsArray={projectsArray}
-						setRouter={setRouter} address={address}
 						loadingData={loadingData}
 						onSelectProject={onSelectProject}
+						projectsArray={projectsArray}
 					/>}
 					{router === 'project' && <AddProject
 						contractsArray={contractsArray}
@@ -118,11 +114,9 @@ const App = () => {
 						wallet={wallet}
 					/>}
 					{router === 'contracts' && <Contracts
-						projectsArray={projectsArray}
-						setRouter={setRouter} address={address}
+						contractsArray={contractsArray}
 						loadingData={loadingData}
 						onSelectContract={onSelectContract}
-						contractsArray={contractsArray}
 					/>}
 					{router === 'contract' && <AddContract
 						displayContract={displayContract}

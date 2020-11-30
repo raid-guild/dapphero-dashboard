@@ -6,23 +6,6 @@ interface ButtonAction2Props {
     active?: boolean;
 }
 
-export const ButtonLink = styled.button`
-    border: none;
-    border-radius: 4px;
-    color: #3c424f;
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.8rem;
-    height: 5rem;
-    transition: all .3s ease;
-    width: 16rem;
-
-    &:hover {
-        box-shadow: ${shadows.card};
-        color: ${colors.green};
-        cursor: pointer;
-    }
-`
-
 export const ButtonAction1 = styled.button`
     background: ${colors.green};
     border: none;
@@ -32,9 +15,9 @@ export const ButtonAction1 = styled.button`
     font-family: 'Nunito Sans', sans-serif;
     font-size: 1.8rem;
     height: 4rem;
+    outline: none;
     transition: all .3s ease;
     width: 13rem;
-    outline: none;
 
     &:hover {
         box-shadow: ${shadows.button};
@@ -51,16 +34,16 @@ export const ButtonAction1 = styled.button`
 `
 
 export const ButtonAction2 = styled.button<ButtonAction2Props>`
-    border: 1px solid ${colors.grey2};
     background: ${colors.white};
+    border: 1px solid ${colors.grey2};
     border-radius: 4px;
     color: ${colors.black2};
     font-family: 'Nunito Sans', sans-serif;
     font-size: 1.8rem;
     height: 4.5rem;
+    outline: none;
     transition: all .3s ease;
     width: 10rem;
-    outline: none;
 
     &:hover {
         cursor: pointer;
@@ -68,8 +51,8 @@ export const ButtonAction2 = styled.button<ButtonAction2Props>`
 
     ${props => props.active && css`
         background: ${colors.green};
-        color: ${colors.white};
         border: 1px solid transparent;
+        color: ${colors.white};
     `}
 `
 
@@ -83,4 +66,21 @@ export const ButtonsContainer2 = styled.div`
     display: flex;
     justify-content: space-between;
     width: 28rem;
+`
+
+export const ButtonLink = styled.button`
+    border: none;
+    border-radius: 4px;
+    color: #3c424f;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1.8rem;
+    height: 5rem;
+    transition: all .3s ease;
+    width: 16rem;
+
+    &:hover {
+        box-shadow: ${shadows.card};
+        color: ${colors.green};
+        cursor: pointer;
+    }
 `

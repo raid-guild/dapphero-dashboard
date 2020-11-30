@@ -6,8 +6,8 @@ import { colors } from './Theme'
 const Line = styled.hr`
     border-bottom: 1px solid ${colors.grey};
     opacity: .15;
-    width: 100%;
     padding-bottom: 5rem;
+    width: 100%;
 `
 
 export default Line

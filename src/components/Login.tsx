@@ -19,7 +19,7 @@ const Login: React.FC<any> = ({
             </ChangeSizeContainer>
             <LoginContainer>
                 <H2>Upload a Wallet to Use App</H2>
-                <LoginInput type="file" className='overflow-hidden' onChange={uploadWallet} />
+                <LoginInput type="file" onChange={uploadWallet} />
             </LoginContainer>
         </>
     )
@@ -31,11 +31,11 @@ const ChangeSizeContainer = styled.div`
     background: #f7f9fb;
     border-radius: 5px;
     box-shadow: ${shadows.card};
+    display: block;
     height: 12rem;
     margin: 0 auto;
     padding: 4rem;
     width: 30rem;
-    display: block;
 
     ${media.small`
         display: none;
@@ -46,11 +46,11 @@ const LoginContainer = styled.div`
     background: #f7f9fb;
     border-radius: 5px;
     box-shadow: ${shadows.card};
+    display: none;
     height: 18rem;
     margin: 0 auto;
     padding: 5rem;
     width: 50rem;
-    display: none;
 
     ${media.small`
         display: block;
@@ -78,14 +78,14 @@ const LoginInput = styled.input`
     transition: all .3s ease;
     width: 30rem;
 
-    ${media.large`
-        margin-top: 3rem;
-    `}
-
     &:hover {
         color: ${colors.green};
         cursor: pointer;
     }
+
+    ${media.large`
+        margin-top: 3rem;
+    `}
 `
 
 const LogoContainer = styled.div`

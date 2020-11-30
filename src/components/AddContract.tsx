@@ -100,7 +100,7 @@ const AddContract: React.FC<any> = ({
                     <P1 color={colors.grey2}>Please provide the network, address and ABI of your smart contract. If your contract is a verified Etherscan contract, you can load the ABI automatically.</P1>
                     <br/>
                     <Label htmlFor="network">Select a project Network:</Label>
-                    <Select defaultValue={newContract.network} onChange={handleOnChange} name="network" id="network">
+                    <Select disabled={newContract.isLocked} defaultValue={newContract.network} onChange={handleOnChange} name="network" id="network">
                         <option value="">choose an option</option>
                         <option value="rinkeby">rinkeby</option>
                         <option value="mainnet">mainnet</option>
@@ -141,7 +141,7 @@ const AddContract: React.FC<any> = ({
 
             <ButtonsContainer2>
                 <ButtonAction1 onClick={!isNew ? onUpdateContract : onAddNewContract}>Save</ButtonAction1>
-                {!isNew && (!newContract.isPaused && <ButtonAction1 color={colors.red} onClick={onDeleteContract}>Delete</ButtonAction1>)}
+                {!isNew && (!newContract.isLocked && <ButtonAction1 color={colors.red} onClick={onDeleteContract}>Delete</ButtonAction1>)}
             </ButtonsContainer2>
         </Main>
     )

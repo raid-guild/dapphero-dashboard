@@ -2,7 +2,6 @@ import { ThemedCssFunction, BaseThemedCssFunction } from 'styled-components';
 import { css } from 'styled-components';
 
 const sizes = {
-	xsmall: 450,
 	small: 850,
 	medium: 1024,
 	large: 1440,
@@ -22,14 +21,3 @@ export const media = (Object.keys(sizes) as (keyof typeof sizes)[]).reduce(
   },
   {} as { [key in keyof typeof sizes]: ThemedCssFunction<BaseThemedCssFunction<any[]>>},
 );
-
-// const respondTo = Object.keys(breakpoints).reduce((accumulator, label) => {
-// 	accumulator[label] = (...args) => css`
-// 		@media (min-width: ${breakpoints[label]}) {
-// 			${css(...args)};
-// 		}
-// 	`;
-// 	return accumulator;
-// }, {});
-
-// export default respondTo

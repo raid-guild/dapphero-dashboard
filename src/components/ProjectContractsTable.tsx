@@ -10,7 +10,6 @@ const ProjectContractsTable: React.FC<any> = ({
     contractList,
     onRemoveContract,
 }) => {
-
     return (
         <Table>
             <tbody>
@@ -44,17 +43,17 @@ const ProjectContractsTable: React.FC<any> = ({
 
 export default ProjectContractsTable
 
-const SVGContainer = styled.div`
-    height: 2.5rem;
-    width: 2.5rem;
-    margin: 0 auto;
-`
-
 const SVG = styled.img`
     border-radius: 3px;
     display: block;
     height: 100%;
     margin: 0px;
-    width: 85%;
     opacity: .4;
+    width: 85%;
+`
+
+const SVGContainer = styled.div`
+    height: 2.5rem;
+    margin: 0 auto;
+    width: 2.5rem;
 `

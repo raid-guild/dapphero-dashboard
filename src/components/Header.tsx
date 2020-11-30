@@ -24,12 +24,12 @@ export default Header
 const HeaderContainer = styled.div`
     background: ${colors.white};
     box-shadow: ${shadows.card};
-    position: sticky;
-    top: 0;
     display: flex;
     grid-column: 2 / -1;
     grid-row: 1 / 2;
     justify-content: space-between;
+    position: sticky;
     padding: 4rem 5rem;
+    top: 0;
     z-index: 98;
 `

@@ -79,8 +79,8 @@ export const P1 = styled.p`
     font-family: 'Roboto', sans-serif;
     font-size: 1.6rem;
     font-weight: 400;
-    transition: all .3s ease;
     line-height: 22px;
+    transition: all .3s ease;
 
     ${props => props.color && css`
         color: ${props.color};
@@ -92,8 +92,8 @@ export const P2 = styled.p`
     font-family: 'Roboto', sans-serif;
     font-size: 1.4rem;
     font-weight: 400;
-    transition: all .3s ease;
     line-height: 22px;
+    transition: all .3s ease;
 
     ${props => props.color && css`
         color: ${props.color};

@@ -14,28 +14,30 @@ const Spinner: React.FC<any> = () => {
 export default Spinner
 
 const LDSRing = styled.div`
-    z-index: 9;
-    width: 4rem;
     height: 4rem;
     margin: 2rem auto;
+    width: 4rem;
+    z-index: 9;
+
     ${media.small`
-        width: 7rem;
         height: 7rem;
+        width: 7rem;
     `}
     div {
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border: 5px solid ${colors.green};
+        border-color: ${colors.green} transparent transparent transparent;
+        border-radius: 50%;
         box-sizing: border-box;
         display: block;
-        position: absolute;
-        width: 3rem;
         height: 3rem;
         margin: 8px;
-        border: 5px solid ${colors.green};
-        border-radius: 50%;
-        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: ${colors.green} transparent transparent transparent;
+        position: absolute;
+        width: 3rem;
+
         ${media.small`
-            width: 5rem;
             height: 5rem;
+            width: 5rem;
         `}
     }
     div:nth-child(1) {

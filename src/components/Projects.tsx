@@ -1,11 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 
 // Components
 import { colors } from '../components/Theme'
 import { ButtonAction1 } from '../components/Buttons'
 import Spinner from './Spinner'
-import { Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow, Dot} from './Table'
+import { IsLocked, Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow, Dot} from './Table'
 import { H4, H5, P1 } from '../components/Typography'
 import { Main } from './Containers'
 
@@ -13,7 +12,6 @@ const Projects: React.FC<any> = ({
     loadingData,
     onSelectProject,
     projectsArray,
-    setRouter,
 }) => {
 
     return (
@@ -51,7 +49,7 @@ const Projects: React.FC<any> = ({
                                     <P1 color={colors.green}>{project.id.slice(0, 10)}...</P1>
                                 </TableBodyCell>
                                 <TableBodyCell>
-                                    <P1 color={colors.red}>{project.network ? project.network : 'missing'}</P1>
+                                    <P1 color={project.network ? colors.green : colors.red}>{project.network ? project.network : 'missing'}</P1>
                                 </TableBodyCell>
                                 <TableBodyCell>{project.isLocked ? 'Locked' : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
                             </TableBodyRow>
@@ -65,14 +63,3 @@ const Projects: React.FC<any> = ({
 }
 
 export default Projects
-
-const IsLocked = styled.div`
-    border: 1px solid ${colors.red};
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    margin: 0 auto;
-    padding: .3rem;
-    transition: all .3s ease;
-    width: 9rem;
-`

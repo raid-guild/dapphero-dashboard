@@ -35,25 +35,6 @@ const Navigation: React.FC<any> = ({
 
 export default Navigation
 
-const NavigationContainer = styled.div`
-    align-items: center;
-    background: ${colors.white};
-    border-right: 2px solid rgb(235, 239, 245);
-    display: flex;
-    height: 100vh;
-    left: 0;
-    flex-direction: column;
-    grid-column: 1 / 2;
-    gird-row: 1 / -1;
-    position: fixed;
-    width: 25rem;
-    z-index: 99;
-
-    ${media.medium`
-        width: 30rem;
-    `}
-`
-
 const LogoContainer = styled.div`
     height: 15rem;
     margin-top: 3rem;
@@ -71,4 +52,24 @@ const LogoImage = styled.img`
     height: 100%;
     margin: 0px;
     width: 100%;
+`
+
+const NavigationContainer = styled.div`
+    align-items: center;
+    background: ${colors.white};
+    border-right: 2px solid rgb(235, 239, 245);
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / 2;
+    gird-row: 1 / -1;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 25rem;
+    z-index: 99;
+
+    ${media.medium`
+        width: 30rem;
+    `}
 `

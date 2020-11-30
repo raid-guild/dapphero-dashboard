@@ -4,6 +4,17 @@ import { media } from '../components/Breakpoints'
 // Components
 import { colors } from '../components/Theme'
 
+export const IsLocked = styled.div`
+    border: 1px solid ${colors.red};
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin: 0 auto;
+    padding: .3rem;
+    transition: all .3s ease;
+    width: 9rem;
+`
+
 export const Table = styled.table`
     border-radius: 5px;
     border-collapse: collapse;
@@ -28,8 +39,8 @@ export const TableBodyRow = styled.tr`
     height: 5rem;
 
     &:hover {
-        cursor: pointer;
         border-left: 3px solid ${colors.green};
+        cursor: pointer;
     }
 `
 

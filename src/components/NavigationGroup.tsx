@@ -57,12 +57,6 @@ const NavigationGroupContainer = styled.div<NavigationGroupContainerProps>`
     justify-content: flex-start;
     width: 100%;
 
-    ${props => props.active && css`
-        h2 {
-            color: ${colors.green};
-        }
-    `}
-
     &:hover {
         cursor: pointer;
 
@@ -70,13 +64,12 @@ const NavigationGroupContainer = styled.div<NavigationGroupContainerProps>`
             color: ${colors.green};
         }
     }
-`
 
-const SVGContainer = styled.div`
-    height: 2.5rem;
-    margin-left: 6rem;
-    margin-right: 2rem;
-    width: 2.5rem;
+    ${props => props.active && css`
+        h2 {
+            color: ${colors.green};
+        }
+    `}
 `
 
 const SVG = styled.img`
@@ -85,4 +78,11 @@ const SVG = styled.img`
     height: 100%;
     margin: 0px;
     width: 100%;
+`
+
+const SVGContainer = styled.div`
+    height: 2.5rem;
+    margin-left: 6rem;
+    margin-right: 2rem;
+    width: 2.5rem;
 `

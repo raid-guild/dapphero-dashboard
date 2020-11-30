@@ -47,7 +47,7 @@ const AddProject: React.FC<any> = ({
             let filterByNetwork = filteredContracts.filter(contract => contract.network === newProject.network)
             setContractList(filterByNetwork)
         },
-        [newProject]
+        [contractsArray, newProject]
     )
 
     // Add new contract to display
@@ -97,14 +97,14 @@ const AddProject: React.FC<any> = ({
     const onAddNewProject = async () => {
         console.log('Saving...')
         const id = await addProject(newProject)
-        console.log(id)
+        console.log('Transaction ID: ', id)
     }
 
     // Delete project
     const onDeleteProject = async () => {
         console.log('Deleting...')
         const id = await deleteProject(newProject.id)
-        console.log(id)
+        console.log('Transaction ID: ', id)
     }
 
     // Update project
@@ -114,8 +114,15 @@ const AddProject: React.FC<any> = ({
             console.log('No changes were made. Project was not saved.')
         } else {
             const id = await updateProject(displayProject.id, newProject)
-            console.log(id)
+            console.log('Transaction ID: ', id)
         }
+    }
+
+    const onLockProject = () => {
+        setNewProject((prev: any) => ({
+            ...prev,
+            isLocked: !prev.isLocked
+        }))
     }
 
     // Handle input changes
@@ -138,6 +145,7 @@ const AddProject: React.FC<any> = ({
             setNewContract('')
         }
 
+        // Set new contract id if it changes
         if (e.target.id === 'contract') {
             setNewContract(e.target.value)
             return
@@ -148,6 +156,8 @@ const AddProject: React.FC<any> = ({
             ...prev,
             [e.target.id]: e.target.value
         }))
+
+        console.log(newProject.isLocked)
     }
 
     // Handle copy on script tag
@@ -196,7 +206,7 @@ const AddProject: React.FC<any> = ({
                     <P1 color={colors.grey2}>Select a network for your project, followed by one or more smart contracts deployed on that network.</P1>
                     <br/>
                     <Label htmlFor="network">Select a project Network:</Label>
-                    <Select defaultValue={newProject.network} onChange={handleOnChange} name="network" id="network">
+                    <Select disabled={newProject.isLocked} defaultValue={newProject.network} onChange={handleOnChange} name="network" id="network">
                         <option value="">choose an option</option>
                         <option value="rinkeby">rinkeby</option>
                         <option value="mainnet">mainnet</option>
@@ -210,7 +220,7 @@ const AddProject: React.FC<any> = ({
                     <br />
                     <br />
                     <Label htmlFor="contract">Add Smart Contract:</Label>
-                    <Select defaultValue={''} onChange={handleOnChange} name="contract" id="contract">
+                    <Select disabled={newProject.isLocked} defaultValue={''} onChange={handleOnChange} name="contract" id="contract">
                         <option value={''}>choose an option</option>
                         {newProject.network !== '' && contractsArray.filter((contract: { network: any }) => contract.network === newProject.network).map((contract: any, index: any) => {
                             return <option key={index} value={contract.id}>{contract.name}</option>
@@ -274,8 +284,8 @@ const AddProject: React.FC<any> = ({
                     <br/>
 
                     <ButtonsContainer1>
-                        <ButtonAction2 active={newProject.isPaused} onClick={() => setNewProject((prev: any) => ({...prev, isPaused: !prev.isPaused}))}>{!newProject.isPaused ? 'Enabled' : 'Paused'}</ButtonAction2>
-                        <ButtonAction2 active={newProject.isLocked} onClick={() => setNewProject((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newProject.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
+                        <ButtonAction2 disabled={newProject.isLocked} active={newProject.isPaused} onClick={() => setNewProject((prev: any) => ({...prev, isPaused: !prev.isPaused}))}>{!newProject.isPaused ? 'Enabled' : 'Paused'}</ButtonAction2>
+                        <ButtonAction2 active={newProject.isLocked} onClick={onLockProject}>{!newProject.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
                     </ButtonsContainer1>
                 </CardContainer>
             </Card>
