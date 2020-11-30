@@ -1,5 +1,5 @@
 # DappHero Dashboard
-Currently deployed at: https://arweave.net/HRE7LhR6PzWnRHBZlcGSu3nCGzrQogZfjbaw1tSTXaQ
+Currently deployed at: https://arweave.net/v-xhg15qbLa0ivu0d8VfU2Anfsm8ijDGcJF2-MUUgek
 
 ## DappHero Core
 Latest core deployment at: https://arweave.net/LLFlLl7dugP4SEGTKvwWWllsBZLAaQLIXiLV729Z_kU
@@ -18,6 +18,7 @@ Latest core deployment at: https://arweave.net/LLFlLl7dugP4SEGTKvwWWllsBZLAaQLIX
 - Favicon: https://arweave.net/jXLNXjwmZpViJbodmNCczcWN0XkHyR8hxiEvhnAqQ-Y
 - Projects Icon: https://arweave.net/y--LjDmE8Ixh07sj0Hmy0rrZqX5EFrAk9BKQyMEt0a8
 - Contracts Icon: https://arweave.net/9ayl_-SzNbM-eAZEyre-CuQpKN7d37U4yf32IfjHF60
+- Trash Icon: https://arweave.net/-pOkMS1bSIN4YgXsjCPC4sV86v-J4l3NP6zq5wqwoLw
 
 # SmartWeave Contracts
 

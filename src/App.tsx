@@ -61,19 +61,19 @@ const App = () => {
 	// Load initial State
 	React.useEffect(() => {
 		if (wallet) {
-			setInitialState();
+			setInitialState()
 		}
 		return
 	}, [setInitialState, wallet])
 
 	// Upload wallet
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		const fileReader = new FileReader();
+		const fileReader = new FileReader()
 		fileReader.onload = async (e) => {
-			setWallet(JSON.parse(e.target!.result as string));
+			setWallet(JSON.parse(e.target!.result as string))
 		}
 		if (evt.target.files?.length) {
-			fileReader.readAsText(evt.target.files[0]);
+			fileReader.readAsText(evt.target.files[0])
 		}
 	}
 
@@ -131,7 +131,7 @@ const App = () => {
 				</Layout>)
 			}
 		</>
-	);
+	)
 }
 
-export default App;
+export default App

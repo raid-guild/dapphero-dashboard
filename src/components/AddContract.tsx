@@ -67,86 +67,83 @@ const AddContract: React.FC<any> = ({
     }
     
     return (
-        <>
-            <Main background={colors.grey}>
-                <Card>
-                    <CardContainer>
-                        <H3>Basic Information</H3>
-                    </CardContainer>
-                    <Line />
-                    <CardContainer>
-                        <Label htmlFor="name">Name:</Label>
-                        <Input
-                            id='name'
-                            onChange={handleOnChange}
-                            required
-                            value={newContract.name}
-                        />
-                        <Label htmlFor="description">Description:</Label>
-                        <TextArea
-                            id='description'
-                            onChange={handleOnChange}
-                            required
-                            value={newContract.description}
-                        />
-                    </CardContainer>
-                </Card>
+        <Main background={colors.grey}>
+            <Card>
+                <CardContainer>
+                    <H3>Basic Information</H3>
+                </CardContainer>
+                <Line />
+                <CardContainer>
+                    <Label htmlFor="name">Name:</Label>
+                    <Input
+                        id='name'
+                        onChange={handleOnChange}
+                        required
+                        value={newContract.name}
+                    />
+                    <Label htmlFor="description">Description:</Label>
+                    <TextArea
+                        id='description'
+                        onChange={handleOnChange}
+                        required
+                        value={newContract.description}
+                    />
+                </CardContainer>
+            </Card>
 
-                <Card>
-                    <CardContainer>
-                        <H3>Networks and Contracts</H3>
-                    </CardContainer>
-                    <Line />
-                    <CardContainer>
-                        <P1 color={colors.grey2}>Please provide the network, address and ABI of your smart contract. If your contract is a verified Etherscan contract, you can load the ABI automatically.</P1>
-                        <br/>
-                        <Label htmlFor="network">Select a project Network:</Label>
-                        <Select defaultValue={newContract.network} onChange={handleOnChange} name="network" id="network">
-                            <option value="">choose an option</option>
-                            <option value="rinkeby">rinkeby</option>
-                            <option value="mainnet">mainnet</option>
-                            <option value="kovan">kovan</option>
-                            <option value="goerli">goerli</option>
-                            <option value="ropsten">ropsten</option>
-                            <option value="xDai">xDai</option>
-                            <option value="maticMumbaiTestnet">maticMumbaiTestnet</option>
-                        </Select>
-                        <Label htmlFor="deployedAddress">Address deployed:</Label>
-                        <Input
-                            id='deployedAddress'
-                            onChange={handleOnChange}
-                            required
-                            value={newContract.deployedAddress}
-                        />
-                        <Label htmlFor="abi">Contract ABI:</Label>
-                        <TextArea
-                            id='abi'
-                            onChange={handleOnChange}
-                            required
-                            value={newContract.abi}
-                        />
-                    </CardContainer>
-                </Card>
+            <Card>
+                <CardContainer>
+                    <H3>Networks and Contracts</H3>
+                </CardContainer>
+                <Line />
+                <CardContainer>
+                    <P1 color={colors.grey2}>Please provide the network, address and ABI of your smart contract. If your contract is a verified Etherscan contract, you can load the ABI automatically.</P1>
+                    <br/>
+                    <Label htmlFor="network">Select a project Network:</Label>
+                    <Select defaultValue={newContract.network} onChange={handleOnChange} name="network" id="network">
+                        <option value="">choose an option</option>
+                        <option value="rinkeby">rinkeby</option>
+                        <option value="mainnet">mainnet</option>
+                        <option value="kovan">kovan</option>
+                        <option value="goerli">goerli</option>
+                        <option value="ropsten">ropsten</option>
+                        <option value="xDai">xDai</option>
+                        <option value="maticMumbaiTestnet">maticMumbaiTestnet</option>
+                    </Select>
+                    <Label htmlFor="deployedAddress">Address deployed:</Label>
+                    <Input
+                        id='deployedAddress'
+                        onChange={handleOnChange}
+                        required
+                        value={newContract.deployedAddress}
+                    />
+                    <Label htmlFor="abi">Contract ABI:</Label>
+                    <TextArea
+                        id='abi'
+                        onChange={handleOnChange}
+                        required
+                        value={newContract.abi}
+                    />
+                </CardContainer>
+            </Card>
 
-                <Card>
-                    <CardContainer>
-                        <H3>Status</H3>
-                    </CardContainer>
-                    <Line />
-                    <CardContainer>
-                        <P1 color={colors.grey2}>To prevent accidental contract deletion you can lock it here.</P1>
-                        <br/>
+            <Card>
+                <CardContainer>
+                    <H3>Status</H3>
+                </CardContainer>
+                <Line />
+                <CardContainer>
+                    <P1 color={colors.grey2}>To prevent accidental contract deletion you can lock it here.</P1>
+                    <br/>
+                    <ButtonAction2 active={newContract.isLocked} onClick={() => setNewContract((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newContract.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
+                </CardContainer>
+            </Card>
 
-                        <ButtonAction2 active={newContract.isLocked} onClick={() => setNewContract((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newContract.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
-                    </CardContainer>
-                </Card>
-
-                <ButtonsContainer2>
-                    <ButtonAction1 onClick={!isNew ? onUpdateContract : onAddNewContract}>Save</ButtonAction1>
-                    {!isNew && (!newContract.isPaused && <ButtonAction1 color={colors.red} onClick={onDeleteContract}>Delete</ButtonAction1>)}
-                </ButtonsContainer2>
-            </Main>
-        </>
+            <ButtonsContainer2>
+                <ButtonAction1 onClick={!isNew ? onUpdateContract : onAddNewContract}>Save</ButtonAction1>
+                {!isNew && (!newContract.isPaused && <ButtonAction1 color={colors.red} onClick={onDeleteContract}>Delete</ButtonAction1>)}
+            </ButtonsContainer2>
+        </Main>
     )
 }
 
