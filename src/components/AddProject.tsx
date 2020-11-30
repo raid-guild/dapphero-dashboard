@@ -9,6 +9,7 @@ import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, InputCopy, Select, TextArea } from './Form'
 import Line from './Line'
 import ProjectContractsTable from './ProjectContractsTable'
+import SpinnerTransaction from './SpinnerTransaction'
 import { colors } from './Theme'
 import { H3, P1, P2 } from './Typography'
 
@@ -22,6 +23,8 @@ const AddProject: React.FC<any> = ({
     const [ isCopied, setIsCopied ] = React.useState<boolean>(false)
     const [ isNew, setIsNew ] = React.useState<boolean>(false)
     const [ newProject, setNewProject ] = React.useState(displayProject)
+    const [ pendingSave, setPendingSave ] = React.useState<boolean>(false)
+    const [ pendingDelete, setPendingDelete ] = React.useState<boolean>(false)
 
     // Hooks
     const { addProject, deleteProject, updateProject } = useProjects(wallet)
@@ -96,33 +99,32 @@ const AddProject: React.FC<any> = ({
     // Add new project
     const onAddNewProject = async () => {
         console.log('Saving...')
+        setPendingSave(true)
         const id = await addProject(newProject)
         console.log('Transaction ID: ', id)
+        setPendingSave(false)
     }
 
     // Delete project
     const onDeleteProject = async () => {
         console.log('Deleting...')
+        setPendingDelete(true)
         const id = await deleteProject(newProject.id)
         console.log('Transaction ID: ', id)
+        setPendingDelete(false)
     }
 
     // Update project
     const onUpdateProject = async () => {
-        console.log('Updating...')
         if (displayProject === newProject) {
             console.log('No changes were made. Project was not saved.')
         } else {
+            console.log('Updating...')
+            setPendingSave(true)
             const id = await updateProject(displayProject.id, newProject)
             console.log('Transaction ID: ', id)
+            setPendingSave(false)
         }
-    }
-
-    const onLockProject = () => {
-        setNewProject((prev: any) => ({
-            ...prev,
-            isLocked: !prev.isLocked
-        }))
     }
 
     // Handle input changes
@@ -130,7 +132,7 @@ const AddProject: React.FC<any> = ({
         e.persist()
 
         // Don't allow changes if project is locked
-        if (newProject.isLocked) {
+        if (newProject.isLocked || pendingSave || pendingDelete) {
             return
         }
 
@@ -206,7 +208,7 @@ const AddProject: React.FC<any> = ({
                     <P1 color={colors.grey2}>Select a network for your project, followed by one or more smart contracts deployed on that network.</P1>
                     <br/>
                     <Label htmlFor="network">Select a project Network:</Label>
-                    <Select disabled={newProject.isLocked} defaultValue={newProject.network} onChange={handleOnChange} name="network" id="network">
+                    <Select disabled={newProject.isLocked || pendingSave || pendingDelete} defaultValue={newProject.network} onChange={handleOnChange} name="network" id="network">
                         <option value="">choose an option</option>
                         <option value="rinkeby">rinkeby</option>
                         <option value="mainnet">mainnet</option>
@@ -220,7 +222,7 @@ const AddProject: React.FC<any> = ({
                     <br />
                     <br />
                     <Label htmlFor="contract">Add Smart Contract:</Label>
-                    <Select disabled={newProject.isLocked} defaultValue={''} onChange={handleOnChange} name="contract" id="contract">
+                    <Select disabled={newProject.isLocked || pendingSave || pendingDelete} defaultValue={''} onChange={handleOnChange} name="contract" id="contract">
                         <option value={''}>choose an option</option>
                         {newProject.network !== '' && contractsArray.filter((contract: { network: any }) => contract.network === newProject.network).map((contract: any, index: any) => {
                             return <option key={index} value={contract.id}>{contract.name}</option>
@@ -284,15 +286,23 @@ const AddProject: React.FC<any> = ({
                     <br/>
 
                     <ButtonsContainer1>
-                        <ButtonAction2 disabled={newProject.isLocked} active={newProject.isPaused} onClick={() => setNewProject((prev: any) => ({...prev, isPaused: !prev.isPaused}))}>{!newProject.isPaused ? 'Enabled' : 'Paused'}</ButtonAction2>
-                        <ButtonAction2 active={newProject.isLocked} onClick={onLockProject}>{!newProject.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
+                        <ButtonAction2 disabled={newProject.isLocked || pendingSave || pendingDelete} active={newProject.isPaused} onClick={() => setNewProject((prev: any) => ({...prev, isPaused: !prev.isPaused}))}>{!newProject.isPaused ? 'Enabled' : 'Paused'}</ButtonAction2>
+                        <ButtonAction2 disabled={pendingSave || pendingDelete} active={newProject.isLocked} onClick={() => setNewProject((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newProject.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
                     </ButtonsContainer1>
                 </CardContainer>
             </Card>
             
             <ButtonsContainer2>
-                <ButtonAction1 onClick={!isNew ? onUpdateProject : onAddNewProject}>Save</ButtonAction1>
-                {!isNew && (!newProject.isPaused && <ButtonAction1 color={colors.red} onClick={onDeleteProject}>Delete</ButtonAction1>)}
+                <ButtonAction1 disabled={pendingSave || pendingDelete} onClick={!isNew ? onUpdateProject : onAddNewProject}>
+                    {
+                        pendingSave ? <SpinnerTransaction /> : 'Save'
+                    }
+                </ButtonAction1>
+                {!isNew && (!newProject.isPaused && <ButtonAction1 disabled={pendingSave || pendingDelete}  color={colors.red} onClick={onDeleteProject}>
+                    {
+                        pendingDelete ? <SpinnerTransaction /> : 'Delete'
+                    }
+                </ButtonAction1>)}
             </ButtonsContainer2>
         </Main>
     )

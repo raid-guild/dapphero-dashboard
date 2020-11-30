@@ -8,6 +8,7 @@ import { ButtonAction1, ButtonAction2, ButtonsContainer2 } from './Buttons'
 import { Card, CardContainer, Main } from './Containers'
 import { Label, Input, Select, TextArea } from './Form'
 import Line from './Line'
+import SpinnerTransaction from './SpinnerTransaction'
 import { colors } from './Theme'
 import { H3, P1 } from './Typography'
 
@@ -17,6 +18,8 @@ const AddContract: React.FC<any> = ({
 }) => {
     const [ isNew, setIsNew ] = React.useState<boolean>(false)
     const [ newContract, setNewContract ] = React.useState(displayContract)
+    const [ pendingSave, setPendingSave ] = React.useState<boolean>(false)
+    const [ pendingDelete, setPendingDelete ] = React.useState<boolean>(false)
 
     // Hooks
     const { addContract, deleteContract, updateContract } = useContracts(wallet)
@@ -31,15 +34,19 @@ const AddContract: React.FC<any> = ({
     // Add new contract
     const onAddNewContract = async () => {
         console.log('Adding...')
+        setPendingSave(true)
         const id = await addContract(newContract)
         console.log('Transaction ID:', id)
+        setPendingSave(false)
     }
 
     // Delete contract
     const onDeleteContract = async () => {
         console.log('Deleting...')
+        setPendingDelete(true)
         const id = await deleteContract(newContract.id)
         console.log('Transaction ID:', id)
+        setPendingDelete(false)
     }
 
     // Update contract
@@ -48,14 +55,16 @@ const AddContract: React.FC<any> = ({
             console.log('No changes were made. Contract did not update.')
         } else {
             console.log('Updating...')
+            setPendingSave(true)
             const id = await updateContract(displayContract.id, newContract)
             console.log('Transaction ID:', id)
+            setPendingSave(false)
         }
     }
 
     // Handle changes to contract details
     const handleOnChange = (e: any) => {
-        if (newContract.isLocked) {
+        if (newContract.isLocked || pendingSave || pendingDelete) {
             return
         }
 
@@ -100,7 +109,7 @@ const AddContract: React.FC<any> = ({
                     <P1 color={colors.grey2}>Please provide the network, address and ABI of your smart contract. If your contract is a verified Etherscan contract, you can load the ABI automatically.</P1>
                     <br/>
                     <Label htmlFor="network">Select a project Network:</Label>
-                    <Select disabled={newContract.isLocked} defaultValue={newContract.network} onChange={handleOnChange} name="network" id="network">
+                    <Select disabled={newContract.isLocked || pendingSave || pendingDelete} defaultValue={newContract.network} onChange={handleOnChange} name="network" id="network">
                         <option value="">choose an option</option>
                         <option value="rinkeby">rinkeby</option>
                         <option value="mainnet">mainnet</option>
@@ -135,13 +144,21 @@ const AddContract: React.FC<any> = ({
                 <CardContainer>
                     <P1 color={colors.grey2}>To prevent accidental contract deletion you can lock it here.</P1>
                     <br/>
-                    <ButtonAction2 active={newContract.isLocked} onClick={() => setNewContract((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newContract.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
+                    <ButtonAction2 disabled={pendingSave || pendingDelete} active={newContract.isLocked} onClick={() => setNewContract((prev: any) => ({...prev, isLocked: !prev.isLocked}))}>{!newContract.isLocked ? 'Lock' : 'Locked'}</ButtonAction2>
                 </CardContainer>
             </Card>
 
             <ButtonsContainer2>
-                <ButtonAction1 onClick={!isNew ? onUpdateContract : onAddNewContract}>Save</ButtonAction1>
-                {!isNew && (!newContract.isLocked && <ButtonAction1 color={colors.red} onClick={onDeleteContract}>Delete</ButtonAction1>)}
+                <ButtonAction1 disabled={pendingSave || pendingDelete} onClick={!isNew ? onUpdateContract : onAddNewContract}>
+                    {
+                        pendingSave ? <SpinnerTransaction /> : 'Save'
+                    }
+                </ButtonAction1>
+                {!isNew && (!newContract.isLocked && <ButtonAction1 disabled={pendingSave || pendingDelete} color={colors.red} onClick={onDeleteContract}>
+                    {
+                        pendingDelete ? <SpinnerTransaction /> : 'Delete'
+                    }
+                </ButtonAction1>)}
             </ButtonsContainer2>
         </Main>
     )
