@@ -112,4 +112,18 @@ const LogoImage = styled.img`
     height: 100%;
     margin: 0px;
     width: 100%;
+    
+    animation-name: fade;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+
+    @keyframes fade {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
 `
