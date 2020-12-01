@@ -2,7 +2,7 @@ import useArweave from './useArweave'
 import { readContract, selectWeightedPstHolder } from 'smartweave'
 import { JWKInterface } from 'arweave/node/lib/wallet'
 
-const PST_TOKEN_ID = '19tBk-g7euaGOJbT62BAIZqcxrUkraQ82d-3eqDHFzQ'
+const PST_TOKEN_ID = 'd2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc'
 
 export default function usePST(wallet: JWKInterface) {
     const arweave = useArweave()

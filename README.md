@@ -4,6 +4,9 @@ Currently deployed at: https://arweave.net/lJsYXtg7_1EF8QeOU4jf5C5x0nCjOyc1vWkIk
 ## DappHero Core
 Latest core deployment at: https://arweave.net/LLFlLl7dugP4SEGTKvwWWllsBZLAaQLIXiLV729Z_kU
 
+## Profit Sharing Community
+https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc
+
 ## Goals
 - [x] Deploy to Arweave
 - [x] Deploy dapphero-core to [Arweave](https://arweave.net/QXLKZsu2DLUonKxDC5j1DR9dZhtp2C2i-NHWHTezbzQ)
