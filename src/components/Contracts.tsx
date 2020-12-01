@@ -3,7 +3,7 @@ import React from 'react'
 // Components
 import { ButtonAction1 } from '../components/Buttons'
 import { Main } from './Containers'
-import { IsLocked, Dot, Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow } from './Table'
+import { IsLocked, IsUnlocked, Dot, Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow } from './Table'
 import Spinner from './Spinner'
 import { colors } from '../components/Theme'
 import { H4, H5, P1 } from '../components/Typography'
@@ -50,7 +50,7 @@ const Contracts: React.FC<any> = ({
                                 <TableBodyCell>
                                     <P1 color={contract.network ? colors.green : colors.red}>{contract.network ? contract.network : 'missing'}</P1>
                                 </TableBodyCell>
-                                <TableBodyCell>{contract.isLocked ? 'Locked' : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
+                                <TableBodyCell>{contract.isLocked ? <IsUnlocked>locked</IsUnlocked> : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
                             </TableBodyRow>
                         )
                     })}

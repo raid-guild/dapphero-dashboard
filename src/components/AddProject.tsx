@@ -76,7 +76,7 @@ const AddProject: React.FC<any> = ({
             ...prev,
             contracts: newContractsArray
         }))
-        console.log('add')
+        console.log('Contract added.')
     }
 
     // Remove contract from display
@@ -95,40 +95,55 @@ const AddProject: React.FC<any> = ({
 
     React.useEffect(() => {
         displayContracts()
-    }, [displayContracts, newProject])
+    }, [displayContracts])
 
     // Add new project
     const onAddNewProject = async () => {
-        console.log('Saving...')
-        setPendingSave(true)
-        const id = await addProject(newProject)
-        console.log('Transaction ID: ', id)
-        onSnackbar(id)
-        setPendingSave(false)
+        try {
+            console.log('Saving...')
+            setPendingSave(true)
+            const id = await addProject(newProject)
+            console.log('Transaction ID: ', id)
+            onSnackbar(id)
+            setPendingSave(false)
+        } catch (err) {
+            console.error(`Can't add project to Arweave.`, err)
+        }
+        
     }
 
     // Delete project
     const onDeleteProject = async () => {
-        console.log('Deleting...')
-        setPendingDelete(true)
-        const id = await deleteProject(newProject.id)
-        console.log('Transaction ID: ', id)
-        onSnackbar(id)
-        setPendingDelete(false)
+        try {
+            console.log('Deleting...')
+            setPendingDelete(true)
+            const id = await deleteProject(newProject.id)
+            console.log('Transaction ID: ', id)
+            onSnackbar(id)
+            setPendingDelete(false)
+        } catch (err) {
+            console.error(`Can't delete project on Arweave.`, err)
+        }
+        
     }
 
     // Update project
     const onUpdateProject = async () => {
-        if (displayProject === newProject) {
-            console.log('No changes were made. Project was not saved.')
-        } else {
-            console.log('Updating...')
-            setPendingSave(true)
-            const id = await updateProject(displayProject.id, newProject)
-            console.log('Transaction ID: ', id)
-            onSnackbar(id)
-            setPendingSave(false)
+        try {
+            if (displayProject === newProject) {
+                console.log('No changes were made. Project was not saved.')
+            } else {
+                console.log('Updating...')
+                setPendingSave(true)
+                const id = await updateProject(displayProject.id, newProject)
+                console.log('Transaction ID: ', id)
+                onSnackbar(id)
+                setPendingSave(false)
+            }
+        } catch (err) {
+            console.error(`Can't update project on Arweave.`, err)
         }
+        
     }
 
     // Handle input changes
@@ -162,8 +177,6 @@ const AddProject: React.FC<any> = ({
             ...prev,
             [e.target.id]: e.target.value
         }))
-
-        console.log(newProject.isLocked)
     }
 
     // Handle copy on script tag
@@ -269,7 +282,7 @@ const AddProject: React.FC<any> = ({
                     <InputCopy
                         id='script'
                         required
-                        defaultValue={`<script src="https://arweave.net/LLFlLl7dugP4SEGTKvwWWllsBZLAaQLIXiLV729Z_kU" id="dh-apiKey" data-api="${newProject.id}"></script>`}
+                        defaultValue={`<script src="https://arweave.net/aRnzGy1O31tnJbjBKk6zoe7u5FpnTxFL0Q5Fs-HuB8Q" id="dh-apiKey" data-api="${newProject.id}"></script>`}
                     />
                     <ButtonAction1 onClick={onCopy}>{!isCopied ? 'Copy' : 'Copied!'}</ButtonAction1>
                 </CardContainer>)}

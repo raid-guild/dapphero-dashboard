@@ -29,6 +29,7 @@ const App = () => {
 	const [displayContract, setDisplayContract] = React.useState(DEFAULT_CONTRACT)
 	const [displayProject, setDisplayProject] = React.useState(DEFAULT_PROJECT)
 	const [contractsArray, setContractsArray] = React.useState<any[]>([])
+	const [loginError, setLoginError] = React.useState<boolean>(false)
 	const [projectsArray, setProjectsArray] = React.useState<any[]>([])
 	const [transactionId, setTransactionId] = React.useState<string>('')
 	const [snackbar, setSnackbar] = React.useState<boolean>(false)
@@ -44,7 +45,6 @@ const App = () => {
 	// Load initial State
 	React.useEffect(() => {
 		const setInitialState = async () => {
-	
 			// Grabs all user projects from smartweave contract
 			const projectsResult = await getAllProjects()
 			const newProjectsArray = addIdsToArrary(projectsResult)
@@ -59,7 +59,11 @@ const App = () => {
 		}
 
 		if (wallet) {
-			setInitialState()
+			try {
+				setInitialState()
+			} catch (err) {
+				console.error(`can't retrieve data from Arweave.`, err)
+			}
 		}
 		return
 	// eslint-disable-next-line
@@ -68,9 +72,17 @@ const App = () => {
 	// Upload wallet
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const fileReader = new FileReader()
+		
 		fileReader.onload = async (e) => {
-			setWallet(JSON.parse(e.target!.result as string))
+			try {
+				setWallet(JSON.parse(e.target!.result as string))
+			} catch (err) {
+				setLoginError(true)
+				console.error('Invalid wallet was uploaded.', err)
+			}
 		}
+		
+
 		if (evt.target.files?.length) {
 			fileReader.readAsText(evt.target.files[0])
 		}
@@ -104,7 +116,7 @@ const App = () => {
 	return (
 		<>
 			{!wallet &&
-				<Login uploadWallet={uploadWallet} />
+				<Login loginError={loginError} uploadWallet={uploadWallet} />
 			}
 			{wallet &&
 				(<Layout>

@@ -4,9 +4,10 @@ import { media } from '../components/Breakpoints'
 
 // Components
 import { colors, shadows } from '../components/Theme'
-import { H2 } from './Typography'
+import { H2, P1 } from './Typography'
 
 const Login: React.FC<any> = ({
+    loginError,
     uploadWallet,
 }) => {
     return (
@@ -20,6 +21,9 @@ const Login: React.FC<any> = ({
             <LoginContainer>
                 <H2>Upload a Wallet to Use App</H2>
                 <LoginInput type="file" onChange={uploadWallet} />
+                <br />
+                <br />
+                {loginError && <P1 color={colors.red}>Invalid wallet file.</P1>}
             </LoginContainer>
         </>
     )

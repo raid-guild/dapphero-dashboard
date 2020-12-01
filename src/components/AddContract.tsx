@@ -34,35 +34,47 @@ const AddContract: React.FC<any> = ({
 
     // Add new contract
     const onAddNewContract = async () => {
-        console.log('Adding...')
-        setPendingSave(true)
-        const id = await addContract(newContract)
-        console.log('Transaction ID:', id)
-        onSnackbar(id)
-        setPendingSave(false)
+        try {
+            console.log('Adding...')
+            setPendingSave(true)
+            const id = await addContract(newContract)
+            console.log('Transaction ID:', id)
+            onSnackbar(id)
+            setPendingSave(false)
+        } catch (err) {
+            console.error(`Can't add contract to Arweave.`, err)
+        }
     }
 
     // Delete contract
     const onDeleteContract = async () => {
-        console.log('Deleting...')
-        setPendingDelete(true)
-        const id = await deleteContract(newContract.id)
-        console.log('Transaction ID:', id)
-        onSnackbar(id)
-        setPendingDelete(false)
+        try {
+            console.log('Deleting...')
+            setPendingDelete(true)
+            const id = await deleteContract(newContract.id)
+            console.log('Transaction ID:', id)
+            onSnackbar(id)
+            setPendingDelete(false)
+        } catch (err) {
+            console.error(`Can't delete contract on Arweave.`, err)
+        }
     }
 
     // Update contract
     const onUpdateContract = async () => {
-        if (displayContract === newContract) {
-            console.log('No changes were made. Contract did not update.')
-        } else {
-            console.log('Updating...')
-            setPendingSave(true)
-            const id = await updateContract(displayContract.id, newContract)
-            console.log('Transaction ID:', id)
-            onSnackbar(id)
-            setPendingSave(false)
+        try {
+            if (displayContract === newContract) {
+                console.log('No changes were made. Contract did not update.')
+            } else {
+                console.log('Updating...')
+                setPendingSave(true)
+                const id = await updateContract(displayContract.id, newContract)
+                console.log('Transaction ID:', id)
+                onSnackbar(id)
+                setPendingSave(false)
+            }
+        } catch (err) {
+            console.error(`Can't update contract on Arweave.`, err)
         }
     }
 

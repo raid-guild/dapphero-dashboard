@@ -15,6 +15,17 @@ export const IsLocked = styled.div`
     width: 9rem;
 `
 
+export const IsUnlocked = styled.div`
+    border: 1px solid ${colors.green};
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin: 0 auto;
+    padding: .3rem;
+    transition: all .3s ease;
+    width: 9rem;
+`
+
 export const Table = styled.table`
     border-radius: 5px;
     border-collapse: collapse;

@@ -4,7 +4,7 @@ import React from 'react'
 import { colors } from '../components/Theme'
 import { ButtonAction1 } from '../components/Buttons'
 import Spinner from './Spinner'
-import { IsLocked, Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow, Dot} from './Table'
+import { IsLocked, IsUnlocked, Table, TableBodyCell, TableBodyRow, TableHeadCell, TableHeadRow, Dot} from './Table'
 import { H4, H5, P1 } from '../components/Typography'
 import { Main } from './Containers'
 
@@ -51,7 +51,7 @@ const Projects: React.FC<any> = ({
                                 <TableBodyCell>
                                     <P1 color={project.network ? colors.green : colors.red}>{project.network ? project.network : 'missing'}</P1>
                                 </TableBodyCell>
-                                <TableBodyCell>{project.isLocked ? 'Locked' : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
+                                <TableBodyCell>{project.isLocked ? <IsUnlocked>locked</IsUnlocked> : <IsLocked>unlocked</IsLocked>}</TableBodyCell>
                             </TableBodyRow>
                         )
                     })}
