@@ -13,7 +13,7 @@ const Navigation: React.FC<any> = ({
     return (
         <NavigationContainer>
             <LogoContainer onClick={() => setRouter('projects')}>
-                <LogoImage alt="DappHero Logo" src="https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y" />
+                <LogoImage alt="DappHero Logo" src="https://arweave.net/AZMyGTPMuq5A-iqGGz87rLRM7oXxE8nBymprqmWUh48" />
             </LogoContainer>
             <NavigationGroup
                 iconAltText="Projects"

@@ -13,7 +13,7 @@ const Login: React.FC<any> = ({
     return (
         <>
             <LogoContainer>
-                <LogoImage alt="DappHero Logo" src="https://arweave.net/Se6yGCl5B03DxosnMjmhA1eoOwsIO0bsHaGIJmr7N5Y" />
+                <LogoImage alt="DappHero Logo" src="https://arweave.net/AZMyGTPMuq5A-iqGGz87rLRM7oXxE8nBymprqmWUh48" />
             </LogoContainer>
             <ChangeSizeContainer>
                 <H2>Please use a desktop browser to login.</H2>
