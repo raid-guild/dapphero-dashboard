@@ -18,7 +18,7 @@ export function handle(state: any, action: ContractActionInterface) {
             creator: action.caller,
             createdAt: new Date().toUTCString(),
             updatedAt: new Date().toUTCString(),
-            isLocked: false
+            isLocked: contract.isLocked || false
         }
 
         return { state }
@@ -41,6 +41,7 @@ export function handle(state: any, action: ContractActionInterface) {
         state.contracts[id].network = contract.network
         state.contracts[id].deployedAddress = contract.deployedAddress
         state.contracts[id].abi = contract.abi
+        state.contracts[id].isLocked = contract.isLocked
         state.contracts[id].updatedAt = new Date().toUTCString()
 
         return { state }

@@ -28,8 +28,8 @@ Contracts must be compiled from Typescript before deploying by running:
 ### `yarn build-contracts`
 The contracts and state json will be in the `dist` folder
 ## Current Deployed Addresses
-- Projects: `QYKnm-uZY9Ib6r-jwD4HXmkmyjtjWrjBiVTPgx6X1n0`
-- Contracts: `FgnK-IPuHLyQhGS_zQUCj22E0Tom-kFEun8zxaoRme4`
+- Projects: `7UkUpwjSn8dWMUYU-XRfeHq68uzH8lbBYjEp5BYnOXY`
+- Contracts: `vgRwEGqrDsImkGXG9GNxBwCYR6-AVTKiet1kw-M_GdY`
 
 ## Tests
  You can run tests with the following command:

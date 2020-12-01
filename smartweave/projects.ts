@@ -18,8 +18,8 @@ export function handle(state: any, action: ProjectActionInterface) {
             creator: action.caller,
             createdAt: new Date().toUTCString(),
             updatedAt: new Date().toUTCString(),
-            isPaused: false,
-            isLocked: false
+            isPaused: project.isPaused || false,
+            isLocked: project.isLocked || false
         }
 
         return { state }
@@ -42,6 +42,8 @@ export function handle(state: any, action: ProjectActionInterface) {
         state.projects[id].coverImg = project.coverImg
         state.projects[id].network = project.network
         state.projects[id].contracts = project.contracts
+        state.projects[id].isPaused = project.isPaused
+        state.projects[id].isLocked = project.isLocked
         state.projects[id].updatedAt = new Date().toUTCString()
 
         return { state }

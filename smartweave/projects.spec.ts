@@ -37,6 +37,8 @@ describe('Create, Update, Fetch Projects', () => {
                     description: 'Blah blah blah',
                     coverImg: 'https://example.com/cover.png',
                     network: 'mainnet',
+                    isPaused: true,
+                    isLocked: false,
                     contracts: []
                 }
             }, caller: addresses.user
@@ -72,7 +74,9 @@ describe('Create, Update, Fetch Projects', () => {
                     network: 'rinkeby',
                     contracts: [
                         '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF'
-                    ]
+                    ],
+                    isLocked: true,
+                    isPaused: true
                 }
             }, caller: addresses.user
         })
@@ -81,6 +85,8 @@ describe('Create, Update, Fetch Projects', () => {
         expect(state.projects[updateId].description).toBe('Blah blah blah (Updated)')
         expect(state.projects[updateId].coverImg).toBe('https://example.com/cover_updated.png')
         expect(state.projects[updateId].network).toBe('rinkeby')
+        expect(state.projects[updateId].isPaused).toBe(true)
+        expect(state.projects[updateId].isLocked).toBe(true)
         expect(state.projects[updateId].contracts[0]).toBe('0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF')
     })
 

@@ -37,7 +37,8 @@ describe('Create, Update, Fetch Contracts', () => {
                     description: 'Blah blah blah',
                     deployedAddress: '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF',
                     network: 'mainnet',
-                    abi: '[{}]'
+                    abi: '[{}]',
+                    isLocked: true
                 }
             }, caller: addresses.user
         })
@@ -70,7 +71,8 @@ describe('Create, Update, Fetch Contracts', () => {
                     description: 'Blah blah blah (Updated)',
                     deployedAddress: '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cG',
                     network: 'rinkeby',
-                    abi: '[{"foo":"foo"}]'
+                    abi: '[{"foo":"foo"}]',
+                    isLocked: true
                 }
             }, caller: addresses.user
         })
@@ -80,6 +82,7 @@ describe('Create, Update, Fetch Contracts', () => {
         expect(state.contracts[updateId].deployedAddress).toBe('0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cG')
         expect(state.contracts[updateId].network).toBe('rinkeby')
         expect(state.contracts[updateId].abi).toBe('[{"foo":"foo"}]')
+        expect(state.contracts[updateId].isLocked).toBe(true)
     })
 
     it('Should not allow updates of contracts not owned by the caller', () => {
