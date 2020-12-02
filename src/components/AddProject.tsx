@@ -17,6 +17,8 @@ const AddProject: React.FC<any> = ({
     contractsArray,
     displayProject,
     onSnackbar,
+    setRouter,
+    subscribeToTransaction,
     wallet,
 }) => {
     const [ newContract, setNewContract ] = React.useState<string>('')
@@ -35,7 +37,6 @@ const AddProject: React.FC<any> = ({
         if (newProject.id === undefined) {
             setIsNew(true)
         }
-
     }, [newProject])
 
     // Get contracts to display
@@ -106,6 +107,8 @@ const AddProject: React.FC<any> = ({
             console.log('Transaction ID: ', id)
             onSnackbar(id)
             setPendingSave(false)
+            setRouter('projects')
+            subscribeToTransaction(id)
         } catch (err) {
             console.error(`Can't add project to Arweave.`, err)
         }
@@ -121,6 +124,8 @@ const AddProject: React.FC<any> = ({
             console.log('Transaction ID: ', id)
             onSnackbar(id)
             setPendingDelete(false)
+            setRouter('projects')
+            subscribeToTransaction(id)
         } catch (err) {
             console.error(`Can't delete project on Arweave.`, err)
         }

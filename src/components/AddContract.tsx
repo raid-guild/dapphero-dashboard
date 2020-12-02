@@ -15,6 +15,8 @@ import { H3, P1 } from './Typography'
 const AddContract: React.FC<any> = ({
     displayContract,
     onSnackbar,
+    setRouter,
+    subscribeToTransaction,
     wallet,
 }) => {
     const [ isNew, setIsNew ] = React.useState<boolean>(false)
@@ -41,6 +43,8 @@ const AddContract: React.FC<any> = ({
             console.log('Transaction ID:', id)
             onSnackbar(id)
             setPendingSave(false)
+            setRouter('projects')
+            subscribeToTransaction(id)
         } catch (err) {
             console.error(`Can't add contract to Arweave.`, err)
         }
@@ -55,6 +59,8 @@ const AddContract: React.FC<any> = ({
             console.log('Transaction ID:', id)
             onSnackbar(id)
             setPendingDelete(false)
+            setRouter('projects')
+            subscribeToTransaction(id)
         } catch (err) {
             console.error(`Can't delete contract on Arweave.`, err)
         }

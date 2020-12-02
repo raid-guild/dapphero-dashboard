@@ -5,6 +5,7 @@ import { JWKInterface } from 'arweave/node/lib/wallet'
 import { DEFAULT_CONTRACT, DEFAULT_PROJECT} from './consts'
 
 // Hooks
+import useArweave from './hooks/useArweave'
 import useContracts from './hooks/useContracts'
 import useProjects from './hooks/useProjects'
 
@@ -37,27 +38,27 @@ const App = () => {
 	const [loadingData, setLoadingData] = React.useState<boolean>(true)
 
 	// Hooks
+	const arweave = useArweave()
 	const { getAllProjects } = useProjects(wallet! as JWKInterface)
 	const { getAllContracts } = useContracts(wallet! as JWKInterface)
 
-	
+	// Set Initial State
+	const setInitialState = async () => {
+		// Grabs all user projects from smartweave contract
+		const projectsResult = await getAllProjects()
+		const newProjectsArray = addIdsToArrary(projectsResult)
+		setProjectsArray(newProjectsArray)
 
-	// Load initial State
+		// Grabs all user contracts from smartweave contract
+		const contractsResult = await getAllContracts()
+		const newContractsArray = addIdsToArrary(contractsResult)
+		setContractsArray(newContractsArray)
+
+		setLoadingData(false)
+	}
+
+	// setInitialState when mounted
 	React.useEffect(() => {
-		const setInitialState = async () => {
-			// Grabs all user projects from smartweave contract
-			const projectsResult = await getAllProjects()
-			const newProjectsArray = addIdsToArrary(projectsResult)
-			setProjectsArray(newProjectsArray)
-
-			// Grabs all user contracts from smartweave contract
-			const contractsResult = await getAllContracts()
-			const newContractsArray = addIdsToArrary(contractsResult)
-			setContractsArray(newContractsArray)
-
-			setLoadingData(false)
-		}
-
 		if (wallet) {
 			try {
 				setInitialState()
@@ -68,6 +69,18 @@ const App = () => {
 		return
 	// eslint-disable-next-line
 	}, [wallet])
+	
+	// Subscribe to transaction
+	const subscribeToTransaction = async (transaction: string) => {
+		arweave.transactions.getStatus(transaction).then(status => {
+			if (status.confirmed == null) {
+				setTimeout(() => subscribeToTransaction(transaction), 10000);
+			} else {
+				setInitialState()
+				console.log('Transaction confirmed: ', transaction);
+			}
+		})
+	}
 
 	// Upload wallet
 	const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,6 +145,8 @@ const App = () => {
 						contractsArray={contractsArray}
 						displayProject={displayProject}
 						onSnackbar={onSnackbar}
+						setRouter={setRouter}
+						subscribeToTransaction={subscribeToTransaction}
 						wallet={wallet}
 					/>}
 					{router === 'contracts' && <Contracts
@@ -142,6 +157,8 @@ const App = () => {
 					{router === 'contract' && <AddContract
 						displayContract={displayContract}
 						onSnackbar={onSnackbar}
+						setRouter={setRouter}
+						subscribeToTransaction={subscribeToTransaction}
 						wallet={wallet}
 					/>}
 				</Layout>)
