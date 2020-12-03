@@ -35,7 +35,7 @@ const App = () => {
 	const [transactionId, setTransactionId] = React.useState<string>('')
 	const [snackbar, setSnackbar] = React.useState<boolean>(false)
 
-	const [loadingData, setLoadingData] = React.useState<boolean>(true)
+	const [loadingData, setLoadingData] = React.useState<boolean>(false)
 
 	// Hooks
 	const arweave = useArweave()
@@ -44,6 +44,8 @@ const App = () => {
 
 	// Set Initial State
 	const setInitialState = async () => {
+		console.log('Retrieving data...')
+		setLoadingData(true)
 		// Grabs all user projects from smartweave contract
 		const projectsResult = await getAllProjects()
 		const newProjectsArray = addIdsToArrary(projectsResult)

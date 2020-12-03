@@ -22,8 +22,8 @@ export const CardContainer = styled.div`
 
 export const Main = styled.main<MainProps>`
 	grid-column: 2 / -1;
-	grid-row: 2 / -1;
-    padding: 5rem;
+    grid-row: 1 / -1;
+    padding: 17rem 5rem 5rem;
 
     ${props => css`
         background: ${props.background};

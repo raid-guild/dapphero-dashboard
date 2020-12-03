@@ -14,8 +14,14 @@ const Projects: React.FC<any> = ({
     projectsArray,
 }) => {
 
+    React.useEffect(() => {
+        let el = document.getElementById('top') as HTMLElement
+        el.scrollIntoView({behavior: 'smooth', block: 'start'})
+
+    }, [])
+
     return (
-        <Main background={colors.white}>
+        <Main id="top" background={colors.white}>
             <H4>Functionality in DappHero is built around projects. Contract, Networks, and other features belong to an individual project, and this project becomes available on your website via script tag.</H4>
             <ButtonAction1 onClick={onSelectProject.bind(this, 'default')}>New +</ButtonAction1>
             {!loadingData && <Table>

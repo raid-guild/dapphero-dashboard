@@ -31,8 +31,11 @@ const AddContract: React.FC<any> = ({
         if (newContract.id === undefined) {
             setIsNew(true)
         }
+        let el = document.getElementById('top') as HTMLElement
+        el.scrollIntoView({behavior: 'smooth', block: 'start'})
         return
-    }, [newContract])
+    // eslint-disable-next-line
+    }, [])
 
     // Add new contract
     const onAddNewContract = async () => {
@@ -43,7 +46,7 @@ const AddContract: React.FC<any> = ({
             console.log('Transaction ID:', id)
             onSnackbar(id)
             setPendingSave(false)
-            setRouter('projects')
+            setRouter('contracts')
             subscribeToTransaction(id)
         } catch (err) {
             console.error(`Can't add contract to Arweave.`, err)
@@ -59,7 +62,7 @@ const AddContract: React.FC<any> = ({
             console.log('Transaction ID:', id)
             onSnackbar(id)
             setPendingDelete(false)
-            setRouter('projects')
+            setRouter('contracts')
             subscribeToTransaction(id)
         } catch (err) {
             console.error(`Can't delete contract on Arweave.`, err)
@@ -98,7 +101,7 @@ const AddContract: React.FC<any> = ({
     }
     
     return (
-        <Main background={colors.grey}>
+        <Main id="top" background={colors.grey}>
             <Card>
                 <CardContainer>
                     <H3>Basic Information</H3>

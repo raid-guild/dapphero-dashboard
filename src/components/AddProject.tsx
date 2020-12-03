@@ -37,7 +37,12 @@ const AddProject: React.FC<any> = ({
         if (newProject.id === undefined) {
             setIsNew(true)
         }
-    }, [newProject])
+
+        let el = document.getElementById('top') as HTMLElement
+        el.scrollIntoView({behavior: 'smooth', block: 'start'})
+        return
+        // eslint-disable-next-line
+    }, [])
 
     // Get contracts to display
     const displayContracts = React.useCallback(
@@ -197,7 +202,7 @@ const AddProject: React.FC<any> = ({
     }
 
     return (
-        <Main background={colors.grey}>
+        <Main id="top" background={colors.grey}>
             <Card>
                 <CardContainer>
                     <H3>Basic Information</H3>

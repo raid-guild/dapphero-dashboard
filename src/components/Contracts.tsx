@@ -13,8 +13,14 @@ const Contracts: React.FC<any> = ({
     loadingData,
     onSelectContract,
 }) => {
+    React.useEffect(() => {
+        let el = document.getElementById('top') as HTMLElement
+        el.scrollIntoView({behavior: 'smooth', block: 'start'})
+
+    }, [])
+
     return (
-        <Main background={colors.white}>
+        <Main id="top" background={colors.white}>
             <H4>The Contracts tab offers you a quick overview of the contracts you have associated with your DappHero Account. Once you create a contract here, you will be able to use it in an of your DappHero projects.</H4>
             <ButtonAction1 onClick={onSelectContract.bind(this, 'default')}>New +</ButtonAction1>
             {!loadingData && <Table>
