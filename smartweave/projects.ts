@@ -15,6 +15,7 @@ export function handle(state: any, action: ProjectActionInterface) {
             coverImg: project.coverImg,
             network: project.network,
             contracts: project.contracts,
+            provider: project.provider,
             creator: action.caller,
             createdAt: new Date().toUTCString(),
             updatedAt: new Date().toUTCString(),
@@ -42,6 +43,7 @@ export function handle(state: any, action: ProjectActionInterface) {
         state.projects[id].coverImg = project.coverImg
         state.projects[id].network = project.network
         state.projects[id].contracts = project.contracts
+        state.projects[id].provider = project.provider
         state.projects[id].isPaused = project.isPaused
         state.projects[id].isLocked = project.isLocked
         state.projects[id].updatedAt = new Date().toUTCString()

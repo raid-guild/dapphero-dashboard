@@ -37,6 +37,7 @@ describe('Create, Update, Fetch Projects', () => {
                     description: 'Blah blah blah',
                     coverImg: 'https://example.com/cover.png',
                     network: 'mainnet',
+                    provider: 'https://infura.io/blahblahblah',
                     isPaused: true,
                     isLocked: false,
                     contracts: []
@@ -56,6 +57,7 @@ describe('Create, Update, Fetch Projects', () => {
                     description: 'Blah blah blah',
                     coverImg: 'https://example.com/cover.png',
                     network: 'mainnet',
+                    provider: 'https://infura.io/blahblahblah',
                     contracts: []
                 }
             }, caller: addresses.user
@@ -72,6 +74,7 @@ describe('Create, Update, Fetch Projects', () => {
                     description: 'Blah blah blah (Updated)',
                     coverImg: 'https://example.com/cover_updated.png',
                     network: 'rinkeby',
+                    provider: 'https://infura.io/12345',
                     contracts: [
                         '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF'
                     ],
@@ -85,6 +88,7 @@ describe('Create, Update, Fetch Projects', () => {
         expect(state.projects[updateId].description).toBe('Blah blah blah (Updated)')
         expect(state.projects[updateId].coverImg).toBe('https://example.com/cover_updated.png')
         expect(state.projects[updateId].network).toBe('rinkeby')
+        expect(state.projects[updateId].provider).toBe('https://infura.io/12345')
         expect(state.projects[updateId].isPaused).toBe(true)
         expect(state.projects[updateId].isLocked).toBe(true)
         expect(state.projects[updateId].contracts[0]).toBe('0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF')
@@ -99,6 +103,7 @@ describe('Create, Update, Fetch Projects', () => {
                     description: 'Blah blah blah',
                     coverImg: 'https://example.com/cover.png',
                     network: 'mainnet',
+                    provider: 'https://infura.io/blahblahblah',
                     contracts: []
                 }
             }, caller: addresses.user
@@ -116,6 +121,7 @@ describe('Create, Update, Fetch Projects', () => {
                         description: 'Blah blah blah (Updated)',
                         coverImg: 'https://example.com/cover_updated.png',
                         network: 'rinkeby',
+                        provider: 'https://infura.io/12345',
                         contracts: [
                             '0xCfb67396c3Af5Bb5B67381Dfa23f52A1A24E57cF'
                         ]
@@ -130,6 +136,7 @@ describe('Create, Update, Fetch Projects', () => {
         expect(state.projects[updateId].description).toBe('Blah blah blah')
         expect(state.projects[updateId].coverImg).toBe('https://example.com/cover.png')
         expect(state.projects[updateId].network).toBe('mainnet')
+        expect(state.projects[updateId].provider).toBe('https://infura.io/blahblahblah')
         expect(state.projects[updateId].contracts[0]).toBe(undefined)
     })
 
@@ -139,6 +146,7 @@ describe('Create, Update, Fetch Projects', () => {
             description: 'Blah blah blah',
             coverImg: 'https://example.com/cover.png',
             network: 'mainnet',
+            provider: 'https://infura.io/blahblahblah', 
             contracts: []
         }
 
@@ -162,6 +170,7 @@ describe('Create, Update, Fetch Projects', () => {
         expect(data.result.description).toBe('Blah blah blah')
         expect(data.result.coverImg).toBe('https://example.com/cover.png')
         expect(data.result.network).toBe('mainnet')
+        expect(data.result.provider).toBe('https://infura.io/blahblahblah')
     })
 
     it('Should delete an existing project', async () => {
@@ -170,6 +179,7 @@ describe('Create, Update, Fetch Projects', () => {
             description: 'Blah blah blah',
             coverImg: 'https://example.com/cover.png',
             network: 'mainnet',
+            provider: 'https://infura.io/blahblahblah',
             contracts: []
         }
 
@@ -198,6 +208,7 @@ describe('Create, Update, Fetch Projects', () => {
             description: 'Blah blah blah',
             coverImg: 'https://example.com/cover.png',
             network: 'mainnet',
+            provider: 'https://infura.io/blahblahblah',
             contracts: []
         }
 

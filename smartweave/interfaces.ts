@@ -18,6 +18,7 @@ export interface ProjectInterface {
     description: string
     coverImg: string
     network: NetworkType
+    provider: string
     contracts: string[]
     creator?: string
     createdAt?: string

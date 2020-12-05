@@ -5,7 +5,7 @@ import { ProjectInterface } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 import usePST from './usePST'
 
-const CONTRACT_ADDRESS = '7UkUpwjSn8dWMUYU-XRfeHq68uzH8lbBYjEp5BYnOXY'
+const CONTRACT_ADDRESS = 'Gx8E31NsUjkte9RMMdYXNynHXft_vo8c_G39OlIkyiQ'
 export type ProjectList = Record<string,ProjectInterface>
 
 export default function useProjects(wallet: JWKInterface) {

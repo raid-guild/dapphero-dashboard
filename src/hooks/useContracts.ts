@@ -5,7 +5,7 @@ import { ContractInterface, ContractList } from '../../smartweave/interfaces'
 import useArweave from './useArweave'
 import usePST from './usePST'
 
-const CONTRACT_ADDRESS = 'vgRwEGqrDsImkGXG9GNxBwCYR6-AVTKiet1kw-M_GdY'
+const CONTRACT_ADDRESS = 'jYn1iueQHZBo-1EJnK6wfiJzl6nSnIdvjQthxPdlnK4'
 
 export default function useContracts(wallet: JWKInterface) {
     const arweave = useArweave()
