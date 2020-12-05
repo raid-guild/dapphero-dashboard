@@ -1,8 +1,8 @@
 # DappHero Dashboard
-Currently deployed at: https://arweave.net/CAu1mTmLFZOXIk9phcbeUBVitPPV8M0uI1UVLdFxKDo
+Currently deployed at: https://arweave.net/0jHKX9RQ8wL7WyA2zO0FYH7EB9nPiuSTlo3mxedcmrs
 
 ## DappHero Core
-Latest core deployment at: https://arweave.net/aRnzGy1O31tnJbjBKk6zoe7u5FpnTxFL0Q5Fs-HuB8Q
+Latest core deployment at: https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI
 
 ## Profit Sharing Community
 https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc

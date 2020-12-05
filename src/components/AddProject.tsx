@@ -263,6 +263,18 @@ const AddProject: React.FC<any> = ({
                         contractList={contractList}
                         onRemoveContract={onRemoveContract}
                     />
+                    <br />
+                    <br />
+                    <br />
+                    <Label htmlFor="provider">Default read-only Ethereum provider (e.g. Infura, Alchemy, etc...):</Label>
+                    <Input
+                        id='provider'
+                        onChange={handleOnChange}
+                        required
+                        value={newProject.provider}
+                        style={{marginBottom: '2rem'}}
+                    />
+                    <P2 color={colors.grey2}>(Connection must be 'HTTPS')</P2>
                 </CardContainer>
             </Card>
 
@@ -292,7 +304,7 @@ const AddProject: React.FC<any> = ({
                     <InputCopy
                         id='script'
                         required
-                        defaultValue={`<script src="https://arweave.net/aRnzGy1O31tnJbjBKk6zoe7u5FpnTxFL0Q5Fs-HuB8Q" id="dh-apiKey" data-api="${newProject.id}"></script>`}
+                        defaultValue={`<script src="https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI" id="dh-apiKey" data-api="${newProject.id}" data-provider="${newProject.provider}"></script>`}
                     />
                     <ButtonAction1 onClick={onCopy}>{!isCopied ? 'Copy' : 'Copied!'}</ButtonAction1>
                 </CardContainer>)}

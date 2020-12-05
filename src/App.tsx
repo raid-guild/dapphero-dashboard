@@ -55,6 +55,7 @@ const App = () => {
 		const contractsResult = await getAllContracts()
 		const newContractsArray = addIdsToArrary(contractsResult)
 		setContractsArray(newContractsArray)
+		console.log(newContractsArray)
 
 		setLoadingData(false)
 	}

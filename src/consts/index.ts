@@ -4,6 +4,7 @@ export const DEFAULT_PROJECT = {
     coverImg: 'Test 1 image',
     network: '',
     contracts: [],
+    provider: 'https://<network>.infura.io/v3/<Project ID>',
     creator: '',
     createdAt: '',
     updatedAt: '',
