@@ -55,7 +55,6 @@ const App = () => {
 		const contractsResult = await getAllContracts()
 		const newContractsArray = addIdsToArrary(contractsResult)
 		setContractsArray(newContractsArray)
-		console.log(newContractsArray)
 
 		setLoadingData(false)
 	}
@@ -145,6 +144,7 @@ const App = () => {
 						projectsArray={projectsArray}
 					/>}
 					{router === 'project' && <AddProject
+						arweave={arweave}
 						contractsArray={contractsArray}
 						displayProject={displayProject}
 						onSnackbar={onSnackbar}

@@ -31,11 +31,12 @@ const AddProject: React.FC<any> = ({
     const [ newContract, setNewContract ] = React.useState<string>('')
     const [ contractList, setContractList ] = React.useState<any[]>([])
     const [ isCopied, setIsCopied ] = React.useState<boolean>(false)
+    const [ isGenerated, setIsGenerated ] = React.useState<boolean>(false)
+    const [ isGenerating, setIsGenerating ] = React.useState<boolean>(false)
     const [ isNew, setIsNew ] = React.useState<boolean>(false)
     const [ newProject, setNewProject ] = React.useState(displayProject)
     const [ pendingSave, setPendingSave ] = React.useState<boolean>(false)
     const [ pendingDelete, setPendingDelete ] = React.useState<boolean>(false)
-
     const [transactionId, setTransactionId] = React.useState('')
 
     // Hooks
@@ -210,13 +211,17 @@ const AddProject: React.FC<any> = ({
         }
     }
 
-    const testDeploy = async () => {
-        const htmlData = await generateHTML()
+    // Generate HTML Link
+    const onGenerateLink = async () => {
+        setIsGenerating(true)
+
+        const htmlData = await generateHTML(newProject, contractList)
         let htmlTransaction = await arweave.createTransaction({
             data: htmlData
         }, wallet);
         htmlTransaction.addTag('Content-Type', 'text/html');
         await arweave.transactions.sign(htmlTransaction, wallet);
+
         let uploader = await arweave.transactions.getUploader(htmlTransaction);
 
         while (!uploader.isComplete) {
@@ -224,6 +229,9 @@ const AddProject: React.FC<any> = ({
             console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
             setTransactionId(htmlTransaction.id)
         }
+
+        setIsGenerated(true)
+        setIsGenerating(false)
     }
 
     return (
@@ -337,6 +345,29 @@ const AddProject: React.FC<any> = ({
 
             <Card>
                 <CardContainer>
+                    <H3>HTML Generation</H3>
+                </CardContainer>
+                <Line />
+                {isNew
+                ? (<CardContainer>
+                    <P1 color={colors.grey2}>Save project before generating HTML.</P1>
+                    <br/>
+                </CardContainer>)
+                : (<CardContainer>
+                    <P1 color={colors.grey2}>This generates a complete DappHero powered project hosted on Arweave.</P1>
+                    <br/>
+                    <ButtonAction1 onClick={onGenerateLink}>{isGenerating ? <SpinnerTransaction /> : (!isGenerated ? 'Generate link' : 'Generated!')}</ButtonAction1>
+                    {isGenerated && (
+                        <div>
+                            <br />
+                            <P1 color={colors.green}>Hosted HTML: <a rel="noreferrer" target="_blank" href={`https://arweave.net/${transactionId}`}>https://arweave.net/{transactionId}</a></P1>
+                        </div>
+                    )}
+                </CardContainer>)}
+            </Card>
+
+            <Card>
+                <CardContainer>
                     <H3>Status</H3>
                 </CardContainer>
                 <Line />
@@ -368,9 +399,6 @@ const AddProject: React.FC<any> = ({
                     }
                 </ButtonAction1>)}
             </ButtonsContainer2>
-            <br />
-            <button onClick={testDeploy}>Test Deploy</button>
-            <a rel="noreferrer" target="_blank" href={`https://arweave.net/${transactionId}`}>https://arweave.net/{transactionId}</a>
         </Main>
     )
 }

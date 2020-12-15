@@ -1,6 +1,6 @@
 export const CORE_ADDRESS = 'https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI'
 
-export const DASHBOARD_ADDRESS = 'https://arweave.net/0jHKX9RQ8wL7WyA2zO0FYH7EB9nPiuSTlo3mxedcmrs'
+export const DASHBOARD_ADDRESS = 'https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-5n16B2mCqEAw1bIFo'
 
 export const DEFAULT_CONTRACT = {
 	name: 'newContract',

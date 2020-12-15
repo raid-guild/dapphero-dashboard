@@ -1,5 +1,5 @@
 # DappHero Dashboard
-Currently deployed at: https://arweave.net/0jHKX9RQ8wL7WyA2zO0FYH7EB9nPiuSTlo3mxedcmrs
+Currently deployed at: https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-5n16B2mCqEAw1bIFo
 
 ## DappHero Core
 Latest core deployment at: https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI
@@ -7,14 +7,8 @@ Latest core deployment at: https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj
 ## Profit Sharing Community
 https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc
 
-## Goals
-- [x] Deploy to Arweave
-- [x] Deploy dapphero-core to [Arweave](https://arweave.net/QXLKZsu2DLUonKxDC5j1DR9dZhtp2C2i-NHWHTezbzQ)
-- [x] Recreate DappHero dashboard
-- [x] Implement hash routing
-- [x] On dapphero-core, replace bubble.io backend with smartweave addresses
-- [x] Configure new dapphero-core env variables
-- [x] Add transaction statuses
+## Improvements
+- [ ] User should be able to save generated HTML link on the smartweave contract
 
 ## Deployed Assets
 - Community Logo: https://arweave.net/AZMyGTPMuq5A-iqGGz87rLRM7oXxE8nBymprqmWUh48
