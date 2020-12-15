@@ -1,8 +1,5 @@
 import React from 'react'
 
-// Hooks
-import useProjects from '../hooks/useProjects'
-
 // Components
 import { ButtonAction1, ButtonAction2, ButtonsContainer1, ButtonsContainer2 } from './Buttons'
 import { Card, CardContainer, Main } from './Containers'
@@ -13,7 +10,17 @@ import SpinnerTransaction from './SpinnerTransaction'
 import { colors } from './Theme'
 import { H3, P1, P2 } from './Typography'
 
+// Consts
+import { CORE_ADDRESS } from '../consts'
+
+// Helpers
+import generateHTML from '../html-generator/api/generate-html'
+
+// Hooks
+import useProjects from '../hooks/useProjects'
+
 const AddProject: React.FC<any> = ({
+    arweave,
     contractsArray,
     displayProject,
     onSnackbar,
@@ -28,6 +35,8 @@ const AddProject: React.FC<any> = ({
     const [ newProject, setNewProject ] = React.useState(displayProject)
     const [ pendingSave, setPendingSave ] = React.useState<boolean>(false)
     const [ pendingDelete, setPendingDelete ] = React.useState<boolean>(false)
+
+    const [transactionId, setTransactionId] = React.useState('')
 
     // Hooks
     const { addProject, deleteProject, updateProject } = useProjects(wallet)
@@ -201,6 +210,22 @@ const AddProject: React.FC<any> = ({
         }
     }
 
+    const testDeploy = async () => {
+        const htmlData = await generateHTML()
+        let htmlTransaction = await arweave.createTransaction({
+            data: htmlData
+        }, wallet);
+        htmlTransaction.addTag('Content-Type', 'text/html');
+        await arweave.transactions.sign(htmlTransaction, wallet);
+        let uploader = await arweave.transactions.getUploader(htmlTransaction);
+
+        while (!uploader.isComplete) {
+        await uploader.uploadChunk();
+            console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+            setTransactionId(htmlTransaction.id)
+        }
+    }
+
     return (
         <Main id="top" background={colors.grey}>
             <Card>
@@ -304,7 +329,7 @@ const AddProject: React.FC<any> = ({
                     <InputCopy
                         id='script'
                         required
-                        defaultValue={`<script src="https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI" id="dh-apiKey" data-api="${newProject.id}" data-provider="${newProject.provider}"></script>`}
+                        defaultValue={`<script src="${CORE_ADDRESS}" id="dh-apiKey" data-api="${newProject.id}" data-provider="${newProject.provider}"></script>`}
                     />
                     <ButtonAction1 onClick={onCopy}>{!isCopied ? 'Copy' : 'Copied!'}</ButtonAction1>
                 </CardContainer>)}
@@ -343,6 +368,9 @@ const AddProject: React.FC<any> = ({
                     }
                 </ButtonAction1>)}
             </ButtonsContainer2>
+            <br />
+            <button onClick={testDeploy}>Test Deploy</button>
+            <a rel="noreferrer" target="_blank" href={`https://arweave.net/${transactionId}`}>https://arweave.net/{transactionId}</a>
         </Main>
     )
 }
