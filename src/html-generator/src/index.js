@@ -1,6 +1,3 @@
-import parserHTML from "prettier/parser-html";
-import prettier from 'prettier/standalone'
-
 // Consts
 import { CORE_ADDRESS, DASHBOARD_ADDRESS } from '../../consts'
 
@@ -18,13 +15,6 @@ const {
   getViewMethods,
   getTransactionMethods
 } = require('../lib/abi'); // string helpers
-
-
-const formatHtml = string => prettier.format(string, {
-  parser: 'html',
-  plugins: [parserHTML],
-}); // html helpers
-
 
 const getFeatureElement = ({
   name
@@ -217,26 +207,33 @@ const generateHtmlPieces = (abi = [], contractName) => {
       const key = input.name || index;
       return {
         key,
-        [key]: formatHtml(getInputElement(input, {
+        [key]: getInputElement(input, {
           id,
           key,
           hasMoreThanOneAnonymousInput
-        }))
+        })
       };
     });
     const outputElements = outputs.map((output, index) => {
+      console.log('Getting output elements')
+      console.log(getOutputElement(output, {
+        id,
+        isTransaction,
+        index
+      }))
       const key = output.name;
       return {
         key,
-        [key]: formatHtml(getOutputElement(output, {
+        [key]: getOutputElement(output, {
           id,
           isTransaction,
           index
-        }))
+        })
       };
     });
+    console.log(outputElements)
     const autoInvoke = inputs.length === 0 ? 'true' : 'false';
-    const children = formatHtml([...getHtmlFromIO(inputElements), ...getHtmlFromIO(outputElements), invoker].join(''));
+    const children = [...getHtmlFromIO(inputElements), ...getHtmlFromIO(outputElements), invoker].join('');
     const featureElement = getFeatureElement(method, {
       id,
       children,
@@ -265,6 +262,7 @@ const getHtmlPiecesFromViewMethods = (abi, contractName) => {
   _abi = abi;
   _ref2 = getMethods(_abi);
   _ref = getViewMethods(_ref2);
+  console.log(generateHtmlPieces(_ref, contractName))
 
   return generateHtmlPieces(_ref, contractName);
 };
@@ -292,12 +290,17 @@ export const getEntireHtml = ({
     name_text: contractName
   }) => {
     const abi = JSON.parse(abi_text);
+    console.log(abi)
     const htmlPiecesViewMethods = getHtmlPiecesFromViewMethods(abi, contractName);
+    console.log(htmlPiecesViewMethods)
     const htmlPiecesTransactionMethods = getHtmlPiecesFromTransactionMethods(abi, contractName);
     const viewMethodsHtml = getHtmlFromPieces(htmlPiecesViewMethods);
+    console.log(viewMethodsHtml)
     const transactionMethodsHtml = getHtmlFromPieces(htmlPiecesTransactionMethods);
     const viewMethodsHtmlWrapped = wrapIntoTags(wrapIntoTags(viewMethodsHtml, 'section', 'Public Methods'), 'header', '');
     const transactionsMethodsHtmlWrapped = wrapIntoTags(wrapIntoTags(transactionMethodsHtml, 'section', 'Transaction Methods'), 'header', '');
+    console.log(viewMethodsHtmlWrapped)
+    console.log(transactionsMethodsHtmlWrapped)
     return wrapIntoTags(`${viewMethodsHtmlWrapped}${transactionsMethodsHtmlWrapped}`, 'div', contractName);
   }).join('\n'); // const web3Tag = getWeb3Tag();
 
@@ -305,6 +308,6 @@ export const getEntireHtml = ({
   const customJavascript = getCustomJavascriptTag(projectNetworkId, projectNetworkName);
   const scriptTag = getScriptTag(projectId);
   const html = createHtmlTemplate(`${headerTag}${tags}${scriptTag}${customJavascript}`);
-
-  return formatHtml(html);
+  console.log(html)
+  return html;
 };

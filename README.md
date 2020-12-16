@@ -9,6 +9,8 @@ https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc
 
 ## Improvements
 - [ ] User should be able to save generated HTML link on the smartweave contract
+- [ ] Update HTML generator to ES6 syntax
+- [ ] Add error handling to HTML generator
 
 ## Deployed Assets
 - Community Logo: https://arweave.net/AZMyGTPMuq5A-iqGGz87rLRM7oXxE8nBymprqmWUh48
