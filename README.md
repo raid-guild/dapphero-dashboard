@@ -1,8 +1,9 @@
 # DappHero Dashboard
-Currently deployed at: https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-5n16B2mCqEAw1bIFo
+Currently deployed at: https://arweave.net/N4XG7x5paI5hnkT9HeHp5j6IMEo0DVoD094ic6HP1Yw
 
 ## DappHero Core
 Latest core deployment at: https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI
+Repo: https://github.com/raid-guild/dapphero-core
 
 ## Profit Sharing Community
 https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc

@@ -19,8 +19,54 @@ const Login: React.FC<any> = ({
                 <H2>Please use a desktop browser to login.</H2>
             </ChangeSizeContainer>
             <LoginContainer>
-                <H2>Upload a Wallet to Use App</H2>
+                <H2 color={colors.green} style={{fontWeight: 600}}>Upload a Wallet to Use App</H2>
                 <LoginInput type="file" onChange={uploadWallet} />
+                <br />
+                <br />
+                <br />
+                <br />
+                <H2>Build with blockchain, skip the code.</H2>
+                <br />
+                <P1>DappHero Community is a simple low-code/no-code tool that lets you easily connect blockchain to your website, small business, portfolio, online store, blog, and much more!</P1>
+                <br />
+                <P1><a
+                    href={'https://docs.dapphero.io/'}
+                    style={{textDecoration: 'none', color: colors.green}}
+                    target="_blank"
+                    rel="noreferrer"
+                >View Docs</a></P1>
+                <br />
+                <br />
+                <H2>Login with Arweave</H2>
+                <br />
+                <P1>Arweave is a new type of storage that backs data with sustainable and perpetual endowments, allowing users and developers to truly store data forever – for the very first time.</P1>
+                <br />
+                <P1>On top of the Arweave network lives the permaweb: a global, community-owned web that anyone can contribute to or get paid to maintain.</P1>
+                <br />
+                <P1><a
+                    href={'https://www.arweave.org/'}
+                    style={{textDecoration: 'none', color: colors.green}}
+                    target="_blank"
+                    rel="noreferrer"
+                >Learn More</a></P1>
+                <br />
+                <br />
+                <H2>Project Details</H2>
+                <br />
+                <P1>DappHero Community is a profit-sharing community and hosted on Arweave.</P1>
+                <br />
+                <P1><a
+                    href={'https://github.com/raid-guild/dapphero-dashboard'}
+                    style={{textDecoration: 'none', color: colors.green}}
+                    target="_blank"
+                    rel="noreferrer"
+                >View Source Code</a></P1>
+                <P1><a
+                    href={'https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc'}
+                    style={{textDecoration: 'none', color: colors.green}}
+                    target="_blank"
+                    rel="noreferrer"
+                >View the Community</a></P1>
                 <br />
                 <br />
                 {loginError && <P1 color={colors.red}>Invalid wallet file.</P1>}
@@ -51,21 +97,19 @@ const LoginContainer = styled.div`
     border-radius: 5px;
     box-shadow: ${shadows.card};
     display: none;
-    height: 18rem;
     margin: 0 auto;
     padding: 5rem;
     width: 50rem;
 
     ${media.small`
         display: block;
-        height: 18rem;
         padding: 5rem;
         top: 45%;
         width: 50rem;
+        margin-bottom: 10rem;
     `}
 
     ${media.large`
-        height: 22rem;
         padding: 5rem;
         top: 50%;
         width: 70rem;
@@ -88,7 +132,7 @@ const LoginInput = styled.input`
     }
 
     ${media.large`
-        margin-top: 3rem;
+        margin-top: 2rem;
     `}
 `
 
@@ -104,9 +148,9 @@ const LogoContainer = styled.div`
     `}
 
     ${media.large`
-        height: 20rem;
+        height: 15rem;
         margin: 5rem auto 3rem;
-        width: 20rem;
+        width: 15rem;
     `}
 `
 

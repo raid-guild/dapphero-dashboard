@@ -16,6 +16,8 @@ export const H2 = styled.h2`
     font-weight: 500;
     transition: all .3s ease;
 
+    ${props => `color: ${props.color};`}
+
     ${media.small`
         font-size: 2rem;
     `}
