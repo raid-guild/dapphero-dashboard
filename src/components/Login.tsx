@@ -53,7 +53,7 @@ const Login: React.FC<any> = ({
                 <br />
                 <H2>Project Details</H2>
                 <br />
-                <P1>DappHero Community is a profit-sharing community and hosted on Arweave.</P1>
+                <P1>DappHero Community is a profit-sharing community hosted on Arweave.</P1>
                 <br />
                 <P1><a
                     href={'https://github.com/raid-guild/dapphero-dashboard'}
