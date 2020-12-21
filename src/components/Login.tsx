@@ -24,6 +24,13 @@ const Login: React.FC<any> = ({
                 <br />
                 <br />
                 <br />
+                <P1>Click <a
+                    href={'https://docs.arweave.org/info/wallets/arweave-web-extension-wallet'}
+                    style={{textDecoration: 'none', color: colors.green}}
+                    target="_blank"
+                    rel="noreferrer"
+                >here</a> to learn how to get Arweave wallet.</P1>
+                <br />
                 <br />
                 <H2>Build with blockchain, skip the code.</H2>
                 <br />
