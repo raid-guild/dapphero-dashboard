@@ -9,6 +9,7 @@ import { ButtonAction1, ButtonAction2, ButtonsContainer2 } from './Buttons';
 import { Card, CardContainer, Main } from './Containers';
 import { Label, Input, Select, TextArea } from './Form';
 import Line from './Line';
+import Spacer from 'components/Spacer';
 import SpinnerTransaction from './SpinnerTransaction';
 import { colors } from './Theme';
 import { H3, P1, P2 } from './Typography';
@@ -191,6 +192,7 @@ const AddContract: React.FC<any> = ({
           ) : (
             <P2 color={colors.grey2}>Upload ID: {newContract.abi}</P2>
           )}
+          <Spacer size={'sm'} />
           <ButtonAction1 disabled={isUploading || originalAbiText == abiText} onClick={onUploadABI} type={'button'}>
             {isUploading ? <SpinnerTransaction /> : 'Upload'}
           </ButtonAction1>
