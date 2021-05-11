@@ -7,7 +7,7 @@ export const DEFAULT_CONTRACT = {
   description: 'My new contract description',
   network: '',
   deployedAddress: '0x0000000000000000000000000000000000000000',
-  abi: '[]',
+  abi: '',
   creator: '',
   createdAt: new Date().toUTCString(),
   updatedAt: new Date().toUTCString(),

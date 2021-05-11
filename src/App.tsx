@@ -154,6 +154,7 @@ const App = () => {
           )}
           {router === 'contract' && (
             <AddContract
+              arweave={arweave}
               displayContract={displayContract}
               onSnackbar={onSnackbar}
               setRouter={setRouter}

@@ -33,6 +33,18 @@ export const ButtonAction1 = styled.button`
     css`
       background: ${props.color};
     `}
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      background: ${colors.grey};
+      box-shadow: none;
+
+      &:hover {
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+    `}
 `;
 
 export const ButtonAction2 = styled.button<ButtonAction2Props>`

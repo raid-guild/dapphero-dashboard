@@ -1,4 +1,5 @@
 import React from 'react';
+import type { INewContract } from 'utils/types';
 
 // Hooks
 import useContracts from '../hooks/useContracts';
@@ -10,11 +11,21 @@ import { Label, Input, Select, TextArea } from './Form';
 import Line from './Line';
 import SpinnerTransaction from './SpinnerTransaction';
 import { colors } from './Theme';
-import { H3, P1 } from './Typography';
+import { H3, P1, P2 } from './Typography';
 
-const AddContract: React.FC<any> = ({ displayContract, onSnackbar, setRouter, subscribeToTransaction, wallet }) => {
+const AddContract: React.FC<any> = ({
+  arweave,
+  displayContract,
+  onSnackbar,
+  setRouter,
+  subscribeToTransaction,
+  wallet,
+}) => {
+  const [abiText, setAbiText] = React.useState<string>('[]');
+  const [originalAbiText, setOriginalAbiText] = React.useState<string>('');
   const [isNew, setIsNew] = React.useState<boolean>(false);
-  const [newContract, setNewContract] = React.useState(displayContract);
+  const [isUploading, setIsUploading] = React.useState<boolean>(false);
+  const [newContract, setNewContract] = React.useState<INewContract>(displayContract);
   const [pendingSave, setPendingSave] = React.useState<boolean>(false);
   const [pendingDelete, setPendingDelete] = React.useState<boolean>(false);
 
@@ -25,11 +36,21 @@ const AddContract: React.FC<any> = ({ displayContract, onSnackbar, setRouter, su
     if (newContract.id === undefined) {
       setIsNew(true);
     }
+
+    if (displayContract.abi != '') {
+      arweave.transactions
+        .getData('2C5pCElO0lRbyZPGQsUT44GJWUPvIa28padJgltweak', { decode: true, string: true })
+        .then((data: string) => {
+          setOriginalAbiText(data);
+          setAbiText(data);
+        });
+    }
+
     const el = document.getElementById('top') as HTMLElement;
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   // Add new contract
   const onAddNewContract = async () => {
@@ -79,6 +100,30 @@ const AddContract: React.FC<any> = ({ displayContract, onSnackbar, setRouter, su
     } catch (err) {
       console.error(`Can't update contract on Arweave.`, err);
     }
+  };
+
+  // Generate HTML Link
+  const onUploadABI = async () => {
+    setIsUploading(true);
+    const transaction = await arweave.createTransaction(
+      {
+        data: abiText,
+      },
+      wallet,
+    );
+    transaction.addTag('Content-Type', 'text/plain');
+    await arweave.transactions.sign(transaction, wallet);
+    const uploader = await arweave.transactions.getUploader(transaction);
+    while (!uploader.isComplete) {
+      await uploader.uploadChunk();
+      console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+      console.log('Transaction ID: ', transaction.id);
+      setNewContract((prev: any) => ({
+        ...prev,
+        abi: transaction.id,
+      }));
+    }
+    setIsUploading(false);
   };
 
   // Handle changes to contract details
@@ -139,8 +184,16 @@ const AddContract: React.FC<any> = ({ displayContract, onSnackbar, setRouter, su
           </Select>
           <Label htmlFor="deployedAddress">Address deployed:</Label>
           <Input id="deployedAddress" onChange={handleOnChange} required value={newContract.deployedAddress} />
-          <Label htmlFor="abi">Contract ABI:</Label>
-          <TextArea id="abi" onChange={handleOnChange} required value={newContract.abi} />
+          <Label htmlFor="abi-text">Contract ABI:</Label>
+          <TextArea id="abi-text" onChange={(e) => setAbiText(e.target.value)} required value={abiText} />
+          {originalAbiText != abiText ? (
+            <P2 color={colors.grey2}>Make sure to hit &quot;Upload&quot; after adding ABI.</P2>
+          ) : (
+            <P2 color={colors.grey2}>Upload ID: {newContract.abi}</P2>
+          )}
+          <ButtonAction1 disabled={isUploading || originalAbiText == abiText} onClick={onUploadABI} type={'button'}>
+            {isUploading ? <SpinnerTransaction /> : 'Upload'}
+          </ButtonAction1>
         </CardContainer>
       </Card>
 
