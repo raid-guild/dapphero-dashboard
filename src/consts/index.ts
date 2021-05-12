@@ -1,4 +1,4 @@
-export const CORE_ADDRESS = 'https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI';
+export const CORE_ADDRESS = 'https://arweave.net/GmzoDdqjQC_VNHrScKuNtWyTFzD1UVIkfhkC-4MYYWE';
 
 export const DASHBOARD_ADDRESS = 'https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-5n16B2mCqEAw1bIFo';
 

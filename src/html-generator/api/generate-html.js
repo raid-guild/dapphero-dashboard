@@ -1,6 +1,6 @@
 import { getEntireHtml } from '../src'
 
-const generateHTML =  async (project, contracts) => {
+const generateHTML =  async (abis, project) => {
   
   try {
     let projectNetworkId = 5
@@ -29,16 +29,6 @@ const generateHTML =  async (project, contracts) => {
       default:
         projectNetworkId = 4
     }
-
-    let abis = []
-
-    contracts.map(contract => {
-      let newAbi = {
-        abi_text: contract.abi,
-        name_text: contract.name
-      }
-      return abis.push(newAbi)
-    })
 
     const projectId = project.id;
     const projectNetworkName = project.network;

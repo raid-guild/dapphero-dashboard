@@ -210,7 +210,20 @@ const AddProject: React.FC<any> = ({
   const onGenerateLink = async () => {
     setIsGenerating(true);
 
-    const htmlData = await generateHTML(newProject, contractList);
+    const abis: any[] = [];
+    await Promise.all(
+      contractList.map(async (contract) => {
+        const data = await arweave.transactions.getData(contract.abi, { decode: true, string: true });
+        const newAbi = {
+          abi_text: await data,
+          name_text: contract.name,
+        };
+        abis.push(newAbi);
+      }),
+    );
+
+    const htmlData = await generateHTML(abis, newProject);
+    console.log(htmlData);
     const htmlTransaction = await arweave.createTransaction(
       {
         data: htmlData,

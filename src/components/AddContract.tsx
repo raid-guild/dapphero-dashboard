@@ -39,12 +39,10 @@ const AddContract: React.FC<any> = ({
     }
 
     if (displayContract.abi != '') {
-      arweave.transactions
-        .getData('2C5pCElO0lRbyZPGQsUT44GJWUPvIa28padJgltweak', { decode: true, string: true })
-        .then((data: string) => {
-          setOriginalAbiText(data);
-          setAbiText(data);
-        });
+      arweave.transactions.getData(displayContract.abi, { decode: true, string: true }).then((data: string) => {
+        setOriginalAbiText(data);
+        setAbiText(data);
+      });
     }
 
     const el = document.getElementById('top') as HTMLElement;
@@ -103,7 +101,6 @@ const AddContract: React.FC<any> = ({
     }
   };
 
-  // Generate HTML Link
   const onUploadABI = async () => {
     setIsUploading(true);
     const transaction = await arweave.createTransaction(
