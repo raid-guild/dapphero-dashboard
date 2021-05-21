@@ -17,6 +17,7 @@ export function handle(state: any, action: ProjectActionInterface) {
       contracts: project.contracts,
       provider: project.provider,
       creator: action.caller,
+      htmlLink: project.htmlLink,
       createdAt: new Date().toUTCString(),
       updatedAt: new Date().toUTCString(),
       isPaused: project.isPaused || false,
@@ -44,6 +45,7 @@ export function handle(state: any, action: ProjectActionInterface) {
     state.projects[id].network = project.network;
     state.projects[id].contracts = project.contracts;
     state.projects[id].provider = project.provider;
+    state.projects[id].htmlLink = project.htmlLink;
     state.projects[id].isPaused = project.isPaused;
     state.projects[id].isLocked = project.isLocked;
     state.projects[id].updatedAt = new Date().toUTCString();

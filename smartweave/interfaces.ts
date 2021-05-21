@@ -21,6 +21,7 @@ export interface ProjectInterface {
   provider: string;
   contracts: string[];
   creator?: string;
+  htmlLink?: string;
   createdAt?: string;
   updatedAt?: string;
   isPaused?: boolean;
@@ -28,6 +29,7 @@ export interface ProjectInterface {
 }
 
 export type ProjectList = Record<string, ProjectInterface>;
+
 export interface ContractInterface {
   name: string;
   description: string;
