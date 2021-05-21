@@ -243,6 +243,10 @@ const AddProject: React.FC<any> = ({
 
     setIsGenerated(true);
     setIsGenerating(false);
+    setNewProject((prev: any) => ({
+      ...prev,
+      htmlLink: `https://arweave.net/${htmlTransaction.id}`,
+    }));
   };
 
   return (
@@ -388,20 +392,39 @@ const AddProject: React.FC<any> = ({
           </CardContainer>
         ) : (
           <CardContainer>
-            <P1 color={colors.grey2}>This generates a complete DappHero powered project hosted on Arweave.</P1>
-            <br />
-            <ButtonAction1 onClick={onGenerateLink}>
-              {isGenerating ? <SpinnerTransaction /> : !isGenerated ? 'Generate link' : 'Generated!'}
-            </ButtonAction1>
-            {isGenerated && (
+            {newProject.htmlLink ? (
               <div>
-                <br />
                 <P1 color={colors.green}>
                   Hosted HTML:{' '}
-                  <a rel="noreferrer" target="_blank" href={`https://arweave.net/${transactionId}`}>
-                    https://arweave.net/{transactionId}
+                  <a rel="noreferrer" target="_blank" href={newProject.htmlLink}>
+                    {newProject.htmlLink}
                   </a>
                 </P1>
+                <br />
+                <P1 color={colors.grey2}>Generate new link.</P1>
+                <br />
+                <ButtonAction1 onClick={onGenerateLink}>
+                  {isGenerating ? <SpinnerTransaction /> : !isGenerated ? 'Generate link' : 'Generated!'}
+                </ButtonAction1>
+              </div>
+            ) : (
+              <div>
+                <P1 color={colors.grey2}>This generates a complete DappHero powered project hosted on Arweave.</P1>
+                <br />
+                <ButtonAction1 onClick={onGenerateLink}>
+                  {isGenerating ? <SpinnerTransaction /> : !isGenerated ? 'Generate link' : 'Generated!'}
+                </ButtonAction1>
+                {isGenerated && (
+                  <div>
+                    <br />
+                    <P1 color={colors.green}>
+                      Hosted HTML:{' '}
+                      <a rel="noreferrer" target="_blank" href={`https://arweave.net/${transactionId}`}>
+                        https://arweave.net/{transactionId}
+                      </a>
+                    </P1>
+                  </div>
+                )}
               </div>
             )}
           </CardContainer>

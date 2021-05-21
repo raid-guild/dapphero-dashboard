@@ -22,6 +22,7 @@ export const DEFAULT_PROJECT = {
   contracts: [],
   provider: 'https://<network>.infura.io/v3/<Project ID>',
   creator: '',
+  htmlLink: '',
   createdAt: '',
   updatedAt: '',
   isPaused: false,
