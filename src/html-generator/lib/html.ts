@@ -1,4 +1,4 @@
-const createHtmlTemplate = (children) => `
+export const createHtmlTemplate = (children: any) => `
 <!DOCTYPE html>
 
 <html lang="en">
@@ -18,5 +18,3 @@ const createHtmlTemplate = (children) => `
 
 </html>
 `;
-
-module.exports = { createHtmlTemplate };
