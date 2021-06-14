@@ -1,18 +1,37 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components/macro';
 
 // Components
-import { ButtonLink } from './Buttons';
+import { ButtonLink, ButtonAction1 } from './Buttons';
 import { colors, shadows } from './Theme';
 import { H1 } from './Typography';
 
 const Header: React.FC<any> = ({ router }) => {
+  const history = useHistory();
+
   return (
     <HeaderContainer>
       <H1>{router === '' ? 'Projects' : router.charAt(0).toUpperCase() + router.slice(1)}</H1>
-      <a href="https://docs.dapphero.io/" target="_blank" rel="noreferrer">
-        <ButtonLink>Documentation</ButtonLink>
-      </a>
+      <div>
+        <a
+          style={{
+            marginRight: '20px',
+          }}
+          href="https://docs.dapphero.io/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <ButtonLink>Documentation</ButtonLink>
+        </a>
+        <ButtonAction1
+          onClick={() => {
+            history.push('/connect');
+          }}
+        >
+          Connect
+        </ButtonAction1>
+      </div>
     </HeaderContainer>
   );
 };
