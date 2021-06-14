@@ -15,7 +15,6 @@ import AddProject from './components/AddProject';
 import Contracts from './components/Contracts';
 import Header from './components/Header';
 import Layout from './components/Layout';
-import Login from './components/Login';
 import Navigation from './components/Navigation';
 import Projects from './components/Projects';
 import Snackbar from './components/Snackbar';
@@ -131,41 +130,39 @@ const App: React.FC = () => {
 
   return (
     <>
-      {!wallet && <Login loginError={loginError} uploadWallet={uploadWallet} />}
-      {wallet && (
-        <Layout>
-          <Navigation router={router} setRouter={setRouter} />
-          <Header router={router} />
-          {snackbar && <Snackbar setSnackbar={setSnackbar} transactionId={transactionId} />}
-          {router === 'projects' && (
-            <Projects loadingData={loadingData} onSelectProject={onSelectProject} projectsArray={projectsArray} />
-          )}
-          {router === 'project' && (
-            <AddProject
-              arweave={arweave}
-              contractsArray={contractsArray}
-              displayProject={displayProject}
-              onSnackbar={onSnackbar}
-              setRouter={setRouter}
-              subscribeToTransaction={subscribeToTransaction}
-              wallet={wallet}
-            />
-          )}
-          {router === 'contracts' && (
-            <Contracts contractsArray={contractsArray} loadingData={loadingData} onSelectContract={onSelectContract} />
-          )}
-          {router === 'contract' && (
-            <AddContract
-              arweave={arweave}
-              displayContract={displayContract}
-              onSnackbar={onSnackbar}
-              setRouter={setRouter}
-              subscribeToTransaction={subscribeToTransaction}
-              wallet={wallet}
-            />
-          )}
-        </Layout>
-      )}
+      {/* {!wallet && <Login loginError={loginError} uploadWallet={uploadWallet} />} */}
+      <Layout>
+        <Navigation router={router} setRouter={setRouter} />
+        <Header router={router} />
+        {snackbar && <Snackbar setSnackbar={setSnackbar} transactionId={transactionId} />}
+        {router === 'projects' && (
+          <Projects loadingData={loadingData} onSelectProject={onSelectProject} projectsArray={projectsArray} />
+        )}
+        {router === 'project' && (
+          <AddProject
+            arweave={arweave}
+            contractsArray={contractsArray}
+            displayProject={displayProject}
+            onSnackbar={onSnackbar}
+            setRouter={setRouter}
+            subscribeToTransaction={subscribeToTransaction}
+            wallet={wallet}
+          />
+        )}
+        {router === 'contracts' && (
+          <Contracts contractsArray={contractsArray} loadingData={loadingData} onSelectContract={onSelectContract} />
+        )}
+        {router === 'contract' && (
+          <AddContract
+            arweave={arweave}
+            displayContract={displayContract}
+            onSnackbar={onSnackbar}
+            setRouter={setRouter}
+            subscribeToTransaction={subscribeToTransaction}
+            wallet={wallet}
+          />
+        )}
+      </Layout>
     </>
   );
 };
