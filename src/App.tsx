@@ -23,15 +23,17 @@ import Snackbar from './components/Snackbar';
 // Helpers
 import { addIdsToArrary } from './helpers';
 
-const App = () => {
+import type { IProject, IContract } from './utils/types';
+
+const App: React.FC = () => {
   const [router, setRouter] = React.useState<string>('projects');
   const [wallet, setWallet] = React.useState<JWKInterface | null>(null);
 
-  const [displayContract, setDisplayContract] = React.useState(DEFAULT_CONTRACT);
-  const [displayProject, setDisplayProject] = React.useState(DEFAULT_PROJECT);
-  const [contractsArray, setContractsArray] = React.useState<any[]>([]);
+  const [displayContract, setDisplayContract] = React.useState<string | IContract>(DEFAULT_CONTRACT);
+  const [displayProject, setDisplayProject] = React.useState<string | IProject>(DEFAULT_PROJECT);
+  const [contractsArray, setContractsArray] = React.useState<IContract[]>([]);
   const [loginError, setLoginError] = React.useState<boolean>(false);
-  const [projectsArray, setProjectsArray] = React.useState<any[]>([]);
+  const [projectsArray, setProjectsArray] = React.useState<IProject[]>([]);
   const [transactionId, setTransactionId] = React.useState<string>('');
   const [snackbar, setSnackbar] = React.useState<boolean>(false);
 
@@ -39,8 +41,8 @@ const App = () => {
 
   // Hooks
   const arweave = useArweave();
-  const { getAllProjects } = useProjects(wallet! as JWKInterface);
-  const { getAllContracts } = useContracts(wallet! as JWKInterface);
+  const { getAllProjects } = useProjects((wallet as JWKInterface) || null);
+  const { getAllContracts } = useContracts((wallet as JWKInterface) || null);
 
   // Set Initial State
   const setInitialState = async () => {
@@ -90,7 +92,7 @@ const App = () => {
 
     fileReader.onload = async (e) => {
       try {
-        setWallet(JSON.parse(e.target!.result as string));
+        setWallet(JSON.parse((e.target?.result as string) || ''));
       } catch (err) {
         setLoginError(true);
         console.error('Invalid wallet was uploaded.', err);
@@ -103,7 +105,7 @@ const App = () => {
   };
 
   // Open Project component
-  const onSelectProject = (project: any) => {
+  const onSelectProject = (project: string | IProject) => {
     setRouter('project');
     if (project === 'default') {
       setDisplayProject(DEFAULT_PROJECT);
@@ -113,7 +115,7 @@ const App = () => {
   };
 
   // Open Contract component
-  const onSelectContract = (contract: any) => {
+  const onSelectContract = (contract: string | IContract) => {
     setRouter('contract');
     if (contract === 'default') {
       setDisplayContract(DEFAULT_CONTRACT);
