@@ -118,10 +118,10 @@ const App: React.FC = () => {
         <Navigation router={router} setRouter={setRouter} />
         <Header router={router} />
         {snackbar && <Snackbar setSnackbar={setSnackbar} transactionId={transactionId} />}
-        {router === 'projects' && (
+        {router === 'projects' && wallet && (
           <Projects loadingData={loadingData} onSelectProject={onSelectProject} projectsArray={projectsArray} />
         )}
-        {router === 'project' && (
+        {router === 'project' && typeof displayProject !== 'string' && wallet && (
           <AddProject
             arweave={arweave}
             contractsArray={contractsArray}
@@ -132,10 +132,10 @@ const App: React.FC = () => {
             wallet={wallet}
           />
         )}
-        {router === 'contracts' && (
+        {router === 'contracts' && wallet && (
           <Contracts contractsArray={contractsArray} loadingData={loadingData} onSelectContract={onSelectContract} />
         )}
-        {router === 'contract' && (
+        {router === 'contract' && typeof displayContract !== 'string' && wallet && (
           <AddContract
             arweave={arweave}
             displayContract={displayContract}

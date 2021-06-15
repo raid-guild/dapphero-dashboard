@@ -1,3 +1,5 @@
+import type { NetworkType } from 'utils/types';
+
 export const CORE_ADDRESS = 'https://arweave.net/GmzoDdqjQC_VNHrScKuNtWyTFzD1UVIkfhkC-4MYYWE';
 
 export const DASHBOARD_ADDRESS = 'https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-5n16B2mCqEAw1bIFo';
@@ -5,7 +7,7 @@ export const DASHBOARD_ADDRESS = 'https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-
 export const DEFAULT_CONTRACT = {
   name: 'newContract',
   description: 'My new contract description',
-  network: '',
+  network: '' as NetworkType,
   deployedAddress: '0x0000000000000000000000000000000000000000',
   abi: '',
   creator: '',
@@ -18,7 +20,7 @@ export const DEFAULT_PROJECT = {
   name: 'myProjectName',
   description: 'My new project description',
   coverImg: 'Test 1 image',
-  network: '',
+  network: '' as NetworkType,
   contracts: [],
   provider: 'https://<network>.infura.io/v3/<Project ID>',
   creator: '',

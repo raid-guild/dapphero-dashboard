@@ -33,7 +33,7 @@ const Header: React.FC<any> = ({ router }) => {
           ? router === ''
             ? 'Projects'
             : router.charAt(0).toUpperCase() + router.slice(1)
-          : 'You must connect your wallet to use app.'}
+          : 'You must connect your wallet to use app'}
       </H1>
       <div>
         <a
