@@ -274,7 +274,7 @@ export const getEntireHtml = ({
   projectName: string;
   projectNetworkId: number;
   projectNetworkName: string;
-}) => {
+}): string => {
   const tags = abis
     .map(({ abi_text, name_text: contractName }) => {
       const abi = JSON.parse(abi_text);

@@ -1,12 +1,24 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { media } from '../components/Breakpoints';
+
+import { ArWalletContext } from 'contexts/ArWallet';
 
 // Components
 import { colors, shadows } from '../components/Theme';
 import { H2, P1 } from './Typography';
 
-const Login: React.FC<any> = ({ loginError, uploadWallet }) => {
+const Login: React.FC = () => {
+  const history = useHistory();
+  const { loginError, uploadWallet, wallet } = React.useContext(ArWalletContext);
+
+  React.useEffect(() => {
+    if (wallet) {
+      history.push('/');
+    }
+  }, [wallet]);
+
   return (
     <>
       <LogoContainer>
