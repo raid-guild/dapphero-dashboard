@@ -16,6 +16,8 @@ import SpinnerTransaction from './SpinnerTransaction';
 import { colors } from './Theme';
 import { H3, P1, P2 } from './Typography';
 
+import { BalanceContext } from 'contexts/Balance';
+
 interface IAddContract {
   arweave: Arweave;
   displayContract: IContract;
@@ -33,6 +35,8 @@ const AddContract: React.FC<IAddContract> = ({
   subscribeToTransaction,
   wallet,
 }) => {
+  const { arBalance } = React.useContext(BalanceContext);
+
   const [abiText, setAbiText] = React.useState<string | Uint8Array>('[]');
   const [originalAbiText, setOriginalAbiText] = React.useState<string | Uint8Array>('');
   const [isNew, setIsNew] = React.useState<boolean>(false);
@@ -254,6 +258,8 @@ const AddContract: React.FC<IAddContract> = ({
           </ButtonAction1>
         )}
       </ButtonsContainer2>
+      <br />
+      {BigInt(arBalance) === BigInt(0) && <P2 color={colors.red}>Your AR balance is currently 0.</P2>}
     </Main>
   );
 };
