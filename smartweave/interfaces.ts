@@ -55,5 +55,5 @@ export interface ContractInput {
   contract: ContractInterface;
 }
 
-export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet';
+export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet' | '';
 export type FunctionType = 'create' | 'update' | 'get' | 'delete' | 'getByCreator';

@@ -1,5 +1,5 @@
 export interface INewContract {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   network: NetworkType;
@@ -15,7 +15,7 @@ export interface IProject {
   name: string;
   description: string;
   coverImg: string;
-  network: string;
+  network: NetworkType;
   contracts: never[];
   provider: string;
   creator: string;
@@ -27,9 +27,10 @@ export interface IProject {
 }
 
 export interface IContract {
+  id?: string;
   name: string;
   description: string;
-  network: string;
+  network: NetworkType;
   deployedAddress: string;
   abi: string;
   creator: string;
@@ -38,4 +39,4 @@ export interface IContract {
   isLocked: boolean;
 }
 
-export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet';
+export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet' | '';

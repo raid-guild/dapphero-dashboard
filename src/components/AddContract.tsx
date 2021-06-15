@@ -1,5 +1,7 @@
 import React from 'react';
-import type { INewContract } from 'utils/types';
+import Arweave from 'arweave';
+import { JWKInterface } from 'arweave/node/lib/wallet';
+import type { IContract } from 'utils/types';
 
 // Hooks
 import useContracts from '../hooks/useContracts';
@@ -14,7 +16,16 @@ import SpinnerTransaction from './SpinnerTransaction';
 import { colors } from './Theme';
 import { H3, P1, P2 } from './Typography';
 
-const AddContract: React.FC<any> = ({
+interface IAddContract {
+  arweave: Arweave;
+  displayContract: IContract;
+  onSnackbar: (id: string) => void;
+  setRouter: React.Dispatch<React.SetStateAction<string>>;
+  subscribeToTransaction: (transaction: string) => Promise<void>;
+  wallet: JWKInterface;
+}
+
+const AddContract: React.FC<IAddContract> = ({
   arweave,
   displayContract,
   onSnackbar,
@@ -22,11 +33,11 @@ const AddContract: React.FC<any> = ({
   subscribeToTransaction,
   wallet,
 }) => {
-  const [abiText, setAbiText] = React.useState<string>('[]');
-  const [originalAbiText, setOriginalAbiText] = React.useState<string>('');
+  const [abiText, setAbiText] = React.useState<string | Uint8Array>('[]');
+  const [originalAbiText, setOriginalAbiText] = React.useState<string | Uint8Array>('');
   const [isNew, setIsNew] = React.useState<boolean>(false);
   const [isUploading, setIsUploading] = React.useState<boolean>(false);
-  const [newContract, setNewContract] = React.useState<INewContract>(displayContract);
+  const [newContract, setNewContract] = React.useState<IContract>(displayContract);
   const [pendingSave, setPendingSave] = React.useState<boolean>(false);
   const [pendingDelete, setPendingDelete] = React.useState<boolean>(false);
 
@@ -38,11 +49,13 @@ const AddContract: React.FC<any> = ({
       setIsNew(true);
     }
 
-    if (displayContract.abi != '') {
-      arweave.transactions.getData(displayContract.abi, { decode: true, string: true }).then((data: string) => {
-        setOriginalAbiText(data);
-        setAbiText(data);
-      });
+    if (displayContract.abi !== '') {
+      arweave.transactions
+        .getData(displayContract.abi, { decode: true, string: true })
+        .then((data: string | Uint8Array) => {
+          setOriginalAbiText(data);
+          setAbiText(data);
+        });
     }
 
     const el = document.getElementById('top') as HTMLElement;
@@ -58,10 +71,14 @@ const AddContract: React.FC<any> = ({
       setPendingSave(true);
       const id = await addContract(newContract);
       console.log('Transaction ID:', id);
-      onSnackbar(id);
-      setPendingSave(false);
-      setRouter('contracts');
-      subscribeToTransaction(id);
+      if (typeof id === 'string') {
+        onSnackbar(id);
+        setPendingSave(false);
+        setRouter('contracts');
+        subscribeToTransaction(id);
+      } else {
+        console.error(`Can't add contract to Arweave.`);
+      }
     } catch (err) {
       console.error(`Can't add contract to Arweave.`, err);
     }
@@ -72,12 +89,16 @@ const AddContract: React.FC<any> = ({
     try {
       console.log('Deleting...');
       setPendingDelete(true);
-      const id = await deleteContract(newContract.id);
+      const id = await deleteContract(newContract.id || '');
       console.log('Transaction ID:', id);
-      onSnackbar(id);
-      setPendingDelete(false);
-      setRouter('contracts');
-      subscribeToTransaction(id);
+      if (typeof id === 'string') {
+        onSnackbar(id);
+        setPendingDelete(false);
+        setRouter('contracts');
+        subscribeToTransaction(id);
+      } else {
+        console.error(`Can't delete contract on Arweave.`);
+      }
     } catch (err) {
       console.error(`Can't delete contract on Arweave.`, err);
     }
@@ -91,10 +112,14 @@ const AddContract: React.FC<any> = ({
       } else {
         console.log('Updating...');
         setPendingSave(true);
-        const id = await updateContract(displayContract.id, newContract);
+        const id = await updateContract(displayContract.id || '', newContract);
         console.log('Transaction ID:', id);
-        onSnackbar(id);
-        setPendingSave(false);
+        if (typeof id === 'string') {
+          onSnackbar(id);
+          setPendingSave(false);
+        } else {
+          console.error(`Can't update contract on Arweave.`);
+        }
       }
     } catch (err) {
       console.error(`Can't update contract on Arweave.`, err);
@@ -116,7 +141,7 @@ const AddContract: React.FC<any> = ({
       await uploader.uploadChunk();
       console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
       console.log('Transaction ID: ', transaction.id);
-      setNewContract((prev: any) => ({
+      setNewContract((prev: IContract) => ({
         ...prev,
         abi: transaction.id,
       }));
@@ -125,13 +150,18 @@ const AddContract: React.FC<any> = ({
   };
 
   // Handle changes to contract details
-  const handleOnChange = (e: any) => {
+  const handleOnChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     if (newContract.isLocked || pendingSave || pendingDelete) {
       return;
     }
 
     e.persist();
-    setNewContract((prev: any) => ({
+    setNewContract((prev: IContract) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
@@ -148,7 +178,7 @@ const AddContract: React.FC<any> = ({
           <Label htmlFor="name">Name:</Label>
           <Input id="name" onChange={handleOnChange} required value={newContract.name} />
           <Label htmlFor="description">Description:</Label>
-          <TextArea id="description" onChange={handleOnChange} required value={newContract.description} />
+          <TextArea id="description" onChange={(e) => handleOnChange(e)} required value={newContract.description} />
         </CardContainer>
       </Card>
 
@@ -167,7 +197,7 @@ const AddContract: React.FC<any> = ({
           <Select
             disabled={newContract.isLocked || pendingSave || pendingDelete}
             defaultValue={newContract.network}
-            onChange={handleOnChange}
+            onChange={(e) => handleOnChange(e)}
             name="network"
             id="network"
           >
@@ -183,14 +213,14 @@ const AddContract: React.FC<any> = ({
           <Label htmlFor="deployedAddress">Address deployed:</Label>
           <Input id="deployedAddress" onChange={handleOnChange} required value={newContract.deployedAddress} />
           <Label htmlFor="abi-text">Contract ABI:</Label>
-          <TextArea id="abi-text" onChange={(e) => setAbiText(e.target.value)} required value={abiText} />
-          {originalAbiText != abiText ? (
+          <TextArea id="abi-text" onChange={(e) => setAbiText(e.target.value)} required value={abiText as string} />
+          {originalAbiText !== abiText ? (
             <P2 color={colors.grey2}>Make sure to hit &quot;Upload&quot; after adding ABI.</P2>
           ) : (
             <P2 color={colors.grey2}>Upload ID: {newContract.abi}</P2>
           )}
           <Spacer size={'sm'} />
-          <ButtonAction1 disabled={isUploading || originalAbiText == abiText} onClick={onUploadABI} type={'button'}>
+          <ButtonAction1 disabled={isUploading || originalAbiText === abiText} onClick={onUploadABI} type={'button'}>
             {isUploading ? <SpinnerTransaction /> : 'Upload'}
           </ButtonAction1>
         </CardContainer>
@@ -207,7 +237,7 @@ const AddContract: React.FC<any> = ({
           <ButtonAction2
             disabled={pendingSave || pendingDelete}
             active={newContract.isLocked}
-            onClick={() => setNewContract((prev: any) => ({ ...prev, isLocked: !prev.isLocked }))}
+            onClick={() => setNewContract((prev: IContract) => ({ ...prev, isLocked: !prev.isLocked }))}
           >
             {!newContract.isLocked ? 'Lock' : 'Locked'}
           </ButtonAction2>
