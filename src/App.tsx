@@ -121,7 +121,7 @@ const App: React.FC = () => {
         {router === 'projects' && wallet && (
           <Projects loadingData={loadingData} onSelectProject={onSelectProject} projectsArray={projectsArray} />
         )}
-        {router === 'project' && wallet && (
+        {router === 'project' && typeof displayProject !== 'string' && wallet && (
           <AddProject
             arweave={arweave}
             contractsArray={contractsArray}
@@ -135,7 +135,7 @@ const App: React.FC = () => {
         {router === 'contracts' && wallet && (
           <Contracts contractsArray={contractsArray} loadingData={loadingData} onSelectContract={onSelectContract} />
         )}
-        {router === 'contract' && wallet && typeof displayContract !== 'string' && wallet && (
+        {router === 'contract' && typeof displayContract !== 'string' && wallet && (
           <AddContract
             arweave={arweave}
             displayContract={displayContract}

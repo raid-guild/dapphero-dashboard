@@ -1,15 +1,7 @@
 import { getEntireHtml } from '../src';
+import type { IProject } from 'utils/types';
 
-const generateHTML = async (
-  abis: any[],
-  project: {
-    network: string;
-    id: string;
-    description: string;
-    coverImg: string;
-    name: string;
-  },
-) => {
+const generateHTML = async (abis: any[], project: IProject): Promise<any> => {
   try {
     let projectNetworkId = 1;
     switch (project.network) {

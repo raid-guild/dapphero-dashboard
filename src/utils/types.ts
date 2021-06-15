@@ -12,11 +12,12 @@ export interface INewContract {
 }
 
 export interface IProject {
+  id?: string;
   name: string;
   description: string;
   coverImg: string;
   network: NetworkType;
-  contracts: never[];
+  contracts: string[];
   provider: string;
   creator: string;
   htmlLink: string;
@@ -40,3 +41,8 @@ export interface IContract {
 }
 
 export type NetworkType = 'rinkeby' | 'mainnet' | 'kovan' | 'goerli' | 'ropsten' | 'xDai' | 'maticMumbaiTestnet' | '';
+
+export interface IABI {
+  abi_text: string | Uint8Array;
+  name_text: string;
+}

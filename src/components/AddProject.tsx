@@ -1,4 +1,7 @@
 import React from 'react';
+import Arweave from 'arweave';
+import { JWKInterface } from 'arweave/node/lib/wallet';
+import type { IProject, IContract, IABI } from 'utils/types';
 
 // Components
 import { ButtonAction1, ButtonAction2, ButtonsContainer1, ButtonsContainer2 } from './Buttons';
@@ -21,7 +24,17 @@ import useProjects from '../hooks/useProjects';
 
 import { BalanceContext } from 'contexts/Balance';
 
-const AddProject: React.FC<any> = ({
+interface IAddProject {
+  arweave: Arweave;
+  contractsArray: IContract[];
+  displayProject: IProject;
+  onSnackbar: (id: string) => void;
+  setRouter: React.Dispatch<React.SetStateAction<string>>;
+  subscribeToTransaction: (transaction: string) => Promise<void>;
+  wallet: JWKInterface;
+}
+
+const AddProject: React.FC<IAddProject> = ({
   arweave,
   contractsArray,
   displayProject,
@@ -33,7 +46,7 @@ const AddProject: React.FC<any> = ({
   const { arBalance } = React.useContext(BalanceContext);
 
   const [newContract, setNewContract] = React.useState<string>('');
-  const [contractList, setContractList] = React.useState<any[]>([]);
+  const [contractList, setContractList] = React.useState<IContract[]>([]);
   const [isCopied, setIsCopied] = React.useState<boolean>(false);
   const [isGenerated, setIsGenerated] = React.useState<boolean>(false);
   const [isGenerating, setIsGenerating] = React.useState<boolean>(false);
@@ -60,13 +73,13 @@ const AddProject: React.FC<any> = ({
 
   // Get contracts to display
   const displayContracts = React.useCallback(async () => {
-    const filteredContracts: any[] = [];
+    const filteredContracts: IContract[] = [];
 
     for (let i = 0; i < newProject.contracts.length; i++) {
-      const filtertedContract = contractsArray.find(
-        (contract: { id: string }) => contract.id === newProject.contracts[i],
-      );
-      filteredContracts.push(filtertedContract);
+      const filtertedContract = contractsArray.find((contract: IContract) => contract.id === newProject.contracts[i]);
+      if (filtertedContract) {
+        filteredContracts.push(filtertedContract);
+      }
     }
 
     const filterByNetwork = filteredContracts.filter((contract) => contract.network === newProject.network);
@@ -82,7 +95,7 @@ const AddProject: React.FC<any> = ({
     }
 
     // If contract already exists in display, do not add duplicate
-    if (contractList.find((contract: { id: string }) => contract.id === newContract)) {
+    if (contractList.find((contract: IContract) => contract.id === newContract)) {
       console.log('Duplicate contract.');
       return;
     }
@@ -90,7 +103,7 @@ const AddProject: React.FC<any> = ({
     // Add new contract to newProject
     const newContractsArray = newProject.contracts;
     newContractsArray.push(newContract);
-    setNewProject((prev: any) => ({
+    setNewProject((prev: IProject) => ({
       ...prev,
       contracts: newContractsArray,
     }));
@@ -98,11 +111,11 @@ const AddProject: React.FC<any> = ({
   };
 
   // Remove contract from display
-  const onRemoveContract = async (index: string | number) => {
+  const onRemoveContract = async (index: number) => {
     console.log('Removing...');
     const newArray = newProject.contracts;
     newArray.splice(index, 1);
-    setNewProject((prev: any) => ({
+    setNewProject((prev: IProject) => ({
       ...prev,
       contracts: newArray,
     }));
@@ -122,10 +135,14 @@ const AddProject: React.FC<any> = ({
       setPendingSave(true);
       const id = await addProject(newProject);
       console.log('Transaction ID: ', id);
-      onSnackbar(id);
-      setPendingSave(false);
-      setRouter('projects');
-      subscribeToTransaction(id);
+      if (typeof id === 'string') {
+        onSnackbar(id);
+        setPendingSave(false);
+        setRouter('projects');
+        subscribeToTransaction(id);
+      } else {
+        console.error(`Can't add project to Arweave.`);
+      }
     } catch (err) {
       console.error(`Can't add project to Arweave.`, err);
     }
@@ -136,12 +153,16 @@ const AddProject: React.FC<any> = ({
     try {
       console.log('Deleting...');
       setPendingDelete(true);
-      const id = await deleteProject(newProject.id);
+      const id = await deleteProject(newProject.id || '');
       console.log('Transaction ID: ', id);
-      onSnackbar(id);
-      setPendingDelete(false);
-      setRouter('projects');
-      subscribeToTransaction(id);
+      if (typeof id === 'string') {
+        onSnackbar(id);
+        setPendingDelete(false);
+        setRouter('projects');
+        subscribeToTransaction(id);
+      } else {
+        console.error(`Can't delete project on Arweave.`);
+      }
     } catch (err) {
       console.error(`Can't delete project on Arweave.`, err);
     }
@@ -155,10 +176,14 @@ const AddProject: React.FC<any> = ({
       } else {
         console.log('Updating...');
         setPendingSave(true);
-        const id = await updateProject(displayProject.id, newProject);
+        const id = await updateProject(displayProject.id || '', newProject);
         console.log('Transaction ID: ', id);
-        onSnackbar(id);
-        setPendingSave(false);
+        if (typeof id === 'string') {
+          onSnackbar(id);
+          setPendingSave(false);
+        } else {
+          console.error(`Can't update project on Arweave.`);
+        }
       }
     } catch (err) {
       console.error(`Can't update project on Arweave.`, err);
@@ -166,7 +191,12 @@ const AddProject: React.FC<any> = ({
   };
 
   // Handle input changes
-  const handleOnChange = (e: any) => {
+  const handleOnChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     e.persist();
 
     // Don't allow changes if project is locked
@@ -176,7 +206,7 @@ const AddProject: React.FC<any> = ({
 
     // Reset contract if network changes
     if (e.target.id === 'network') {
-      setNewProject((prev: any) => ({
+      setNewProject((prev: IProject) => ({
         ...prev,
         contracts: [],
       }));
@@ -192,7 +222,7 @@ const AddProject: React.FC<any> = ({
     }
 
     // Add changes to newProject
-    setNewProject((prev: any) => ({
+    setNewProject((prev: IProject) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
@@ -214,7 +244,7 @@ const AddProject: React.FC<any> = ({
   const onGenerateLink = async () => {
     setIsGenerating(true);
 
-    const abis: any[] = [];
+    const abis: IABI[] = [];
     await Promise.all(
       contractList.map(async (contract) => {
         const data = await arweave.transactions.getData(contract.abi, { decode: true, string: true });
@@ -247,7 +277,7 @@ const AddProject: React.FC<any> = ({
 
     setIsGenerated(true);
     setIsGenerating(false);
-    setNewProject((prev: any) => ({
+    setNewProject((prev: IProject) => ({
       ...prev,
       htmlLink: `https://arweave.net/${htmlTransaction.id}`,
     }));
@@ -311,8 +341,8 @@ const AddProject: React.FC<any> = ({
             <option value={''}>choose an option</option>
             {newProject.network !== '' &&
               contractsArray
-                .filter((contract: { network: any }) => contract.network === newProject.network)
-                .map((contract: any, index: any) => {
+                .filter((contract: IContract) => contract.network === newProject.network)
+                .map((contract: IContract, index: number) => {
                   return (
                     <option key={index} value={contract.id}>
                       {contract.name}
@@ -458,14 +488,14 @@ const AddProject: React.FC<any> = ({
             <ButtonAction2
               disabled={newProject.isLocked || pendingSave || pendingDelete}
               active={newProject.isPaused}
-              onClick={() => setNewProject((prev: any) => ({ ...prev, isPaused: !prev.isPaused }))}
+              onClick={() => setNewProject((prev: IProject) => ({ ...prev, isPaused: !prev.isPaused }))}
             >
               {!newProject.isPaused ? 'Enabled' : 'Paused'}
             </ButtonAction2>
             <ButtonAction2
               disabled={pendingSave || pendingDelete}
               active={newProject.isLocked}
-              onClick={() => setNewProject((prev: any) => ({ ...prev, isLocked: !prev.isLocked }))}
+              onClick={() => setNewProject((prev: IProject) => ({ ...prev, isLocked: !prev.isLocked }))}
             >
               {!newProject.isLocked ? 'Lock' : 'Locked'}
             </ButtonAction2>
