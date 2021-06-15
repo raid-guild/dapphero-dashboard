@@ -8,15 +8,19 @@ import Login from './components/Login';
 import reportWebVitals from './reportWebVitals';
 import './styles.css';
 
+import { ArWalletProvider } from 'contexts/ArWallet';
+
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route exact path="/connect" component={Login} />
-        <Route exact path="/login" component={Login} />
-      </Switch>
-    </HashRouter>
+    <ArWalletProvider>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/connect" component={Login} />
+          <Route exact path="/login" component={Login} />
+        </Switch>
+      </HashRouter>
+    </ArWalletProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

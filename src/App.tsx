@@ -4,6 +4,9 @@ import { JWKInterface } from 'arweave/node/lib/wallet';
 // Consts
 import { DEFAULT_CONTRACT, DEFAULT_PROJECT } from './consts';
 
+// Contexts
+import { ArWalletContext } from 'contexts/ArWallet';
+
 // Hooks
 import useArweave from './hooks/useArweave';
 import useContracts from './hooks/useContracts';
@@ -25,13 +28,12 @@ import { addIdsToArrary } from './helpers';
 import type { IProject, IContract } from './utils/types';
 
 const App: React.FC = () => {
-  const [router, setRouter] = React.useState<string>('projects');
-  const [wallet, setWallet] = React.useState<JWKInterface | null>(null);
+  const { wallet } = React.useContext(ArWalletContext);
 
+  const [router, setRouter] = React.useState<string>('projects');
   const [displayContract, setDisplayContract] = React.useState<string | IContract>(DEFAULT_CONTRACT);
   const [displayProject, setDisplayProject] = React.useState<string | IProject>(DEFAULT_PROJECT);
   const [contractsArray, setContractsArray] = React.useState<IContract[]>([]);
-  const [loginError, setLoginError] = React.useState<boolean>(false);
   const [projectsArray, setProjectsArray] = React.useState<IProject[]>([]);
   const [transactionId, setTransactionId] = React.useState<string>('');
   const [snackbar, setSnackbar] = React.useState<boolean>(false);
@@ -85,24 +87,6 @@ const App: React.FC = () => {
     });
   };
 
-  // Upload wallet
-  const uploadWallet = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const fileReader = new FileReader();
-
-    fileReader.onload = async (e) => {
-      try {
-        setWallet(JSON.parse((e.target?.result as string) || ''));
-      } catch (err) {
-        setLoginError(true);
-        console.error('Invalid wallet was uploaded.', err);
-      }
-    };
-
-    if (evt.target.files?.length) {
-      fileReader.readAsText(evt.target.files[0]);
-    }
-  };
-
   // Open Project component
   const onSelectProject = (project: string | IProject) => {
     setRouter('project');
@@ -130,7 +114,6 @@ const App: React.FC = () => {
 
   return (
     <>
-      {/* {!wallet && <Login loginError={loginError} uploadWallet={uploadWallet} />} */}
       <Layout>
         <Navigation router={router} setRouter={setRouter} />
         <Header router={router} />

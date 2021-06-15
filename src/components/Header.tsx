@@ -2,17 +2,39 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
+import { ArWalletContext } from 'contexts/ArWallet';
+import useArweave from 'hooks/useArweave';
+
+import { shortenAddress } from 'utils';
+
 // Components
 import { ButtonLink, ButtonAction1 } from './Buttons';
 import { colors, shadows } from './Theme';
 import { H1 } from './Typography';
 
 const Header: React.FC<any> = ({ router }) => {
+  const arweave = useArweave();
   const history = useHistory();
+  const { wallet } = React.useContext(ArWalletContext);
+  const [address, setAddress] = React.useState<string>('');
+
+  React.useEffect(() => {
+    if (wallet) {
+      arweave.wallets.jwkToAddress(wallet).then((address) => {
+        setAddress(address);
+      });
+    }
+  }, [wallet]);
 
   return (
     <HeaderContainer>
-      <H1>{router === '' ? 'Projects' : router.charAt(0).toUpperCase() + router.slice(1)}</H1>
+      <H1>
+        {wallet
+          ? router === ''
+            ? 'Projects'
+            : router.charAt(0).toUpperCase() + router.slice(1)
+          : 'You must connect your wallet to use app.'}
+      </H1>
       <div>
         <a
           style={{
@@ -29,7 +51,7 @@ const Header: React.FC<any> = ({ router }) => {
             history.push('/connect');
           }}
         >
-          Connect
+          {wallet ? shortenAddress(address, 3) : 'Connect'}
         </ButtonAction1>
       </div>
     </HeaderContainer>
