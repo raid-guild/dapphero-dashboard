@@ -9,17 +9,20 @@ import reportWebVitals from './reportWebVitals';
 import './styles.css';
 
 import { ArWalletProvider } from 'contexts/ArWallet';
+import { BalanceProvider } from 'contexts/Balance';
 
 ReactDOM.render(
   <React.StrictMode>
     <ArWalletProvider>
-      <HashRouter>
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/connect" component={Login} />
-          <Route exact path="/login" component={Login} />
-        </Switch>
-      </HashRouter>
+      <BalanceProvider>
+        <HashRouter>
+          <Switch>
+            <Route exact path="/" component={App} />
+            <Route exact path="/connect" component={Login} />
+            <Route exact path="/login" component={Login} />
+          </Switch>
+        </HashRouter>
+      </BalanceProvider>
     </ArWalletProvider>
   </React.StrictMode>,
   document.getElementById('root'),

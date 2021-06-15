@@ -19,6 +19,8 @@ import generateHTML from '../html-generator/api/generate-html';
 // Hooks
 import useProjects from '../hooks/useProjects';
 
+import { BalanceContext } from 'contexts/Balance';
+
 const AddProject: React.FC<any> = ({
   arweave,
   contractsArray,
@@ -28,6 +30,8 @@ const AddProject: React.FC<any> = ({
   subscribeToTransaction,
   wallet,
 }) => {
+  const { arBalance } = React.useContext(BalanceContext);
+
   const [newContract, setNewContract] = React.useState<string>('');
   const [contractList, setContractList] = React.useState<any[]>([]);
   const [isCopied, setIsCopied] = React.useState<boolean>(false);
@@ -479,6 +483,8 @@ const AddProject: React.FC<any> = ({
           </ButtonAction1>
         )}
       </ButtonsContainer2>
+      <br />
+      {BigInt(arBalance) === BigInt(0) && <P2 color={colors.red}>Your AR balance is currently 0.</P2>}
     </Main>
   );
 };
