@@ -1,6 +1,6 @@
 import type { NetworkType } from 'utils/types';
 
-export const CORE_ADDRESS = 'https://arweave.net/GmzoDdqjQC_VNHrScKuNtWyTFzD1UVIkfhkC-4MYYWE';
+export const CORE_ADDRESS = 'https://arweave.net/NKPfsVuEIopmug_05ZUHV9FkmHH7cpCLF9XMduubzM8';
 
 export const DASHBOARD_ADDRESS = 'https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-5n16B2mCqEAw1bIFo';
 

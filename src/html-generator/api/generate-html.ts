@@ -3,7 +3,7 @@ import type { IProject } from 'utils/types';
 
 const generateHTML = async (abis: any[], project: IProject): Promise<any> => {
   try {
-    let projectNetworkId = 1;
+    let projectNetworkId = 4;
     switch (project.network) {
       case 'mainnet':
         projectNetworkId = 1;

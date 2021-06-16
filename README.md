@@ -1,18 +1,13 @@
 # DappHero Dashboard
 Currently deployed at: https://arweave.net/fHGBbciTF4sDHbIqXwefnM0nt3ZgX8cTufTHUdyXbiA
-Dev deployment at: https://arweave.net/i1nqXw9vuDV6hAVlNWyLzXZ7EHVKwxk5p85149eYZSE
+Dev deployment at: https://arweave.net/_2lVWgpvPI-cMAaM7-_75j6Tn7304VQoJ9SW8zT5S20
 
 ## DappHero Core
-Latest core deployment at: https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI
+Latest core deployment at: https://arweave.net/NKPfsVuEIopmug_05ZUHV9FkmHH7cpCLF9XMduubzM8
 Repo: https://github.com/raid-guild/dapphero-core
 
 ## Profit Sharing Community
 https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc
-
-## Improvements
-- [ ] User should be able to save generated HTML link on the smartweave contract
-- [ ] Update HTML generator to ES6 syntax
-- [ ] Add error handling to HTML generator
 
 ## Deployed Assets
 - Community Logo: https://arweave.net/AZMyGTPMuq5A-iqGGz87rLRM7oXxE8nBymprqmWUh48
