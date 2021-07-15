@@ -1,17 +1,12 @@
 # DappHero Dashboard
-Currently deployed at: https://arweave.net/fHGBbciTF4sDHbIqXwefnM0nt3ZgX8cTufTHUdyXbiA
+Currently deployed at: https://arweave.net/CvPRezjo7CrvhRebqbiadAmXi-5n16B2mCqEAw1bIFo
 
 ## DappHero Core
-Latest core deployment at: https://arweave.net/Bvlkgd4UbOTxt0qsXAy_Wucxpo9xZ9IMj3v2egIDWNI
+Latest core deployment at: https://arweave.net/NKPfsVuEIopmug_05ZUHV9FkmHH7cpCLF9XMduubzM8
 Repo: https://github.com/raid-guild/dapphero-core
 
 ## Profit Sharing Community
 https://community.xyz/#d2D-oGZIHnuYzNtFnKtUVY4-xmmCKH8w6KUVKrrjtuc
-
-## Improvements
-- [ ] User should be able to save generated HTML link on the smartweave contract
-- [ ] Update HTML generator to ES6 syntax
-- [ ] Add error handling to HTML generator
 
 ## Deployed Assets
 - Community Logo: https://arweave.net/AZMyGTPMuq5A-iqGGz87rLRM7oXxE8nBymprqmWUh48
@@ -29,8 +24,8 @@ Contracts must be compiled from Typescript before deploying by running:
 ### `yarn build-contracts`
 The contracts and state json will be in the `dist` folder
 ## Current Deployed Addresses
-- Projects: `Gx8E31NsUjkte9RMMdYXNynHXft_vo8c_G39OlIkyiQ`
-- Contracts: `jYn1iueQHZBo-1EJnK6wfiJzl6nSnIdvjQthxPdlnK4`
+- Projects: `0Nx9CWDplg9guCp67_NlT2axv-GLyxQaZaI1TyDMSzg`
+- Contracts: `kJiz2yvXjHDGUT45XudbRcC9uy6QJce2JgwDXlJlv0Y`
 
 ## Tests
  You can run tests with the following command:

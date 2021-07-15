@@ -16,23 +16,20 @@ import { execute, ContractInteraction } from './contract-step';
  * @param input         the interaction input, will be serialized as Json.
  */
 export async function interactWrite(arweave: Arweave, wallet: JWKInterface, contractId: string, input: any) {
-  
   // Use a random value in the data body. We must put
   // _something_ in the body, because a tx must have data or target
   // to be valid. The value doesn't matter, but something sorta random
   // helps because it will generate a different txid.
-  let interactionTx = await arweave.createTransaction(
+  const interactionTx = await arweave.createTransaction(
     {
-      data: Math.random()
-        .toString()
-        .slice(-4)
+      data: Math.random().toString().slice(-4),
     },
-    wallet
+    wallet,
   );
 
   if (!input) {
     throw new Error(`Input should be a truthy value: ${JSON.stringify(input)}`);
-  }  
+  }
 
   interactionTx.addTag('App-Name', 'SmartWeaveAction');
   interactionTx.addTag('App-Version', '0.3.0');
@@ -64,12 +61,11 @@ export async function interactWriteDryRun(arweave: Arweave, wallet: JWKInterface
 
   const interaction: ContractInteraction = {
     input: input,
-    caller: from
+    caller: from,
   };
 
   return execute(contractInfo.handler, interaction, latestState);
 }
-
 
 /**
  * This will load a contract to its latest state, and execute a read interaction that
@@ -87,11 +83,9 @@ export async function interactRead(arweave: Arweave, wallet: JWKInterface, contr
 
   const interaction: ContractInteraction = {
     input: input,
-    caller: from
+    caller: from,
   };
 
   const result = await execute(contractInfo.handler, interaction, latestState);
-  return result.result
+  return result.result;
 }
-
-

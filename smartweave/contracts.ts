@@ -1,91 +1,91 @@
-import { ContractActionInterface, ContractInput, ContractList } from "./interfaces";
+import { ContractActionInterface, ContractInput, ContractList } from './interfaces';
 
-declare const ContractError: any
-declare const SmartWeave: any
+declare const ContractError: any;
+declare const SmartWeave: any;
 
 export function handle(state: any, action: ContractActionInterface) {
-    const input: ContractInput = action.input
+  const input: ContractInput = action.input;
 
-    if (input.function === 'create') {
-        const contract = input.contract
+  if (input.function === 'create') {
+    const contract = input.contract;
 
-        state.contracts[SmartWeave.transaction.id] = {
-            name: contract.name,
-            description: contract.description,
-            network: contract.network,
-            deployedAddress: contract.deployedAddress,
-            abi: contract.abi,
-            creator: action.caller,
-            createdAt: new Date().toUTCString(),
-            updatedAt: new Date().toUTCString(),
-            isLocked: contract.isLocked || false
-        }
+    state.contracts[SmartWeave.transaction.id] = {
+      name: contract.name,
+      description: contract.description,
+      network: contract.network,
+      deployedAddress: contract.deployedAddress,
+      abi: contract.abi,
+      creator: action.caller,
+      createdAt: new Date().toUTCString(),
+      updatedAt: new Date().toUTCString(),
+      isLocked: contract.isLocked || false,
+    };
 
-        return { state }
+    return { state };
+  }
+
+  if (action.input.function === 'update') {
+    const id = input.id || '';
+    const contract = input.contract;
+
+    if (!state.contracts[id]) {
+      throw new ContractError('Contract deos not exist');
     }
 
-    if (action.input.function === 'update') {
-        const id = input.id || ''
-        const contract = input.contract
-
-        if (!state.contracts[id]) {
-            throw new ContractError('Contract deos not exist')
-        }
-
-        if (state.contracts[id].creator !== action.caller) {
-            throw new ContractError('Contract is owned by another caller')
-        }
-
-        state.contracts[id].name = contract.name
-        state.contracts[id].description = contract.description
-        state.contracts[id].network = contract.network
-        state.contracts[id].deployedAddress = contract.deployedAddress
-        state.contracts[id].abi = contract.abi
-        state.contracts[id].isLocked = contract.isLocked
-        state.contracts[id].updatedAt = new Date().toUTCString()
-
-        return { state }
+    if (state.contracts[id].creator !== action.caller) {
+      throw new ContractError('Contract is owned by another caller');
     }
 
-    if (action.input.function === 'get') {
-        const id = input.id || ''
+    state.contracts[id].name = contract.name;
+    state.contracts[id].description = contract.description;
+    state.contracts[id].network = contract.network;
+    state.contracts[id].deployedAddress = contract.deployedAddress;
+    state.contracts[id].abi = contract.abi;
+    state.contracts[id].isLocked = contract.isLocked;
+    state.contracts[id].updatedAt = new Date().toUTCString();
 
-        if (!state.contracts[id]) {
-            throw new ContractError('Contract does not exist')
-        }
+    return { state };
+  }
 
-        const result = state.contracts[id]
+  if (action.input.function === 'get') {
+    const id = input.id || '';
 
-        return { result }
+    if (!state.contracts[id]) {
+      throw new ContractError('Contract does not exist');
     }
 
-    if (action.input.function === 'delete') {
-        const id = input.id || ''
+    const result = state.contracts[id];
 
-        if (!state.contracts[id]) {
-            throw new ContractError('Contract does not exist')
-        }
+    return { result };
+  }
 
-        if (state.contracts[id].creator !== action.caller) {
-            throw new ContractError('Contract is owned by another caller')
-        }
+  if (action.input.function === 'delete') {
+    const id = input.id || '';
 
-        delete state.contracts[id]
-
-        return { state }
+    if (!state.contracts[id]) {
+      throw new ContractError('Contract does not exist');
     }
 
-    if (action.input.function === 'getByCreator') {
-        let result: ContractList = {}
-
-        for (let key in state.contracts) {
-            if (state.contracts[key].creator === action.caller) {
-                result[key] = state.contracts[key]
-            }
-        }
-
-        return { result }
+    if (state.contracts[id].creator !== action.caller) {
+      throw new ContractError('Contract is owned by another caller');
     }
 
-    throw new ContractError(`No function supplied or function not recognised: "${input.function}"`)
+    delete state.contracts[id];
+
+    return { state };
+  }
+
+  if (action.input.function === 'getByCreator') {
+    const result: ContractList = {};
+
+    for (const key in state.contracts) {
+      if (state.contracts[key].creator === action.caller) {
+        result[key] = state.contracts[key];
+      }
+    }
+
+    return { result };
+  }
+
+  throw new ContractError(`No function supplied or function not recognised: "${input.function}"`);
 }
